@@ -10,6 +10,7 @@
 	let cardMeshes = [];
 	let arrowMeshes = [];
 	let selectedCard = null;
+	let previousCard = null;
 	let hoveredPerson = null;
 	let searchVisible = false;
 	let searchFrom = '';
@@ -59,7 +60,7 @@
 		return new THREE.Vector3(xPos, yPos, zPos);
 	}
 	
-	// Create a card mesh in 3D space with full information
+	// Create a card mesh in 3D space with front and back textures
 	function createCardMesh(topic, position) {
 		const cardWidth = 5;
 		const cardHeight = 7;
@@ -68,29 +69,30 @@
 		const cardGroup = new THREE.Group();
 		cardGroup.userData = { topic, type: 'card' };
 		
-		// Create detailed card texture with all information
-		const canvas = document.createElement('canvas');
-		const ctx = canvas.getContext('2d');
-		canvas.width = 768;
-		canvas.height = 1024;
-		
-		// Draw colored border
 		const borderColor = categoryColors[topic.category] || '#ffffff';
 		const borderWidth = 20;
-		ctx.fillStyle = borderColor;
-		ctx.fillRect(0, 0, canvas.width, canvas.height);
+		
+		// ===== CREATE FRONT TEXTURE (basic info, 1.5x larger fonts) =====
+		const frontCanvas = document.createElement('canvas');
+		const frontCtx = frontCanvas.getContext('2d');
+		frontCanvas.width = 768;
+		frontCanvas.height = 1024;
+		
+		// Draw colored border
+		frontCtx.fillStyle = borderColor;
+		frontCtx.fillRect(0, 0, frontCanvas.width, frontCanvas.height);
 		
 		// Background (inner dark area)
-		ctx.fillStyle = '#1a1a2e';
-		ctx.fillRect(borderWidth, borderWidth, canvas.width - borderWidth * 2, canvas.height - borderWidth * 2);
+		frontCtx.fillStyle = '#1a1a2e';
+		frontCtx.fillRect(borderWidth, borderWidth, frontCanvas.width - borderWidth * 2, frontCanvas.height - borderWidth * 2);
 		
-		let yOffset = 50; // Account for border
+		let yOffset = 60; // Account for border
 		
-		// Title
-		ctx.fillStyle = '#ffffff';
-		ctx.font = 'bold 44px Arial';
-		ctx.textAlign = 'center';
-		ctx.textBaseline = 'top';
+		// Title (66px = 44 * 1.5)
+		frontCtx.fillStyle = '#ffffff';
+		frontCtx.font = 'bold 66px Arial';
+		frontCtx.textAlign = 'center';
+		frontCtx.textBaseline = 'top';
 		
 		// Word wrap the title
 		const words = topic.name.split(' ');
@@ -99,8 +101,8 @@
 		
 		for (let i = 1; i < words.length; i++) {
 			const word = words[i];
-			const width = ctx.measureText(currentLine + ' ' + word).width;
-			if (width < canvas.width - 80) {
+			const width = frontCtx.measureText(currentLine + ' ' + word).width;
+			if (width < frontCanvas.width - 100) {
 				currentLine += ' ' + word;
 			} else {
 				lines.push(currentLine);
@@ -110,119 +112,169 @@
 		lines.push(currentLine);
 		
 		lines.forEach((line) => {
-			ctx.fillText(line, canvas.width / 2, yOffset);
-			yOffset += 50;
+			frontCtx.fillText(line, frontCanvas.width / 2, yOffset);
+			yOffset += 75;
 		});
 		
-		yOffset += 10;
+		yOffset += 20;
 		
-		// Year
-		ctx.font = '28px Arial';
-		ctx.fillStyle = '#aaaaaa';
+		// Year (42px = 28 * 1.5)
+		frontCtx.font = '42px Arial';
+		frontCtx.fillStyle = '#aaaaaa';
 		const yearText = topic.year < 0 ? `${Math.abs(topic.year)} BC` : `${topic.year} AD`;
-		ctx.fillText(yearText, canvas.width / 2, yOffset);
-		yOffset += 45;
+		frontCtx.fillText(yearText, frontCanvas.width / 2, yOffset);
+		yOffset += 65;
 		
-		// Category
-		ctx.font = '24px Arial';
-		ctx.fillStyle = borderColor;
-		ctx.fillText(topic.category, canvas.width / 2, yOffset);
-		yOffset += 45;
+		// Category (36px = 24 * 1.5)
+		frontCtx.font = '36px Arial';
+		frontCtx.fillStyle = borderColor;
+		frontCtx.fillText(topic.category, frontCanvas.width / 2, yOffset);
+		yOffset += 60;
 		
-		// Type
-		ctx.font = '20px Arial';
-		ctx.fillStyle = '#999999';
-		ctx.fillText(topic.type, canvas.width / 2, yOffset);
+		// Type (30px = 20 * 1.5)
+		frontCtx.font = '30px Arial';
+		frontCtx.fillStyle = '#999999';
+		frontCtx.fillText(topic.type, frontCanvas.width / 2, yOffset);
 		yOffset += 50;
 		
-		// Contributors
+		// Contributors (on front as clickable list)
 		if (topic.contributors && topic.contributors.length > 0) {
-			ctx.fillStyle = '#cccccc';
-			ctx.font = 'bold 22px Arial';
-			ctx.fillText('Contributors', canvas.width / 2, yOffset);
-			yOffset += 35;
+			frontCtx.fillStyle = '#cccccc';
+			frontCtx.font = 'bold 26px Arial';
+			frontCtx.textAlign = 'center';
+			frontCtx.fillText('Contributors', frontCanvas.width / 2, yOffset);
+			yOffset += 40;
 			
-			ctx.font = '18px Arial';
-			ctx.fillStyle = '#aaaaaa';
-			const contributors = topic.contributors
-				.slice(0, 6) // Limit to first 6 to avoid overcrowding
-				.map(id => {
-					const person = people.find(p => p.id === id);
-					// Use person name if found, otherwise capitalize the ID
-					return person ? person.name : id.charAt(0).toUpperCase() + id.slice(1);
-				})
-				.join(', ');
+			// Show contributor names
+			frontCtx.font = '22px Arial';
+			frontCtx.fillStyle = '#aaaaaa';
+			frontCtx.textAlign = 'left';
 			
-			const moreCount = topic.contributors.length > 6 ? topic.contributors.length - 6 : 0;
-			const displayText = moreCount > 0 ? `${contributors} +${moreCount} more` : contributors;
+			topic.contributors.slice(0, 8).forEach(id => {
+				const person = people.find(p => p.id === id);
+				const name = person ? person.name : id.charAt(0).toUpperCase() + id.slice(1);
+				frontCtx.fillText(`• ${name}`, 60, yOffset);
+				yOffset += 28;
+			});
 			
-			// Word wrap contributors
-			const contribWords = displayText.split(' ');
-			let contribLine = '';
-			contribWords.forEach(word => {
-				const testLine = contribLine + (contribLine ? ' ' : '') + word;
-				const width = ctx.measureText(testLine).width;
-				if (width > canvas.width - 80 && contribLine) {
-					ctx.fillText(contribLine, canvas.width / 2, yOffset);
-					yOffset += 28;
-					contribLine = word;
-				} else {
-					contribLine = testLine;
+			if (topic.contributors.length > 8) {
+				frontCtx.textAlign = 'center';
+				frontCtx.fillStyle = '#999';
+				frontCtx.fillText(`+${topic.contributors.length - 8} more`, frontCanvas.width / 2, yOffset);
+				yOffset += 30;
+			}
+			
+			frontCtx.textAlign = 'center';
+			yOffset += 10;
+		}
+		
+		// Leads To (on front, max 10)
+		if (topic.leadsTo && topic.leadsTo.length > 0) {
+			frontCtx.fillStyle = '#cccccc';
+			frontCtx.font = 'bold 26px Arial';
+			frontCtx.fillText('Leads To', frontCanvas.width / 2, yOffset);
+			yOffset += 40;
+			
+			frontCtx.font = '20px Arial';
+			frontCtx.fillStyle = '#6366f1';
+			frontCtx.textAlign = 'left';
+			topic.leadsTo.slice(0, 10).forEach(targetId => {
+				const targetTopic = topics.find(t => t.id === targetId);
+				if (targetTopic) {
+					const text = `➜ ${targetTopic.name}`;
+					frontCtx.fillText(text, 60, yOffset);
+					yOffset += 30;
 				}
 			});
-			if (contribLine) {
-				ctx.fillText(contribLine, canvas.width / 2, yOffset);
-				yOffset += 35;
+			if (topic.leadsTo.length > 10) {
+				frontCtx.textAlign = 'center';
+				frontCtx.fillStyle = '#999';
+				frontCtx.fillText(`+${topic.leadsTo.length - 10} more`, frontCanvas.width / 2, yOffset);
 			}
 		}
 		
-		// Prerequisites
+		const frontTexture = new THREE.CanvasTexture(frontCanvas);
+		
+		// ===== CREATE BACK TEXTURE (detailed info) =====
+		const backCanvas = document.createElement('canvas');
+		const backCtx = backCanvas.getContext('2d');
+		backCanvas.width = 768;
+		backCanvas.height = 1024;
+		
+		// Draw colored border
+		backCtx.fillStyle = borderColor;
+		backCtx.fillRect(0, 0, backCanvas.width, backCanvas.height);
+		
+		// Background (inner dark area)
+		backCtx.fillStyle = '#1a1a2e';
+		backCtx.fillRect(borderWidth, borderWidth, backCanvas.width - borderWidth * 2, backCanvas.height - borderWidth * 2);
+		
+		yOffset = 80;
+		
+		// Prerequisites (on back)
 		if (topic.prerequisites && topic.prerequisites.length > 0) {
-			ctx.fillStyle = '#cccccc';
-			ctx.font = 'bold 22px Arial';
-			ctx.fillText('Prerequisites', canvas.width / 2, yOffset);
+			backCtx.fillStyle = '#cccccc';
+			backCtx.font = 'bold 22px Arial';
+			backCtx.textAlign = 'center';
+			backCtx.fillText('Prerequisites', backCanvas.width / 2, yOffset);
 			yOffset += 35;
 			
-			ctx.font = '18px Arial';
-			ctx.fillStyle = '#aaaaaa';
-			ctx.textAlign = 'left';
+			backCtx.font = '18px Arial';
+			backCtx.fillStyle = '#aaaaaa';
+			backCtx.textAlign = 'left';
 			topic.prerequisites.forEach(prereq => {
 				const prereqTopic = topics.find(t => t.id === prereq.id);
 				if (prereqTopic) {
 					const text = `• ${prereqTopic.name} (${prereq.strength}%)`;
-					ctx.fillText(text, 60, yOffset);
+					backCtx.fillText(text, 60, yOffset);
 					yOffset += 28;
 				}
 			});
-			ctx.textAlign = 'center';
-			yOffset += 10;
+			backCtx.textAlign = 'center';
+			yOffset += 20;
 		}
 		
-		// Leads To
-		if (topic.leadsTo && topic.leadsTo.length > 0) {
-			ctx.fillStyle = '#cccccc';
-			ctx.font = 'bold 22px Arial';
-			ctx.fillText('Leads To', canvas.width / 2, yOffset);
+		// Notes (on back)
+		if (topic.notes) {
+			backCtx.fillStyle = '#cccccc';
+			backCtx.font = 'bold 22px Arial';
+			backCtx.fillText('Notes', backCanvas.width / 2, yOffset);
 			yOffset += 35;
 			
-			ctx.font = '18px Arial';
-			ctx.fillStyle = '#6366f1';
-			ctx.textAlign = 'left';
-			topic.leadsTo.forEach(targetId => {
-				const targetTopic = topics.find(t => t.id === targetId);
-				if (targetTopic) {
-					const text = `➜ ${targetTopic.name}`;
-					ctx.fillText(text, 60, yOffset);
-					yOffset += 28;
+			backCtx.font = '18px Arial';
+			backCtx.fillStyle = '#aaaaaa';
+			backCtx.textAlign = 'left';
+			
+			// Word wrap notes
+			const noteWords = topic.notes.split(' ');
+			let noteLine = '';
+			noteWords.forEach(word => {
+				const testLine = noteLine + (noteLine ? ' ' : '') + word;
+				const width = backCtx.measureText(testLine).width;
+				if (width > backCanvas.width - 100 && noteLine) {
+					backCtx.fillText(noteLine, 50, yOffset);
+					yOffset += 26;
+					noteLine = word;
+				} else {
+					noteLine = testLine;
 				}
 			});
+			if (noteLine) {
+				backCtx.fillText(noteLine, 50, yOffset);
+			}
 		}
 		
-		const texture = new THREE.CanvasTexture(canvas);
+		const backTexture = new THREE.CanvasTexture(backCanvas);
 		
-		// Create materials: texture for front/back, border color for edges
-		const textureMaterial = new THREE.MeshStandardMaterial({ 
-			map: texture,
+		// Create materials: different textures for front and back
+		const frontMaterial = new THREE.MeshStandardMaterial({ 
+			map: frontTexture,
+			roughness: 0.7,
+			metalness: 0.3
+		});
+		
+		const backMaterial = new THREE.MeshStandardMaterial({ 
+			map: backTexture,
 			roughness: 0.7,
 			metalness: 0.3
 		});
@@ -237,12 +289,12 @@
 		
 		// Materials array: [right, left, top, bottom, front, back]
 		const materials = [
-			edgeMaterial,    // right edge
-			edgeMaterial,    // left edge
-			edgeMaterial,    // top edge
-			edgeMaterial,    // bottom edge
-			textureMaterial, // front face
-			textureMaterial  // back face
+			edgeMaterial,  // right edge
+			edgeMaterial,  // left edge
+			edgeMaterial,  // top edge
+			edgeMaterial,  // bottom edge
+			frontMaterial, // front face
+			backMaterial   // back face
 		];
 		
 		const cardGeometry = new THREE.BoxGeometry(cardWidth, cardHeight, CARD_THICKNESS);
@@ -254,19 +306,37 @@
 		return cardGroup;
 	}
 	
-	// Create arrow between two cards
+	// Create arrow between two cards (stops at card surfaces)
 	function createArrow(fromPos, toPos, strength = 50) {
 		const direction = new THREE.Vector3().subVectors(toPos, fromPos);
-		const length = direction.length();
+		const fullLength = direction.length();
 		direction.normalize();
 		
 		// Arrow shaft thickness based on strength (50-100 -> 0.05-0.15)
 		const thickness = 0.05 + ((strength - 50) / 50) * 0.1;
 		
+		// Arrow head dimensions
+		const headHeight = thickness * 4;
+		
+		// Card half-width (cards are 5 units wide, so 2.5 from center to edge)
+		const cardHalfWidth = 2.5;
+		
+		// Offset start position by card radius, end position by card radius + a tiny bit so tip touches
+		const startOffset = cardHalfWidth;
+		const endOffset = cardHalfWidth - headHeight * 0.5; // Arrow tip touches card surface
+		
+		const adjustedLength = fullLength - startOffset - endOffset;
+		
+		if (adjustedLength <= 0) return null; // Cards too close
+		
 		const arrowGroup = new THREE.Group();
 		
+		// Calculate start and end positions (offset from card centers)
+		const startPos = fromPos.clone().add(direction.clone().multiplyScalar(startOffset));
+		const endPos = toPos.clone().sub(direction.clone().multiplyScalar(endOffset));
+		
 		// Shaft
-		const shaftGeometry = new THREE.CylinderGeometry(thickness, thickness, length, 8);
+		const shaftGeometry = new THREE.CylinderGeometry(thickness, thickness, adjustedLength, 8);
 		const shaftMaterial = new THREE.MeshStandardMaterial({
 			color: 0x6366f1,
 			emissive: 0x4f46e5,
@@ -276,16 +346,17 @@
 		});
 		const shaft = new THREE.Mesh(shaftGeometry, shaftMaterial);
 		
-		// Position and rotate shaft
-		shaft.position.copy(fromPos).add(direction.clone().multiplyScalar(length / 2));
+		// Position and rotate shaft (between adjusted positions)
+		shaft.position.copy(startPos).add(direction.clone().multiplyScalar(adjustedLength / 2));
 		shaft.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction);
 		
 		arrowGroup.add(shaft);
 		
-		// Arrow head
-		const headGeometry = new THREE.ConeGeometry(thickness * 2, thickness * 4, 8);
+		// Arrow head (cone points in +Y by default, we rotate it to point along direction)
+		const headGeometry = new THREE.ConeGeometry(thickness * 2, headHeight, 8);
 		const head = new THREE.Mesh(headGeometry, shaftMaterial);
-		head.position.copy(toPos).sub(direction.clone().multiplyScalar(thickness * 2));
+		// Position the head so its base is at endPos and tip extends toward the card
+		head.position.copy(endPos).add(direction.clone().multiplyScalar(headHeight * 0.5));
 		head.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction);
 		arrowGroup.add(head);
 		
@@ -410,8 +481,10 @@
 					const toCard = cardMeshes.find(m => m.userData.topic.id === targetId);
 					if (toCard) {
 						const arrow = createArrow(fromCard.position, toCard.position, 75);
-						scene.add(arrow);
-						arrowMeshes.push(arrow);
+						if (arrow) {
+							scene.add(arrow);
+							arrowMeshes.push(arrow);
+						}
 					}
 				});
 			}
@@ -510,6 +583,11 @@
 	}
 	
 	function zoomToCard(cardMesh) {
+		// Track previous card for back button
+		if (selectedCard && selectedCard.id !== cardMesh.userData.topic.id) {
+			previousCard = selectedCard;
+		}
+		
 		const targetPosition = cardMesh.position.clone();
 		// Increase distance for larger cards (was 15, now 18)
 		const offset = new THREE.Vector3(0, 0, 18);
@@ -536,6 +614,22 @@
 		}
 		
 		animateCamera();
+	}
+	
+	function goToPreviousCard() {
+		if (previousCard) {
+			const prevCardMesh = cardMeshes.find(m => m.userData.topic.id === previousCard.id);
+			if (prevCardMesh) {
+				const temp = selectedCard;
+				selectedCard = previousCard;
+				previousCard = temp;
+				zoomToCard(prevCardMesh);
+				// Don't double-track - reset after navigation
+				if (previousCard && selectedCard && previousCard.id === selectedCard.id) {
+					previousCard = null;
+				}
+			}
+		}
 	}
 	
 	function onWindowResize() {
@@ -687,13 +781,15 @@
 					const toCard = cardMeshes.find(m => m.userData.topic.id === targetId);
 					if (toCard) {
 						const arrow = createArrow(fromCard.position, toCard.position, 75);
-						arrow.children.forEach(child => {
-							if (child.material) {
-								child.material.opacity = 0.2;
-							}
-						});
-						scene.add(arrow);
-						arrowMeshes.push(arrow);
+						if (arrow) {
+							arrow.children.forEach(child => {
+								if (child.material) {
+									child.material.opacity = 0.2;
+								}
+							});
+							scene.add(arrow);
+							arrowMeshes.push(arrow);
+						}
 					}
 				});
 			}
@@ -705,18 +801,20 @@
 			const toCard = cardMeshes.find(m => m.userData.topic.id === path[i + 1].id);
 			if (fromCard && toCard) {
 				const arrow = createArrow(fromCard.position, toCard.position, 100);
-				const hue = (i / (path.length - 1)) * 0.8;
-				const color = new THREE.Color().setHSL(hue, 1, 0.5);
-				arrow.children.forEach(child => {
-					if (child.material) {
-						child.material.color = color;
-						child.material.emissive = color;
-						child.material.emissiveIntensity = 0.5;
-						child.material.opacity = 1;
-					}
-				});
-				scene.add(arrow);
-				arrowMeshes.push(arrow);
+				if (arrow) {
+					const hue = (i / (path.length - 1)) * 0.8;
+					const color = new THREE.Color().setHSL(hue, 1, 0.5);
+					arrow.children.forEach(child => {
+						if (child.material) {
+							child.material.color = color;
+							child.material.emissive = color;
+							child.material.emissiveIntensity = 0.5;
+							child.material.opacity = 1;
+						}
+					});
+					scene.add(arrow);
+					arrowMeshes.push(arrow);
+				}
 			}
 		}
 	}
@@ -800,6 +898,17 @@
 	</div>
 {/if}
 
+<!-- Back Button (top left) -->
+{#if viewMode === '3d' && previousCard}
+	<button
+		class="back-button"
+		on:click={goToPreviousCard}
+		aria-label="Go to previous card"
+	>
+		← Back
+	</button>
+{/if}
+
 <!-- View Mode Button -->
 <button
 	class="view-button"
@@ -855,22 +964,43 @@
 	</div>
 {/if}
 
-<!-- Selected Card Indicator -->
+<!-- Cards are directly clickable - no popup needed -->
+
+<!-- Card Interaction Overlay when viewing a card -->
 {#if selectedCard}
-	<div class="selected-indicator">
-		<div class="indicator-content">
-			<strong>{selectedCard.name}</strong> selected
-			<button class="deselect-button" on:click={closeCardDetail}>✕</button>
-		</div>
+	<div class="card-overlay-panel">
+		<h2>{selectedCard.name}</h2>
+		
+		<!-- Contributors Section -->
+		{#if selectedCard.contributors && selectedCard.contributors.length > 0}
+			<div class="overlay-section">
+				<h3>👥 Contributors</h3>
+				<div class="overlay-grid">
+					{#each selectedCard.contributors as contributorId}
+						{@const person = people.find(p => p.id === contributorId)}
+						{#if person}
+							<button 
+								class="overlay-button"
+								on:click={() => hoveredPerson = hoveredPerson?.id === person.id ? null : person}
+							>
+								{person.name}
+							</button>
+						{/if}
+					{/each}
+				</div>
+			</div>
+		{/if}
+		
+		<!-- Leads To Section -->
 		{#if selectedCard.leadsTo && selectedCard.leadsTo.length > 0}
-			<div class="leads-to-nav">
-				<div class="nav-title">Jump to:</div>
-				<div class="nav-buttons">
+			<div class="overlay-section">
+				<h3>➜ Leads To</h3>
+				<div class="overlay-grid">
 					{#each selectedCard.leadsTo as targetId}
 						{@const targetTopic = topics.find(t => t.id === targetId)}
 						{#if targetTopic}
 							<button 
-								class="nav-button"
+								class="overlay-button leads-button"
 								on:click={() => {
 									const targetCard = cardMeshes.find(m => m.userData.topic.id === targetId);
 									if (targetCard) {
@@ -879,12 +1009,35 @@
 									}
 								}}
 							>
-								➜ {targetTopic.name}
+								{targetTopic.name}
 							</button>
 						{/if}
 					{/each}
 				</div>
 			</div>
+		{/if}
+	</div>
+{/if}
+
+<!-- Person Detail Card -->
+{#if hoveredPerson}
+	<div class="person-detail-card">
+		<button class="close-person" on:click={() => hoveredPerson = null}>✕</button>
+		{#if hoveredPerson.img}
+			<img src={hoveredPerson.img} alt={hoveredPerson.name} />
+		{:else}
+			<div class="placeholder-img">{hoveredPerson.name.split(' ').map(n => n[0]).join('')}</div>
+		{/if}
+		<h3>{hoveredPerson.name}</h3>
+		{#if hoveredPerson.born || hoveredPerson.died}
+			<p class="dates">
+				{#if hoveredPerson.born}
+					Born: {hoveredPerson.born}
+				{/if}
+				{#if hoveredPerson.died}
+					<br>Died: {hoveredPerson.died}
+				{/if}
+			</p>
 		{/if}
 	</div>
 {/if}
@@ -898,6 +1051,28 @@
 	.scene-container {
 		width: 100vw;
 		height: 100vh;
+	}
+	
+	.back-button {
+		position: fixed;
+		top: 2rem;
+		left: 2rem;
+		padding: 0.75rem 1.5rem;
+		border-radius: 0.5rem;
+		background: rgba(99, 102, 241, 0.9);
+		color: white;
+		border: none;
+		font-size: 1rem;
+		font-weight: 600;
+		cursor: pointer;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+		transition: all 0.2s;
+		z-index: 100;
+	}
+	
+	.back-button:hover {
+		transform: translateX(-3px);
+		background: rgba(99, 102, 241, 1);
 	}
 	
 	.view-button {
@@ -1152,85 +1327,170 @@
 		color: #eee;
 	}
 	
-	.selected-indicator {
+	.card-overlay-panel {
 		position: fixed;
-		top: 2rem;
+		top: 50%;
 		right: 2rem;
-		background: rgba(26, 26, 46, 0.95);
-		padding: 1rem 1.5rem;
-		border-radius: 0.75rem;
-		border: 2px solid rgba(99, 102, 241, 0.5);
-		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+		transform: translateY(-50%);
+		background: rgba(26, 26, 46, 0.98);
+		padding: 2rem;
+		border-radius: 1rem;
+		border: 2px solid rgba(99, 102, 241, 0.6);
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
 		z-index: 1000;
-		max-width: 400px;
+		max-width: 350px;
+		max-height: 80vh;
+		overflow-y: auto;
 	}
 	
-	.indicator-content {
+	.card-overlay-panel h2 {
+		margin: 0 0 1.5rem 0;
+		color: #fff;
+		font-size: 1.5rem;
+		border-bottom: 2px solid rgba(99, 102, 241, 0.5);
+		padding-bottom: 0.75rem;
+	}
+	
+	.overlay-section {
+		margin-bottom: 1.5rem;
+	}
+	
+	.overlay-section h3 {
+		margin: 0 0 0.75rem 0;
+		color: #cccccc;
+		font-size: 1.1rem;
+		font-weight: 600;
+	}
+	
+	.overlay-grid {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	
+	.overlay-button {
+		background: rgba(99, 102, 241, 0.15);
+		border: 1px solid rgba(99, 102, 241, 0.4);
+		color: #aaaaaa;
+		padding: 0.75rem 1rem;
+		border-radius: 0.5rem;
+		cursor: pointer;
+		font-size: 0.95rem;
+		text-align: left;
+		transition: all 0.2s;
+		width: 100%;
+	}
+	
+	.overlay-button:hover {
+		background: rgba(99, 102, 241, 0.3);
+		border-color: rgba(99, 102, 241, 0.7);
+		color: #fff;
+		transform: translateX(3px);
+	}
+	
+	.leads-button {
+		color: #6366f1;
+	}
+	
+	.leads-button:hover {
+		color: #818cf8;
+	}
+	
+	.person-detail-card {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background: rgba(26, 26, 46, 0.98);
+		padding: 2rem;
+		border-radius: 1rem;
+		border: 2px solid rgba(99, 102, 241, 0.6);
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+		z-index: 2000;
+		min-width: 300px;
+		max-width: 400px;
+		text-align: center;
+	}
+	
+	.person-detail-card img {
+		width: 150px;
+		height: 150px;
+		border-radius: 50%;
+		object-fit: cover;
+		margin-bottom: 1rem;
+		border: 3px solid rgba(99, 102, 241, 0.5);
+	}
+	
+	.placeholder-img {
+		width: 150px;
+		height: 150px;
+		border-radius: 50%;
+		background: rgba(99, 102, 241, 0.3);
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
-		gap: 1rem;
-		color: #eee;
+		justify-content: center;
+		font-size: 3rem;
+		font-weight: bold;
+		color: #fff;
+		margin: 0 auto 1rem;
+		border: 3px solid rgba(99, 102, 241, 0.5);
 	}
 	
-	.deselect-button {
+	.person-detail-card h3 {
+		color: #fff;
+		margin: 0 0 0.5rem 0;
+		font-size: 1.5rem;
+	}
+	
+	.person-detail-card .dates {
+		color: #aaa;
+		font-size: 1rem;
+		line-height: 1.6;
+		margin: 0;
+	}
+	
+	.close-person {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
 		background: none;
 		border: none;
 		color: #aaa;
-		font-size: 1.25rem;
+		font-size: 1.5rem;
 		cursor: pointer;
 		padding: 0.25rem;
 		line-height: 1;
 		transition: color 0.2s;
 	}
 	
-	.deselect-button:hover {
+	.close-person:hover {
 		color: #fff;
 	}
 	
-	.leads-to-nav {
-		margin-top: 0.75rem;
-		padding-top: 0.75rem;
-		border-top: 1px solid rgba(99, 102, 241, 0.3);
-	}
-	
-	.nav-title {
-		color: #aaa;
-		font-size: 0.9rem;
-		margin-bottom: 0.5rem;
-	}
-	
-	.nav-buttons {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-	}
-	
-	.nav-button {
-		background: rgba(99, 102, 241, 0.2);
-		border: 1px solid rgba(99, 102, 241, 0.4);
-		color: #6366f1;
-		padding: 0.5rem 0.75rem;
-		border-radius: 0.5rem;
-		cursor: pointer;
-		font-size: 0.9rem;
-		text-align: left;
-		transition: all 0.2s;
-	}
-	
-	.nav-button:hover {
-		background: rgba(99, 102, 241, 0.3);
-		border-color: rgba(99, 102, 241, 0.6);
-		transform: translateX(4px);
-	}
-	
 	@media (max-width: 768px) {
-		.selected-indicator {
-			top: auto;
-			bottom: 1rem;
+		.back-button {
+			top: 1rem;
+			left: 1rem;
+			padding: 0.5rem 1rem;
+			font-size: 0.9rem;
+		}
+		
+		.card-overlay-panel {
 			right: 1rem;
 			left: 1rem;
 			max-width: calc(100% - 2rem);
+			max-height: 60vh;
+			padding: 1.5rem;
+		}
+		
+		.card-overlay-panel h2 {
+			font-size: 1.25rem;
+		}
+		
+		.person-detail-card {
+			width: calc(100% - 2rem);
+			max-width: 100%;
+			padding: 1.5rem;
 		}
 		
 		.search-panel {
