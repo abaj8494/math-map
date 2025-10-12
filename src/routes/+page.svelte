@@ -125,11 +125,31 @@
 		frontCtx.fillText(yearText, frontCanvas.width / 2, yOffset);
 		yOffset += 65;
 		
-		// Category (36px = 24 * 1.5)
+		// Category (36px = 24 * 1.5) - with text wrapping
 		frontCtx.font = '36px Arial';
 		frontCtx.fillStyle = borderColor;
-		frontCtx.fillText(topic.category, frontCanvas.width / 2, yOffset);
-		yOffset += 60;
+		const categoryWords = topic.category.split(' ');
+		let categoryLines = [];
+		let categoryLine = categoryWords[0];
+		
+		for (let i = 1; i < categoryWords.length; i++) {
+			const word = categoryWords[i];
+			const width = frontCtx.measureText(categoryLine + ' ' + word).width;
+			if (width < frontCanvas.width - 100) {
+				categoryLine += ' ' + word;
+			} else {
+				categoryLines.push(categoryLine);
+				categoryLine = word;
+			}
+		}
+		categoryLines.push(categoryLine);
+		
+		categoryLines.forEach((line) => {
+			frontCtx.fillText(line, frontCanvas.width / 2, yOffset);
+			yOffset += 40;
+		});
+		
+		yOffset += 20;
 		
 		// Type (30px = 20 * 1.5)
 		frontCtx.font = '30px Arial';
@@ -1380,18 +1400,20 @@
 		left: 1rem;
 		padding: 0.5rem 1rem;
 		border-radius: 0.5rem;
-		background: rgba(99, 102, 241, 0.3);
+		background: rgba(34, 197, 94, 0.6);
 		color: white;
-		border: 1px solid rgba(99, 102, 241, 0.5);
+		border: 1px solid rgba(34, 197, 94, 0.8);
 		font-size: 0.9rem;
-		font-weight: 600;
+		font-weight: 700;
 		cursor: pointer;
 		transition: all 0.2s;
+		box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
 	}
 	
 	.overlay-back-button:hover {
-		background: rgba(99, 102, 241, 0.5);
+		background: rgba(34, 197, 94, 0.8);
 		transform: translateX(-3px);
+		box-shadow: 0 4px 12px rgba(34, 197, 94, 0.5);
 	}
 	
 	.overlay-close-button {
