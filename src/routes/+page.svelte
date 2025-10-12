@@ -15,11 +15,13 @@
 	let searchFrom = '';
 	let searchTo = '';
 	let pathResult = null;
+	let viewMode = '3d'; // '3d' or 'list'
+	let sortBy = 'year'; // 'year', 'name', 'category', 'type'
 	
 	// ========== SPACING PARAMETERS (TWEAK THESE) ==========
-	const CARD_SPACING_X = 400;  // Timeline spread (doubled from 200)
-	const CARD_SPACING_Y = 36;   // Category vertical spread (doubled from 18)
-	const CARD_SPACING_Z = 50;   // Category depth spread (doubled from 25)
+	const CARD_SPACING_X = 600;  // Timeline spread (tripled from 200)
+	const CARD_SPACING_Y = 48;   // Category vertical spread (tripled from 18)
+	const CARD_SPACING_Z = 75;   // Category depth spread (tripled from 25)
 	const CARD_THICKNESS = 0.3;  // Card 3D thickness/depth
 	const STAR_SIZE = 0.1;       // Star point size (decrease for smaller stars)
 	// ======================================================
@@ -61,57 +63,10 @@
 	function createCardMesh(topic, position) {
 		const cardWidth = 5;
 		const cardHeight = 7;
-		const borderWidth = 0.2;
 		
 		// Create card group
 		const cardGroup = new THREE.Group();
 		cardGroup.userData = { topic, type: 'card' };
-		
-		// Single unified card with colored border
-		// Create materials array: [right, left, top, bottom, front, back]
-		const borderColor = categoryColors[topic.category] || '#ffffff';
-		const borderMaterial = new THREE.MeshStandardMaterial({
-			color: borderColor,
-			emissive: borderColor,
-			emissiveIntensity: 0.4,
-			roughness: 0.6,
-			metalness: 0.4
-		});
-		
-		const cardMaterial = new THREE.MeshStandardMaterial({
-			color: 0x1a1a2e,
-			roughness: 0.7,
-			metalness: 0.3
-		});
-		
-		// Use border material for all faces - we'll cover the center with sprite
-		const materials = [
-			borderMaterial, // right
-			borderMaterial, // left
-			borderMaterial, // top
-			borderMaterial, // bottom
-			borderMaterial, // front
-			borderMaterial  // back
-		];
-		
-		const cardGeometry = new THREE.BoxGeometry(cardWidth, cardHeight, CARD_THICKNESS);
-		const cardMesh = new THREE.Mesh(cardGeometry, materials);
-		cardMesh.userData = { isBorder: true };
-		cardGroup.add(cardMesh);
-		
-		// Add a dark plane on front and back to create border effect
-		const innerWidth = cardWidth - borderWidth * 2;
-		const innerHeight = cardHeight - borderWidth * 2;
-		const innerGeometry = new THREE.PlaneGeometry(innerWidth, innerHeight);
-		
-		const frontPlane = new THREE.Mesh(innerGeometry, cardMaterial);
-		frontPlane.position.z = CARD_THICKNESS / 2 + 0.01;
-		cardGroup.add(frontPlane);
-		
-		const backPlane = new THREE.Mesh(innerGeometry, cardMaterial);
-		backPlane.position.z = -CARD_THICKNESS / 2 - 0.01;
-		backPlane.rotation.y = Math.PI;
-		cardGroup.add(backPlane);
 		
 		// Create detailed card texture with all information
 		const canvas = document.createElement('canvas');
@@ -119,11 +74,17 @@
 		canvas.width = 768;
 		canvas.height = 1024;
 		
-		// Background
-		ctx.fillStyle = '#1a1a2e';
+		// Draw colored border
+		const borderColor = categoryColors[topic.category] || '#ffffff';
+		const borderWidth = 20;
+		ctx.fillStyle = borderColor;
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
 		
-		let yOffset = 40;
+		// Background (inner dark area)
+		ctx.fillStyle = '#1a1a2e';
+		ctx.fillRect(borderWidth, borderWidth, canvas.width - borderWidth * 2, canvas.height - borderWidth * 2);
+		
+		let yOffset = 50; // Account for border
 		
 		// Title
 		ctx.fillStyle = '#ffffff';
@@ -258,12 +219,36 @@
 		}
 		
 		const texture = new THREE.CanvasTexture(canvas);
-		const spriteMaterial = new THREE.SpriteMaterial({ map: texture, transparent: true });
-		const sprite = new THREE.Sprite(spriteMaterial);
-		sprite.scale.set(cardWidth * 0.95, cardHeight * 0.95, 1);
-		sprite.position.z = 0.02;
-		sprite.userData = { type: 'sprite', topic };
-		cardGroup.add(sprite);
+		
+		// Create materials: texture for front/back, border color for edges
+		const textureMaterial = new THREE.MeshStandardMaterial({ 
+			map: texture,
+			roughness: 0.7,
+			metalness: 0.3
+		});
+		
+		const edgeMaterial = new THREE.MeshStandardMaterial({
+			color: borderColor,
+			emissive: borderColor,
+			emissiveIntensity: 0.0,
+			roughness: 0.6,
+			metalness: 0.4
+		});
+		
+		// Materials array: [right, left, top, bottom, front, back]
+		const materials = [
+			edgeMaterial,    // right edge
+			edgeMaterial,    // left edge
+			edgeMaterial,    // top edge
+			edgeMaterial,    // bottom edge
+			textureMaterial, // front face
+			textureMaterial  // back face
+		];
+		
+		const cardGeometry = new THREE.BoxGeometry(cardWidth, cardHeight, CARD_THICKNESS);
+		const cardMesh = new THREE.Mesh(cardGeometry, materials);
+		cardMesh.userData = { topic, type: 'cardMesh' };
+		cardGroup.add(cardMesh);
 		
 		cardGroup.position.copy(position);
 		return cardGroup;
@@ -563,24 +548,20 @@
 		requestAnimationFrame(animate);
 		controls.update();
 		
-		// Make all cards face the camera and highlight selected card
+		// Highlight selected card (no rotation - cards stay fixed in 3D space)
 		cardMeshes.forEach(cardGroup => {
-			// Make the entire card group face the camera
-			cardGroup.lookAt(camera.position);
-			
 			const isSelected = selectedCard && cardGroup.userData.topic.id === selectedCard.id;
 			
-			// Find the main card box and update its emissive intensity
+			// Find the card mesh and update edge emissive intensity
 			cardGroup.children.forEach(child => {
-				if (child.userData && child.userData.isBorder) {
-					// This is the main card box with border materials
+				if (child.userData && child.userData.type === 'cardMesh') {
 					if (Array.isArray(child.material)) {
-						// Update all border materials
-						child.material.forEach(mat => {
-							if (mat.emissive) {
-								mat.emissiveIntensity = isSelected ? 0.9 : 0.4;
+						// Update only the edge materials (first 4 in array: right, left, top, bottom)
+						for (let i = 0; i < 4; i++) {
+							if (child.material[i].emissive) {
+								child.material[i].emissiveIntensity = isSelected ? 0.6 : 0.0;
 							}
-						});
+						}
 					}
 				}
 			});
@@ -591,6 +572,29 @@
 	
 	function closeCardDetail() {
 		selectedCard = null;
+	}
+	
+	function toggleViewMode() {
+		viewMode = viewMode === '3d' ? 'list' : '3d';
+		if (viewMode === 'list') {
+			searchVisible = false; // Close search when switching to list
+		}
+	}
+	
+	function getSortedTopics() {
+		const sorted = [...topics];
+		switch (sortBy) {
+			case 'year':
+				return sorted.sort((a, b) => a.year - b.year);
+			case 'name':
+				return sorted.sort((a, b) => a.name.localeCompare(b.name));
+			case 'category':
+				return sorted.sort((a, b) => a.category.localeCompare(b.category) || a.year - b.year);
+			case 'type':
+				return sorted.sort((a, b) => a.type.localeCompare(b.type) || a.year - b.year);
+			default:
+				return sorted;
+		}
 	}
 	
 	function toggleSearch() {
@@ -729,16 +733,92 @@
 	});
 </script>
 
-<div bind:this={container} class="scene-container"></div>
+<div bind:this={container} class="scene-container" style="display: {viewMode === '3d' ? 'block' : 'none'}"></div>
+
+<!-- List View -->
+{#if viewMode === 'list'}
+	<div class="list-view">
+		<div class="list-header">
+			<h1>Mathematical Topics</h1>
+			<div class="sort-controls">
+				<label for="sort-select">Sort by:</label>
+				<select id="sort-select" bind:value={sortBy}>
+					<option value="year">Year (Chronological)</option>
+					<option value="name">Name (A-Z)</option>
+					<option value="category">Category</option>
+					<option value="type">Type (Pure/Applied)</option>
+				</select>
+			</div>
+		</div>
+		
+		<div class="list-cards">
+			{#each getSortedTopics() as topic}
+				<button 
+					class="list-card"
+					style="border-left: 4px solid {categoryColors[topic.category] || '#fff'}"
+					on:click={() => {
+						viewMode = '3d';
+						setTimeout(() => {
+							const card = cardMeshes.find(m => m.userData.topic.id === topic.id);
+							if (card) {
+								selectedCard = topic;
+								zoomToCard(card);
+							}
+						}, 100);
+					}}
+				>
+					<div class="list-card-header">
+						<h3>{topic.name}</h3>
+						<span class="year">{topic.year < 0 ? `${Math.abs(topic.year)} BC` : `${topic.year} AD`}</span>
+					</div>
+					<div class="list-card-meta">
+						<span class="badge" style="background: {categoryColors[topic.category]}">{topic.category}</span>
+						<span class="type">{topic.type}</span>
+					</div>
+					{#if topic.contributors && topic.contributors.length > 0}
+						{@const contribNames = topic.contributors.slice(0, 4).map(id => {
+							const person = people.find(p => p.id === id);
+							return person ? person.name : id.charAt(0).toUpperCase() + id.slice(1);
+						}).join(', ')}
+						<div class="list-card-contributors">
+							<strong>Contributors:</strong>
+							{contribNames}
+							{#if topic.contributors.length > 4}
+								<span class="more">+{topic.contributors.length - 4} more</span>
+							{/if}
+						</div>
+					{/if}
+					{#if topic.notes}
+						<p class="list-card-notes">{topic.notes}</p>
+					{/if}
+					<div class="list-card-footer">
+						Click to view in 3D →
+					</div>
+				</button>
+			{/each}
+		</div>
+	</div>
+{/if}
+
+<!-- View Mode Button -->
+<button
+	class="view-button"
+	on:click={toggleViewMode}
+	aria-label="Toggle view mode"
+>
+	{viewMode === '3d' ? '📋' : '🌌'}
+</button>
 
 <!-- Search Button -->
-<button
-	class="search-button"
-	on:click={toggleSearch}
-	aria-label="Search paths"
->
-	🔍
-</button>
+{#if viewMode === '3d'}
+	<button
+		class="search-button"
+		on:click={toggleSearch}
+		aria-label="Search paths"
+	>
+		🔍
+	</button>
+{/if}
 
 <!-- Search Panel -->
 {#if searchVisible}
@@ -820,7 +900,7 @@
 		height: 100vh;
 	}
 	
-	.search-button {
+	.view-button {
 		position: fixed;
 		bottom: 2rem;
 		right: 2rem;
@@ -836,8 +916,165 @@
 		z-index: 100;
 	}
 	
+	.view-button:hover {
+		transform: scale(1.1);
+	}
+	
+	.search-button {
+		position: fixed;
+		bottom: 2rem;
+		right: 6.5rem;
+		width: 3.5rem;
+		height: 3.5rem;
+		border-radius: 50%;
+		background: rgba(99, 102, 241, 0.9);
+		border: none;
+		font-size: 1.5rem;
+		cursor: pointer;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+		transition: transform 0.2s;
+		z-index: 100;
+	}
+	
 	.search-button:hover {
 		transform: scale(1.1);
+	}
+	
+	.list-view {
+		width: 100vw;
+		height: 100vh;
+		overflow-y: auto;
+		background: var(--cosmos-bg);
+		padding: 2rem;
+	}
+	
+	.list-header {
+		max-width: 1200px;
+		margin: 0 auto 2rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 1rem 0;
+		border-bottom: 2px solid rgba(99, 102, 241, 0.5);
+	}
+	
+	.list-header h1 {
+		color: #eee;
+		font-size: 2rem;
+		margin: 0;
+	}
+	
+	.sort-controls {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+	
+	.sort-controls label {
+		color: #aaa;
+		font-size: 0.9rem;
+	}
+	
+	.sort-controls select {
+		padding: 0.5rem 1rem;
+		border-radius: 0.5rem;
+		border: 1px solid rgba(99, 102, 241, 0.5);
+		background: rgba(26, 26, 46, 0.8);
+		color: #eee;
+		font-size: 1rem;
+		cursor: pointer;
+	}
+	
+	.list-cards {
+		max-width: 1200px;
+		margin: 0 auto;
+		display: grid;
+		gap: 1.5rem;
+	}
+	
+	.list-card {
+		background: rgba(26, 26, 46, 0.95);
+		border-radius: 1rem;
+		padding: 1.5rem;
+		cursor: pointer;
+		transition: all 0.3s;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	}
+	
+	.list-card:hover {
+		transform: translateX(8px);
+		box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
+		background: rgba(26, 26, 46, 1);
+	}
+	
+	.list-card-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 1rem;
+	}
+	
+	.list-card-header h3 {
+		color: #eee;
+		margin: 0;
+		font-size: 1.5rem;
+	}
+	
+	.list-card-header .year {
+		color: #aaa;
+		font-size: 1rem;
+		font-weight: 600;
+	}
+	
+	.list-card-meta {
+		display: flex;
+		gap: 1rem;
+		align-items: center;
+		margin-bottom: 1rem;
+	}
+	
+	.badge {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.5rem;
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: white;
+	}
+	
+	.type {
+		color: #999;
+		font-size: 0.9rem;
+	}
+	
+	.list-card-contributors {
+		color: #aaa;
+		font-size: 0.9rem;
+		margin-bottom: 0.75rem;
+	}
+	
+	.list-card-contributors strong {
+		color: #ccc;
+	}
+	
+	.list-card-contributors .more {
+		color: #6366f1;
+		font-weight: 600;
+	}
+	
+	.list-card-notes {
+		color: #bbb;
+		font-size: 0.9rem;
+		line-height: 1.5;
+		margin: 0.75rem 0;
+		font-style: italic;
+	}
+	
+	.list-card-footer {
+		color: #6366f1;
+		font-size: 0.85rem;
+		margin-top: 1rem;
+		padding-top: 1rem;
+		border-top: 1px solid rgba(99, 102, 241, 0.3);
 	}
 	
 	.search-panel {
@@ -1001,12 +1238,48 @@
 			width: calc(100% - 2rem);
 		}
 		
+		.view-button {
+			bottom: 1rem;
+			right: 1rem;
+			width: 3rem;
+			height: 3rem;
+			font-size: 1.25rem;
+		}
+		
 		.search-button {
 			bottom: 5rem;
 			right: 1rem;
 			width: 3rem;
 			height: 3rem;
 			font-size: 1.25rem;
+		}
+		
+		.list-view {
+			padding: 1rem;
+		}
+		
+		.list-header {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 1rem;
+		}
+		
+		.list-header h1 {
+			font-size: 1.5rem;
+		}
+		
+		.sort-controls {
+			width: 100%;
+		}
+		
+		.sort-controls select {
+			flex: 1;
+		}
+		
+		.list-card-header {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.5rem;
 		}
 	}
 </style>
