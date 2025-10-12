@@ -545,20 +545,22 @@
 			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 			
 			raycaster.setFromCamera(mouse, camera);
-			const intersects = raycaster.intersectObjects(scene.children, true);
+			const intersects = raycaster.intersectObjects(cardMeshes, true);
 			
 			if (intersects.length > 0) {
-				// Find clicked card
+				// Find clicked card - traverse up to find the card group
 				let clickedCard = null;
 				for (let intersect of intersects) {
 					let obj = intersect.object;
-					while (obj.parent && !obj.userData.type) {
+					// Traverse up the hierarchy to find the card group
+					while (obj) {
+						if (obj.userData && obj.userData.type === 'card') {
+							clickedCard = obj;
+							break;
+						}
 						obj = obj.parent;
 					}
-					if (obj.userData && obj.userData.type === 'card') {
-						clickedCard = obj;
-						break;
-					}
+					if (clickedCard) break;
 				}
 				
 				if (clickedCard) {
@@ -976,6 +978,9 @@
 <!-- Card Interaction Overlay when viewing a card -->
 {#if selectedCard && viewMode === '3d'}
 	<div class="card-overlay-panel">
+		{#if previousCard}
+			<button class="overlay-back-button" on:click={goToPreviousCard}>← Back</button>
+		{/if}
 		<h2>{selectedCard.name}</h2>
 		
 		<!-- Contributors Section -->
@@ -1366,6 +1371,26 @@
 		max-width: 350px;
 		max-height: 80vh;
 		overflow-y: auto;
+	}
+	
+	.overlay-back-button {
+		position: absolute;
+		top: 1rem;
+		left: 1rem;
+		padding: 0.5rem 1rem;
+		border-radius: 0.5rem;
+		background: rgba(99, 102, 241, 0.3);
+		color: white;
+		border: 1px solid rgba(99, 102, 241, 0.5);
+		font-size: 0.9rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.2s;
+	}
+	
+	.overlay-back-button:hover {
+		background: rgba(99, 102, 241, 0.5);
+		transform: translateX(-3px);
 	}
 	
 	.card-overlay-panel h2 {
