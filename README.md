@@ -61,10 +61,78 @@ The datastructure json will contain the following information:
 
 id: unique string id
 Name: (full name, string)
+Type: Pure Math / Applied
+Category: one of Foundations | Algebra and Discrete | Analysis | Geometry and Topology | Probability
 Year: int, year of invention
 Leads to: list of other id cards
 Contributors: list of contributors (clicking will pop-up the person card)
-Pre-requisites: list of other id cards
+Pre-requisites: list of other id cards. these will be a tuple starting at 50/100, whereby the thickness of the arrow will increase with higher numbers. it will be to indicate the extent of correlation between fields.
+
+note that stylistically, you should know that "Foundations | Algebra and Discrete | Analysis | Geometry and Topology" are all "Pure Math", whilst "Probability, Statistics and Stochastic Processes | Optimisation and Control | Computation | Physics" fall in Applied 
+
+specifically, I want the following clusters:
+
+**Foundations:**
+Logic
+Axiomatic Set Theory
+Category Theory
+
+**Algebra and Discrete:**
+Linear Algebra
+Abstract Algebra
+Galois Theory
+Module & Representation Theory
+Lie Groups & Lie Algebras
+Commutative and Homological Algebra
+Number Theory
+Graph Theory & Combinatorics
+
+**Analysis:**
+Calculus
+Vector Calculus
+Calculus of Variations
+Fractional and Non-linear Analysis
+Complex Analysis
+Real Analysis: metric spaces, topological spaces
+Measure Theory
+Functional Analysis
+Harmonic Analysis
+
+**Geometry and Topology:**
+Elementary Geometry
+Topology
+Algebraic Topology
+Differential Geometry and Topology
+
+**Probability, Statistics and Stochastic Processes:**
+Probability and Stastistical Theory
+Statistical Inference
+Stochastic Processes
+Bayesian Inference and Computation
+Stochastic Analysis
+Regression Analysis
+Time Series Analysis
+Information Theory
+Machine Learning Theory
+
+**Optimisation and Control**
+Convex and Non-convex optimisation
+Optimal Control Theory
+Game Theory
+
+**Computation:**
+Numerical Analysis
+Computational Linear Algebra
+
+**Physics:**
+Differential Equations
+Partial Differential Equations
+Dynamical Systems and Chaos
+
+
+
+
+
 
 ## final design instructions
 
@@ -80,5 +148,7 @@ I think we can use the Floyd-Warshall algorithm for this.
 
 Finally, I will want the mobile user experience of this site to be equally as smooth, so factor that in before you start writing code. Goodluck!
 
+---
 
+Oh, one more thing - the shrine web-app that you should study is in the folder `shrine-svelte-ref`
 
