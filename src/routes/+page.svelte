@@ -17,9 +17,9 @@
 	let pathResult = null;
 	
 	// ========== SPACING PARAMETERS (TWEAK THESE) ==========
-	const CARD_SPACING_X = 200;  // Timeline spread (increase for more space between years)
-	const CARD_SPACING_Y = 18;   // Category vertical spread (increase for more vertical space)
-	const CARD_SPACING_Z = 25;   // Category depth spread (increase for more depth separation)
+	const CARD_SPACING_X = 400;  // Timeline spread (doubled from 200)
+	const CARD_SPACING_Y = 36;   // Category vertical spread (doubled from 18)
+	const CARD_SPACING_Z = 50;   // Category depth spread (doubled from 25)
 	const CARD_THICKNESS = 0.3;  // Card 3D thickness/depth
 	const STAR_SIZE = 0.1;       // Star point size (decrease for smaller stars)
 	// ======================================================
@@ -61,38 +61,57 @@
 	function createCardMesh(topic, position) {
 		const cardWidth = 5;
 		const cardHeight = 7;
-		const borderThickness = 0.15;
+		const borderWidth = 0.2;
 		
 		// Create card group
 		const cardGroup = new THREE.Group();
 		cardGroup.userData = { topic, type: 'card' };
 		
-		// Main card background with thickness
-		const cardGeometry = new THREE.BoxGeometry(cardWidth, cardHeight, CARD_THICKNESS);
+		// Single unified card with colored border
+		// Create materials array: [right, left, top, bottom, front, back]
+		const borderColor = categoryColors[topic.category] || '#ffffff';
+		const borderMaterial = new THREE.MeshStandardMaterial({
+			color: borderColor,
+			emissive: borderColor,
+			emissiveIntensity: 0.4,
+			roughness: 0.6,
+			metalness: 0.4
+		});
+		
 		const cardMaterial = new THREE.MeshStandardMaterial({
 			color: 0x1a1a2e,
 			roughness: 0.7,
 			metalness: 0.3
 		});
-		const cardMesh = new THREE.Mesh(cardGeometry, cardMaterial);
+		
+		// Use border material for all faces - we'll cover the center with sprite
+		const materials = [
+			borderMaterial, // right
+			borderMaterial, // left
+			borderMaterial, // top
+			borderMaterial, // bottom
+			borderMaterial, // front
+			borderMaterial  // back
+		];
+		
+		const cardGeometry = new THREE.BoxGeometry(cardWidth, cardHeight, CARD_THICKNESS);
+		const cardMesh = new THREE.Mesh(cardGeometry, materials);
+		cardMesh.userData = { isBorder: true };
 		cardGroup.add(cardMesh);
 		
-		// Border with category color (slightly larger box)
-		const borderColor = categoryColors[topic.category] || '#ffffff';
-		const borderGeometry = new THREE.BoxGeometry(
-			cardWidth + borderThickness,
-			cardHeight + borderThickness,
-			CARD_THICKNESS + 0.05
-		);
-		const borderMaterial = new THREE.MeshStandardMaterial({
-			color: borderColor,
-			emissive: borderColor,
-			emissiveIntensity: 0.4
-		});
-		const borderMesh = new THREE.Mesh(borderGeometry, borderMaterial);
-		borderMesh.position.z = -0.01;
-		borderMesh.userData = { isBorder: true };
-		cardGroup.add(borderMesh);
+		// Add a dark plane on front and back to create border effect
+		const innerWidth = cardWidth - borderWidth * 2;
+		const innerHeight = cardHeight - borderWidth * 2;
+		const innerGeometry = new THREE.PlaneGeometry(innerWidth, innerHeight);
+		
+		const frontPlane = new THREE.Mesh(innerGeometry, cardMaterial);
+		frontPlane.position.z = CARD_THICKNESS / 2 + 0.01;
+		cardGroup.add(frontPlane);
+		
+		const backPlane = new THREE.Mesh(innerGeometry, cardMaterial);
+		backPlane.position.z = -CARD_THICKNESS / 2 - 0.01;
+		backPlane.rotation.y = Math.PI;
+		cardGroup.add(backPlane);
 		
 		// Create detailed card texture with all information
 		const canvas = document.createElement('canvas');
@@ -165,14 +184,19 @@
 			ctx.font = '18px Arial';
 			ctx.fillStyle = '#aaaaaa';
 			const contributors = topic.contributors
+				.slice(0, 6) // Limit to first 6 to avoid overcrowding
 				.map(id => {
 					const person = people.find(p => p.id === id);
-					return person ? person.name : id;
+					// Use person name if found, otherwise capitalize the ID
+					return person ? person.name : id.charAt(0).toUpperCase() + id.slice(1);
 				})
 				.join(', ');
 			
+			const moreCount = topic.contributors.length > 6 ? topic.contributors.length - 6 : 0;
+			const displayText = moreCount > 0 ? `${contributors} +${moreCount} more` : contributors;
+			
 			// Word wrap contributors
-			const contribWords = contributors.split(' ');
+			const contribWords = displayText.split(' ');
 			let contribLine = '';
 			contribWords.forEach(word => {
 				const testLine = contribLine + (contribLine ? ' ' : '') + word;
@@ -309,7 +333,7 @@
 		controls.dampingFactor = 0.05;
 		controls.screenSpacePanning = true;
 		controls.minDistance = 10;
-		controls.maxDistance = 300; // Increased for larger spacing
+		controls.maxDistance = 600; // Doubled for doubled spacing
 		
 		// Lighting
 		const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
@@ -323,13 +347,13 @@
 		directionalLight2.position.set(-10, -10, -10);
 		scene.add(directionalLight2);
 		
-		// Add stars
+		// Add stars (expanded for doubled spacing)
 		const starGeometry = new THREE.BufferGeometry();
 		const starVertices = [];
 		for (let i = 0; i < 1000; i++) {
-			const x = (Math.random() - 0.5) * 500;
-			const y = (Math.random() - 0.5) * 500;
-			const z = (Math.random() - 0.5) * 500;
+			const x = (Math.random() - 0.5) * 1000;
+			const y = (Math.random() - 0.5) * 1000;
+			const z = (Math.random() - 0.5) * 1000;
 			starVertices.push(x, y, z);
 		}
 		starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
@@ -486,6 +510,18 @@
 		window.addEventListener('resize', onWindowResize);
 		
 		animate();
+		
+		// Auto-select the earliest card on page load
+		setTimeout(() => {
+			const earliestTopic = [...topics].sort((a, b) => a.year - b.year)[0];
+			if (earliestTopic) {
+				const earliestCard = cardMeshes.find(m => m.userData.topic.id === earliestTopic.id);
+				if (earliestCard) {
+					selectedCard = earliestTopic;
+					zoomToCard(earliestCard);
+				}
+			}
+		}, 500); // Small delay to let scene fully initialize
 	}
 	
 	function zoomToCard(cardMesh) {
@@ -534,11 +570,18 @@
 			
 			const isSelected = selectedCard && cardGroup.userData.topic.id === selectedCard.id;
 			
-			// Find the border mesh and update its emissive intensity
+			// Find the main card box and update its emissive intensity
 			cardGroup.children.forEach(child => {
-				if (child.userData && child.userData.isBorder && child.material && child.material.emissive) {
-					// This is the border mesh
-					child.material.emissiveIntensity = isSelected ? 0.8 : 0.4;
+				if (child.userData && child.userData.isBorder) {
+					// This is the main card box with border materials
+					if (Array.isArray(child.material)) {
+						// Update all border materials
+						child.material.forEach(mat => {
+							if (mat.emissive) {
+								mat.emissiveIntensity = isSelected ? 0.9 : 0.4;
+							}
+						});
+					}
 				}
 			});
 		});
