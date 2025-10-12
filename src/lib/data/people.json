@@ -342,6 +342,30 @@
     "died": null,
     "image": "/images/people/hawking.jpg",
     "gender": 1
+  },
+  {
+    "id": "ito",
+    "name": "Kiyoshi Itô",
+    "born": 1915,
+    "died": 2008,
+    "image": "/images/people/hawking.jpg",
+    "gender": 1
+  },
+  {
+    "id": "doob",
+    "name": "Joseph Doob",
+    "born": 1910,
+    "died": 2004,
+    "image": "/images/people/feynman.jpg",
+    "gender": 1
+  },
+  {
+    "id": "malliavin",
+    "name": "Paul Malliavin",
+    "born": 1925,
+    "died": 2010,
+    "image": "/images/people/feynman.jpg",
+    "gender": 1
   }
 ]
 
