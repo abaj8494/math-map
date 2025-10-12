@@ -15,13 +15,12 @@
 	let searchFrom = '';
 	let searchTo = '';
 	let pathResult = null;
-	let isUserInteracting = false;
-	let interactionTimeout = null;
 	
 	// ========== SPACING PARAMETERS (TWEAK THESE) ==========
-	const CARD_SPACING_X = 150;  // Timeline spread (increase for more space between years)
-	const CARD_SPACING_Y = 12;   // Category vertical spread (increase for more vertical space)
-	const CARD_SPACING_Z = 16;   // Category depth spread (increase for more depth separation)
+	const CARD_SPACING_X = 200;  // Timeline spread (increase for more space between years)
+	const CARD_SPACING_Y = 18;   // Category vertical spread (increase for more vertical space)
+	const CARD_SPACING_Z = 25;   // Category depth spread (increase for more depth separation)
+	const CARD_THICKNESS = 0.3;  // Card 3D thickness/depth
 	const STAR_SIZE = 0.1;       // Star point size (decrease for smaller stars)
 	// ======================================================
 	
@@ -42,13 +41,17 @@
 		const yearNormalized = (topic.year + 600) / 2700; // Normalize from -350 to 2025
 		const xPos = (yearNormalized - 0.5) * CARD_SPACING_X; // Timeline along X axis
 		
-		// Cluster by category
+		// Separate Pure Math (below) and Applied Math (above) the timeline
+		const isPureMath = topic.type === 'Pure Math';
+		const typeOffset = isPureMath ? -1 : 1; // Below for Pure, Above for Applied
+		
+		// Cluster by category within each type
 		const categories = Object.keys(categoryColors);
 		const categoryIndex = categories.indexOf(topic.category);
 		
 		// Add some variation within category
 		const categoryOffset = (index / topicsInCategory) - 0.5;
-		const yPos = (categoryIndex - categories.length / 2) * CARD_SPACING_Y + categoryOffset * 3;
+		const yPos = typeOffset * (categoryIndex * 4 + 8) + categoryOffset * 2.5;
 		const zPos = categoryOffset * CARD_SPACING_Z;
 		
 		return new THREE.Vector3(xPos, yPos, zPos);
@@ -64,31 +67,31 @@
 		const cardGroup = new THREE.Group();
 		cardGroup.userData = { topic, type: 'card' };
 		
-		// Main card background
-		const cardGeometry = new THREE.PlaneGeometry(cardWidth, cardHeight);
+		// Main card background with thickness
+		const cardGeometry = new THREE.BoxGeometry(cardWidth, cardHeight, CARD_THICKNESS);
 		const cardMaterial = new THREE.MeshStandardMaterial({
 			color: 0x1a1a2e,
-			side: THREE.DoubleSide,
 			roughness: 0.7,
 			metalness: 0.3
 		});
 		const cardMesh = new THREE.Mesh(cardGeometry, cardMaterial);
 		cardGroup.add(cardMesh);
 		
-		// Border with category color
+		// Border with category color (slightly larger box)
 		const borderColor = categoryColors[topic.category] || '#ffffff';
-		const borderGeometry = new THREE.PlaneGeometry(
+		const borderGeometry = new THREE.BoxGeometry(
 			cardWidth + borderThickness,
-			cardHeight + borderThickness
+			cardHeight + borderThickness,
+			CARD_THICKNESS + 0.05
 		);
 		const borderMaterial = new THREE.MeshStandardMaterial({
 			color: borderColor,
-			side: THREE.DoubleSide,
 			emissive: borderColor,
 			emissiveIntensity: 0.4
 		});
 		const borderMesh = new THREE.Mesh(borderGeometry, borderMaterial);
 		borderMesh.position.z = -0.01;
+		borderMesh.userData = { isBorder: true };
 		cardGroup.add(borderMesh);
 		
 		// Create detailed card texture with all information
@@ -324,15 +327,53 @@
 		const starGeometry = new THREE.BufferGeometry();
 		const starVertices = [];
 		for (let i = 0; i < 1000; i++) {
-			const x = (Math.random() - 0.5) * 400;
-			const y = (Math.random() - 0.5) * 400;
-			const z = (Math.random() - 0.5) * 400;
+			const x = (Math.random() - 0.5) * 500;
+			const y = (Math.random() - 0.5) * 500;
+			const z = (Math.random() - 0.5) * 500;
 			starVertices.push(x, y, z);
 		}
 		starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
 		const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: STAR_SIZE });
 		const stars = new THREE.Points(starGeometry, starMaterial);
 		scene.add(stars);
+		
+		// Add timeline axis (horizontal line through the center)
+		const timelineLength = CARD_SPACING_X + 20;
+		const timelineGeometry = new THREE.CylinderGeometry(0.15, 0.15, timelineLength, 16);
+		const timelineMaterial = new THREE.MeshStandardMaterial({
+			color: 0x555555,
+			emissive: 0x333333,
+			emissiveIntensity: 0.3,
+			metalness: 0.5,
+			roughness: 0.5
+		});
+		const timeline = new THREE.Mesh(timelineGeometry, timelineMaterial);
+		timeline.rotation.z = Math.PI / 2; // Rotate to horizontal
+		timeline.position.set(0, 0, 0); // Center at origin
+		scene.add(timeline);
+		
+		// Add labels for Pure Math and Applied Math
+		const createLabel = (text, yPosition) => {
+			const canvas = document.createElement('canvas');
+			const ctx = canvas.getContext('2d');
+			canvas.width = 512;
+			canvas.height = 128;
+			ctx.fillStyle = '#ffffff';
+			ctx.font = 'bold 48px Arial';
+			ctx.textAlign = 'center';
+			ctx.textBaseline = 'middle';
+			ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+			
+			const texture = new THREE.CanvasTexture(canvas);
+			const spriteMaterial = new THREE.SpriteMaterial({ map: texture, transparent: true });
+			const sprite = new THREE.Sprite(spriteMaterial);
+			sprite.scale.set(15, 3.75, 1);
+			sprite.position.set(-CARD_SPACING_X / 2 - 15, yPosition, 0);
+			return sprite;
+		};
+		
+		scene.add(createLabel('PURE MATH', -20));
+		scene.add(createLabel('APPLIED MATH', 20));
 		
 		// Create cards
 		const topicsByCategory = {};
@@ -368,24 +409,36 @@
 		});
 		
 		// Track user interaction
-		function onInteractionStart() {
-			isUserInteracting = true;
-			if (interactionTimeout) {
-				clearTimeout(interactionTimeout);
+		let mouseDownPos = { x: 0, y: 0 };
+		let mouseMoved = false;
+		
+		function onInteractionStart(event) {
+			mouseMoved = false;
+			mouseDownPos.x = event.clientX || (event.touches && event.touches[0].clientX) || 0;
+			mouseDownPos.y = event.clientY || (event.touches && event.touches[0].clientY) || 0;
+		}
+		
+		function onMouseMove(event) {
+			if (mouseDownPos.x !== 0 || mouseDownPos.y !== 0) {
+				const dx = (event.clientX || 0) - mouseDownPos.x;
+				const dy = (event.clientY || 0) - mouseDownPos.y;
+				// If mouse moved more than 5 pixels, it's a drag
+				if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+					mouseMoved = true;
+				}
 			}
 		}
 		
 		function onInteractionEnd() {
-			// Wait a bit before allowing clicks again to avoid accidental clicks after drag
-			if (interactionTimeout) {
-				clearTimeout(interactionTimeout);
-			}
-			interactionTimeout = setTimeout(() => {
-				isUserInteracting = false;
-			}, 150);
+			// Reset after a short delay
+			setTimeout(() => {
+				mouseDownPos.x = 0;
+				mouseDownPos.y = 0;
+			}, 10);
 		}
 		
 		renderer.domElement.addEventListener('mousedown', onInteractionStart);
+		renderer.domElement.addEventListener('mousemove', onMouseMove);
 		renderer.domElement.addEventListener('mouseup', onInteractionEnd);
 		renderer.domElement.addEventListener('touchstart', onInteractionStart);
 		renderer.domElement.addEventListener('touchend', onInteractionEnd);
@@ -395,8 +448,8 @@
 		const mouse = new THREE.Vector2();
 		
 		function onMouseClick(event) {
-			// Don't process clicks if user was just interacting (dragging/rotating)
-			if (isUserInteracting) {
+			// Don't process clicks if user was dragging
+			if (mouseMoved) {
 				return;
 			}
 			
@@ -474,13 +527,16 @@
 		requestAnimationFrame(animate);
 		controls.update();
 		
-		// Highlight selected card and make sprites face camera
+		// Make all cards face the camera and highlight selected card
 		cardMeshes.forEach(cardGroup => {
+			// Make the entire card group face the camera
+			cardGroup.lookAt(camera.position);
+			
 			const isSelected = selectedCard && cardGroup.userData.topic.id === selectedCard.id;
 			
 			// Find the border mesh and update its emissive intensity
 			cardGroup.children.forEach(child => {
-				if (child.material && child.material.emissive) {
+				if (child.userData && child.userData.isBorder && child.material && child.material.emissive) {
 					// This is the border mesh
 					child.material.emissiveIntensity = isSelected ? 0.8 : 0.4;
 				}
