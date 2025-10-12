@@ -78,6 +78,7 @@ Axiomatic Set Theory
 Category Theory
 
 **Algebra and Discrete:**
+Elementary Algebra
 Linear Algebra
 Abstract Algebra
 Galois Theory
@@ -96,6 +97,7 @@ Complex Analysis
 Real Analysis: metric spaces, topological spaces
 Measure Theory
 Functional Analysis
+Elementary Trigonometry
 Harmonic Analysis
 
 **Geometry and Topology:**

@@ -1,0 +1,463 @@
+[
+  {
+    "id": "logic",
+    "name": "Logic",
+    "type": "Pure Math",
+    "category": "Foundations",
+    "year": -350,
+    "leadsTo": ["axiomatic-set-theory", "category-theory"],
+    "contributors": ["aristotle", "tarski", "godel"],
+    "prerequisites": []
+  },
+  {
+    "id": "axiomatic-set-theory",
+    "name": "Axiomatic Set Theory",
+    "type": "Pure Math",
+    "category": "Foundations",
+    "year": 1890,
+    "leadsTo": ["category-theory", "measure-theory", "topology"],
+    "contributors": ["cantor", "hilbert", "godel"],
+    "prerequisites": [{"id": "logic", "strength": 70}]
+  },
+  {
+    "id": "category-theory",
+    "name": "Category Theory",
+    "type": "Pure Math",
+    "category": "Foundations",
+    "year": 1945,
+    "leadsTo": ["algebraic-topology", "homological-algebra"],
+    "contributors": [],
+    "prerequisites": [{"id": "axiomatic-set-theory", "strength": 80}, {"id": "abstract-algebra", "strength": 75}]
+  },
+  {
+    "id": "elementary-geometry",
+    "name": "Elementary Geometry",
+    "type": "Pure Math",
+    "category": "Geometry and Topology",
+    "year": -300,
+    "leadsTo": ["calculus", "topology", "differential-geometry"],
+    "contributors": ["euclid", "pythagoras"],
+    "prerequisites": []
+  },
+  {
+    "id": "linear-algebra",
+    "name": "Linear Algebra",
+    "type": "Pure Math",
+    "category": "Algebra and Discrete",
+    "year": 1850,
+    "leadsTo": ["abstract-algebra", "functional-analysis", "computational-linear-algebra", "machine-learning"],
+    "contributors": ["gauss", "cauchy", "jordan", "strang", "axler"],
+    "prerequisites": []
+  },
+  {
+    "id": "abstract-algebra",
+    "name": "Abstract Algebra",
+    "type": "Pure Math",
+    "category": "Algebra and Discrete",
+    "year": 1830,
+    "leadsTo": ["galois-theory", "lie-groups", "representation-theory", "homological-algebra"],
+    "contributors": ["galois", "cauchy", "gauss"],
+    "prerequisites": [{"id": "linear-algebra", "strength": 70}]
+  },
+  {
+    "id": "galois-theory",
+    "name": "Galois Theory",
+    "type": "Pure Math",
+    "category": "Algebra and Discrete",
+    "year": 1832,
+    "leadsTo": ["algebraic-topology", "number-theory"],
+    "contributors": ["galois"],
+    "prerequisites": [{"id": "abstract-algebra", "strength": 90}]
+  },
+  {
+    "id": "representation-theory",
+    "name": "Module & Representation Theory",
+    "type": "Pure Math",
+    "category": "Algebra and Discrete",
+    "year": 1890,
+    "leadsTo": ["lie-groups", "homological-algebra"],
+    "contributors": ["hilbert"],
+    "prerequisites": [{"id": "abstract-algebra", "strength": 85}, {"id": "linear-algebra", "strength": 80}]
+  },
+  {
+    "id": "lie-groups",
+    "name": "Lie Groups & Lie Algebras",
+    "type": "Pure Math",
+    "category": "Algebra and Discrete",
+    "year": 1870,
+    "leadsTo": ["differential-geometry", "representation-theory"],
+    "contributors": [],
+    "prerequisites": [{"id": "abstract-algebra", "strength": 85}, {"id": "calculus", "strength": 75}]
+  },
+  {
+    "id": "homological-algebra",
+    "name": "Commutative and Homological Algebra",
+    "type": "Pure Math",
+    "category": "Algebra and Discrete",
+    "year": 1940,
+    "leadsTo": ["algebraic-topology", "category-theory"],
+    "contributors": [],
+    "prerequisites": [{"id": "abstract-algebra", "strength": 90}, {"id": "category-theory", "strength": 75}]
+  },
+  {
+    "id": "number-theory",
+    "name": "Number Theory",
+    "type": "Pure Math",
+    "category": "Algebra and Discrete",
+    "year": -300,
+    "leadsTo": ["abstract-algebra", "galois-theory"],
+    "contributors": ["euclid", "euler", "gauss", "riemann", "ramanujan"],
+    "prerequisites": []
+  },
+  {
+    "id": "graph-theory",
+    "name": "Graph Theory & Combinatorics",
+    "type": "Pure Math",
+    "category": "Algebra and Discrete",
+    "year": 1736,
+    "leadsTo": ["computation"],
+    "contributors": ["euler", "conway"],
+    "prerequisites": []
+  },
+  {
+    "id": "calculus",
+    "name": "Calculus",
+    "type": "Pure Math",
+    "category": "Analysis",
+    "year": 1670,
+    "leadsTo": ["vector-calculus", "real-analysis", "differential-equations", "complex-analysis"],
+    "contributors": ["newton", "leibniz", "euler"],
+    "prerequisites": [{"id": "elementary-geometry", "strength": 60}]
+  },
+  {
+    "id": "vector-calculus",
+    "name": "Vector Calculus",
+    "type": "Pure Math",
+    "category": "Analysis",
+    "year": 1800,
+    "leadsTo": ["differential-equations", "differential-geometry"],
+    "contributors": ["gauss", "euler"],
+    "prerequisites": [{"id": "calculus", "strength": 90}, {"id": "linear-algebra", "strength": 70}]
+  },
+  {
+    "id": "calculus-of-variations",
+    "name": "Calculus of Variations",
+    "type": "Pure Math",
+    "category": "Analysis",
+    "year": 1755,
+    "leadsTo": ["optimal-control", "pde"],
+    "contributors": ["euler", "lagrange"],
+    "prerequisites": [{"id": "calculus", "strength": 85}]
+  },
+  {
+    "id": "fractional-analysis",
+    "name": "Fractional and Non-linear Analysis",
+    "type": "Pure Math",
+    "category": "Analysis",
+    "year": 1960,
+    "leadsTo": ["dynamical-systems"],
+    "contributors": [],
+    "prerequisites": [{"id": "real-analysis", "strength": 90}, {"id": "functional-analysis", "strength": 85}]
+  },
+  {
+    "id": "complex-analysis",
+    "name": "Complex Analysis",
+    "type": "Pure Math",
+    "category": "Analysis",
+    "year": 1800,
+    "leadsTo": ["harmonic-analysis", "number-theory"],
+    "contributors": ["cauchy", "riemann", "gauss"],
+    "prerequisites": [{"id": "calculus", "strength": 90}]
+  },
+  {
+    "id": "real-analysis",
+    "name": "Real Analysis",
+    "type": "Pure Math",
+    "category": "Analysis",
+    "year": 1870,
+    "leadsTo": ["measure-theory", "functional-analysis", "topology"],
+    "contributors": ["cauchy", "riemann", "cantor", "rudin"],
+    "prerequisites": [{"id": "calculus", "strength": 95}]
+  },
+  {
+    "id": "measure-theory",
+    "name": "Measure Theory",
+    "type": "Pure Math",
+    "category": "Analysis",
+    "year": 1902,
+    "leadsTo": ["functional-analysis", "probability-theory", "stochastic-analysis"],
+    "contributors": ["lebesgue", "kolmogorov"],
+    "prerequisites": [{"id": "real-analysis", "strength": 95}, {"id": "axiomatic-set-theory", "strength": 70}]
+  },
+  {
+    "id": "functional-analysis",
+    "name": "Functional Analysis",
+    "type": "Pure Math",
+    "category": "Analysis",
+    "year": 1920,
+    "leadsTo": ["pde", "stochastic-analysis", "quantum-mechanics"],
+    "contributors": ["hilbert", "banach", "vonneumann", "rudin", "halmos"],
+    "prerequisites": [{"id": "real-analysis", "strength": 90}, {"id": "linear-algebra", "strength": 85}, {"id": "measure-theory", "strength": 80}]
+  },
+  {
+    "id": "harmonic-analysis",
+    "name": "Harmonic Analysis",
+    "type": "Pure Math",
+    "category": "Analysis",
+    "year": 1807,
+    "leadsTo": ["signal-processing", "pde"],
+    "contributors": ["fourier"],
+    "prerequisites": [{"id": "calculus", "strength": 85}, {"id": "complex-analysis", "strength": 75}]
+  },
+  {
+    "id": "topology",
+    "name": "Topology",
+    "type": "Pure Math",
+    "category": "Geometry and Topology",
+    "year": 1895,
+    "leadsTo": ["algebraic-topology", "differential-topology"],
+    "contributors": ["poincare", "cantor", "hilbert"],
+    "prerequisites": [{"id": "real-analysis", "strength": 75}, {"id": "axiomatic-set-theory", "strength": 70}]
+  },
+  {
+    "id": "algebraic-topology",
+    "name": "Algebraic Topology",
+    "type": "Pure Math",
+    "category": "Geometry and Topology",
+    "year": 1910,
+    "leadsTo": ["differential-topology"],
+    "contributors": ["poincare", "hilbert"],
+    "prerequisites": [{"id": "topology", "strength": 90}, {"id": "abstract-algebra", "strength": 85}]
+  },
+  {
+    "id": "differential-geometry",
+    "name": "Differential Geometry",
+    "type": "Pure Math",
+    "category": "Geometry and Topology",
+    "year": 1827,
+    "leadsTo": ["differential-topology", "general-relativity"],
+    "contributors": ["gauss", "riemann", "poincare"],
+    "prerequisites": [{"id": "vector-calculus", "strength": 90}, {"id": "linear-algebra", "strength": 75}]
+  },
+  {
+    "id": "differential-topology",
+    "name": "Differential Topology",
+    "type": "Pure Math",
+    "category": "Geometry and Topology",
+    "year": 1930,
+    "leadsTo": [],
+    "contributors": ["poincare"],
+    "prerequisites": [{"id": "topology", "strength": 85}, {"id": "differential-geometry", "strength": 85}]
+  },
+  {
+    "id": "probability-theory",
+    "name": "Probability and Statistical Theory",
+    "type": "Applied Math",
+    "category": "Probability, Statistics and Stochastic Processes",
+    "year": 1654,
+    "leadsTo": ["statistical-inference", "stochastic-processes", "information-theory"],
+    "contributors": ["kolmogorov"],
+    "prerequisites": [{"id": "calculus", "strength": 70}]
+  },
+  {
+    "id": "statistical-inference",
+    "name": "Statistical Inference",
+    "type": "Applied Math",
+    "category": "Probability, Statistics and Stochastic Processes",
+    "year": 1800,
+    "leadsTo": ["bayesian-inference", "regression-analysis", "machine-learning"],
+    "contributors": ["gauss", "wasserman"],
+    "prerequisites": [{"id": "probability-theory", "strength": 85}, {"id": "linear-algebra", "strength": 65}]
+  },
+  {
+    "id": "stochastic-processes",
+    "name": "Stochastic Processes",
+    "type": "Applied Math",
+    "category": "Probability, Statistics and Stochastic Processes",
+    "year": 1900,
+    "leadsTo": ["stochastic-analysis", "time-series"],
+    "contributors": ["kolmogorov"],
+    "prerequisites": [{"id": "probability-theory", "strength": 90}, {"id": "real-analysis", "strength": 75}]
+  },
+  {
+    "id": "bayesian-inference",
+    "name": "Bayesian Inference and Computation",
+    "type": "Applied Math",
+    "category": "Probability, Statistics and Stochastic Processes",
+    "year": 1763,
+    "leadsTo": ["machine-learning"],
+    "contributors": ["jaynes", "wasserman"],
+    "prerequisites": [{"id": "probability-theory", "strength": 85}, {"id": "statistical-inference", "strength": 80}]
+  },
+  {
+    "id": "stochastic-analysis",
+    "name": "Stochastic Analysis",
+    "type": "Applied Math",
+    "category": "Probability, Statistics and Stochastic Processes",
+    "year": 1940,
+    "leadsTo": [],
+    "contributors": ["kolmogorov"],
+    "prerequisites": [{"id": "stochastic-processes", "strength": 90}, {"id": "measure-theory", "strength": 85}, {"id": "functional-analysis", "strength": 80}]
+  },
+  {
+    "id": "regression-analysis",
+    "name": "Regression Analysis",
+    "type": "Applied Math",
+    "category": "Probability, Statistics and Stochastic Processes",
+    "year": 1805,
+    "leadsTo": ["machine-learning"],
+    "contributors": ["gauss"],
+    "prerequisites": [{"id": "statistical-inference", "strength": 85}, {"id": "linear-algebra", "strength": 75}]
+  },
+  {
+    "id": "time-series",
+    "name": "Time Series Analysis",
+    "type": "Applied Math",
+    "category": "Probability, Statistics and Stochastic Processes",
+    "year": 1920,
+    "leadsTo": ["machine-learning"],
+    "contributors": [],
+    "prerequisites": [{"id": "stochastic-processes", "strength": 85}, {"id": "statistical-inference", "strength": 80}]
+  },
+  {
+    "id": "information-theory",
+    "name": "Information Theory",
+    "type": "Applied Math",
+    "category": "Probability, Statistics and Stochastic Processes",
+    "year": 1948,
+    "leadsTo": ["machine-learning"],
+    "contributors": ["jaynes"],
+    "prerequisites": [{"id": "probability-theory", "strength": 85}]
+  },
+  {
+    "id": "machine-learning",
+    "name": "Machine Learning Theory",
+    "type": "Applied Math",
+    "category": "Probability, Statistics and Stochastic Processes",
+    "year": 1950,
+    "leadsTo": [],
+    "contributors": ["turing", "vonneumann"],
+    "prerequisites": [{"id": "linear-algebra", "strength": 80}, {"id": "statistical-inference", "strength": 85}, {"id": "optimization", "strength": 75}]
+  },
+  {
+    "id": "optimization",
+    "name": "Convex and Non-convex Optimisation",
+    "type": "Applied Math",
+    "category": "Optimisation and Control",
+    "year": 1940,
+    "leadsTo": ["machine-learning", "optimal-control"],
+    "contributors": ["vonneumann"],
+    "prerequisites": [{"id": "calculus", "strength": 85}, {"id": "linear-algebra", "strength": 80}]
+  },
+  {
+    "id": "optimal-control",
+    "name": "Optimal Control Theory",
+    "type": "Applied Math",
+    "category": "Optimisation and Control",
+    "year": 1950,
+    "leadsTo": [],
+    "contributors": [],
+    "prerequisites": [{"id": "calculus-of-variations", "strength": 85}, {"id": "differential-equations", "strength": 80}, {"id": "optimization", "strength": 75}]
+  },
+  {
+    "id": "game-theory",
+    "name": "Game Theory",
+    "type": "Applied Math",
+    "category": "Optimisation and Control",
+    "year": 1928,
+    "leadsTo": [],
+    "contributors": ["vonneumann"],
+    "prerequisites": [{"id": "probability-theory", "strength": 70}, {"id": "optimization", "strength": 70}]
+  },
+  {
+    "id": "numerical-analysis",
+    "name": "Numerical Analysis",
+    "type": "Applied Math",
+    "category": "Computation",
+    "year": 1940,
+    "leadsTo": ["computational-linear-algebra"],
+    "contributors": ["vonneumann"],
+    "prerequisites": [{"id": "calculus", "strength": 80}, {"id": "linear-algebra", "strength": 75}]
+  },
+  {
+    "id": "computational-linear-algebra",
+    "name": "Computational Linear Algebra",
+    "type": "Applied Math",
+    "category": "Computation",
+    "year": 1950,
+    "leadsTo": ["machine-learning"],
+    "contributors": ["strang"],
+    "prerequisites": [{"id": "linear-algebra", "strength": 90}, {"id": "numerical-analysis", "strength": 75}]
+  },
+  {
+    "id": "computation",
+    "name": "Theory of Computation",
+    "type": "Applied Math",
+    "category": "Computation",
+    "year": 1936,
+    "leadsTo": [],
+    "contributors": ["turing", "godel", "knuth"],
+    "prerequisites": [{"id": "logic", "strength": 85}, {"id": "graph-theory", "strength": 70}]
+  },
+  {
+    "id": "differential-equations",
+    "name": "Differential Equations",
+    "type": "Applied Math",
+    "category": "Physics",
+    "year": 1670,
+    "leadsTo": ["pde", "dynamical-systems"],
+    "contributors": ["newton", "euler", "leibniz"],
+    "prerequisites": [{"id": "calculus", "strength": 90}]
+  },
+  {
+    "id": "pde",
+    "name": "Partial Differential Equations",
+    "type": "Applied Math",
+    "category": "Physics",
+    "year": 1750,
+    "leadsTo": ["dynamical-systems", "quantum-mechanics", "general-relativity"],
+    "contributors": ["euler", "fourier", "lagrange"],
+    "prerequisites": [{"id": "vector-calculus", "strength": 90}, {"id": "differential-equations", "strength": 85}]
+  },
+  {
+    "id": "dynamical-systems",
+    "name": "Dynamical Systems and Chaos",
+    "type": "Applied Math",
+    "category": "Physics",
+    "year": 1880,
+    "leadsTo": [],
+    "contributors": ["poincare"],
+    "prerequisites": [{"id": "differential-equations", "strength": 90}, {"id": "topology", "strength": 70}]
+  },
+  {
+    "id": "quantum-mechanics",
+    "name": "Quantum Mechanics",
+    "type": "Applied Math",
+    "category": "Physics",
+    "year": 1925,
+    "leadsTo": [],
+    "contributors": ["hilbert", "vonneumann", "feynman", "penrose"],
+    "prerequisites": [{"id": "functional-analysis", "strength": 85}, {"id": "pde", "strength": 80}]
+  },
+  {
+    "id": "general-relativity",
+    "name": "General Relativity",
+    "type": "Applied Math",
+    "category": "Physics",
+    "year": 1915,
+    "leadsTo": [],
+    "contributors": ["einstein", "riemann", "hawking", "penrose"],
+    "prerequisites": [{"id": "differential-geometry", "strength": 95}, {"id": "pde", "strength": 80}]
+  },
+  {
+    "id": "signal-processing",
+    "name": "Signal Processing",
+    "type": "Applied Math",
+    "category": "Computation",
+    "year": 1940,
+    "leadsTo": ["machine-learning"],
+    "contributors": ["fourier"],
+    "prerequisites": [{"id": "harmonic-analysis", "strength": 85}, {"id": "linear-algebra", "strength": 75}]
+  }
+]
+

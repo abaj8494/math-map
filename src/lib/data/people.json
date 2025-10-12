@@ -1,0 +1,323 @@
+[
+  {
+    "id": "pythagoras",
+    "name": "Pythagoras",
+    "born": -570,
+    "died": -495,
+    "image": "/images/people/thales.jpg",
+    "gender": 1
+  },
+  {
+    "id": "euclid",
+    "name": "Euclid",
+    "born": -325,
+    "died": -265,
+    "image": "/images/people/euclid.jpg",
+    "gender": 1
+  },
+  {
+    "id": "aristotle",
+    "name": "Aristotle",
+    "born": -384,
+    "died": -322,
+    "image": "/images/people/aristotle.jpg",
+    "gender": 1
+  },
+  {
+    "id": "descartes",
+    "name": "René Descartes",
+    "born": 1596,
+    "died": 1650,
+    "image": "/images/people/descartes.jpg",
+    "gender": 1
+  },
+  {
+    "id": "newton",
+    "name": "Isaac Newton",
+    "born": 1643,
+    "died": 1727,
+    "image": "/images/people/newton.jpg",
+    "gender": 1
+  },
+  {
+    "id": "leibniz",
+    "name": "Gottfried Wilhelm Leibniz",
+    "born": 1646,
+    "died": 1716,
+    "image": "/images/people/newton.jpg",
+    "gender": 1
+  },
+  {
+    "id": "euler",
+    "name": "Leonhard Euler",
+    "born": 1707,
+    "died": 1783,
+    "image": "/images/people/euler.jpg",
+    "gender": 1
+  },
+  {
+    "id": "lagrange",
+    "name": "Joseph-Louis Lagrange",
+    "born": 1736,
+    "died": 1813,
+    "image": "/images/people/euler.jpg",
+    "gender": 1
+  },
+  {
+    "id": "fourier",
+    "name": "Joseph Fourier",
+    "born": 1768,
+    "died": 1830,
+    "image": "/images/people/fourier.jpg",
+    "gender": 1
+  },
+  {
+    "id": "gauss",
+    "name": "Carl Friedrich Gauss",
+    "born": 1777,
+    "died": 1855,
+    "image": "/images/people/gauss.jpg",
+    "gender": 1
+  },
+  {
+    "id": "cauchy",
+    "name": "Augustin-Louis Cauchy",
+    "born": 1789,
+    "died": 1857,
+    "image": "/images/people/gauss.jpg",
+    "gender": 1
+  },
+  {
+    "id": "galois",
+    "name": "Évariste Galois",
+    "born": 1811,
+    "died": 1832,
+    "image": "/images/people/gauss.jpg",
+    "gender": 1
+  },
+  {
+    "id": "lovelace",
+    "name": "Ada Lovelace",
+    "born": 1815,
+    "died": 1852,
+    "image": "/images/people/lovelace.jpg",
+    "gender": 0
+  },
+  {
+    "id": "cantor",
+    "name": "Georg Cantor",
+    "born": 1845,
+    "died": 1918,
+    "image": "/images/people/cantor.jpg",
+    "gender": 1
+  },
+  {
+    "id": "riemann",
+    "name": "Bernhard Riemann",
+    "born": 1826,
+    "died": 1866,
+    "image": "/images/people/gauss.jpg",
+    "gender": 1
+  },
+  {
+    "id": "hilbert",
+    "name": "David Hilbert",
+    "born": 1862,
+    "died": 1943,
+    "image": "/images/people/hilbert.jpg",
+    "gender": 1
+  },
+  {
+    "id": "poincare",
+    "name": "Henri Poincaré",
+    "born": 1854,
+    "died": 1912,
+    "image": "/images/people/hilbert.jpg",
+    "gender": 1
+  },
+  {
+    "id": "ramanujan",
+    "name": "Srinivasa Ramanujan",
+    "born": 1887,
+    "died": 1920,
+    "image": "/images/people/einstein.jpg",
+    "gender": 1
+  },
+  {
+    "id": "einstein",
+    "name": "Albert Einstein",
+    "born": 1879,
+    "died": 1955,
+    "image": "/images/people/einstein.jpg",
+    "gender": 1
+  },
+  {
+    "id": "tarski",
+    "name": "Alfred Tarski",
+    "born": 1901,
+    "died": 1983,
+    "image": "/images/people/tarski.jpg",
+    "gender": 1
+  },
+  {
+    "id": "banach",
+    "name": "Stefan Banach",
+    "born": 1892,
+    "died": 1945,
+    "image": "/images/people/hilbert.jpg",
+    "gender": 1
+  },
+  {
+    "id": "lebesgue",
+    "name": "Henri Lebesgue",
+    "born": 1875,
+    "died": 1941,
+    "image": "/images/people/hilbert.jpg",
+    "gender": 1
+  },
+  {
+    "id": "kolmogorov",
+    "name": "Andrey Kolmogorov",
+    "born": 1903,
+    "died": 1987,
+    "image": "/images/people/hawking.jpg",
+    "gender": 1
+  },
+  {
+    "id": "turing",
+    "name": "Alan Turing",
+    "born": 1912,
+    "died": 1954,
+    "image": "/images/people/turing.jpg",
+    "gender": 1
+  },
+  {
+    "id": "godel",
+    "name": "Kurt Gödel",
+    "born": 1906,
+    "died": 1978,
+    "image": "/images/people/einstein.jpg",
+    "gender": 1
+  },
+  {
+    "id": "vonneumann",
+    "name": "John von Neumann",
+    "born": 1903,
+    "died": 1957,
+    "image": "/images/people/einstein.jpg",
+    "gender": 1
+  },
+  {
+    "id": "conway",
+    "name": "John Horton Conway",
+    "born": 1937,
+    "died": 2020,
+    "image": "/images/people/conway.jpg",
+    "gender": 1
+  },
+  {
+    "id": "knuth",
+    "name": "Donald Knuth",
+    "born": 1938,
+    "died": null,
+    "image": "/images/people/knuth.jpg",
+    "gender": 1
+  },
+  {
+    "id": "rudin",
+    "name": "Walter Rudin",
+    "born": 1921,
+    "died": 2010,
+    "image": "/images/people/feynman.jpg",
+    "gender": 1
+  },
+  {
+    "id": "halmos",
+    "name": "Paul Halmos",
+    "born": 1916,
+    "died": 2006,
+    "image": "/images/people/feynman.jpg",
+    "gender": 1
+  },
+  {
+    "id": "axler",
+    "name": "Sheldon Axler",
+    "born": 1949,
+    "died": null,
+    "image": "/images/people/hawking.jpg",
+    "gender": 1
+  },
+  {
+    "id": "strang",
+    "name": "Gilbert Strang",
+    "born": 1934,
+    "died": null,
+    "image": "/images/people/hawking.jpg",
+    "gender": 1
+  },
+  {
+    "id": "tao",
+    "name": "Terence Tao",
+    "born": 1975,
+    "died": null,
+    "image": "/images/people/hawking.jpg",
+    "gender": 1
+  },
+  {
+    "id": "wasserman",
+    "name": "Larry Wasserman",
+    "born": 1959,
+    "died": null,
+    "image": "/images/people/hawking.jpg",
+    "gender": 1
+  },
+  {
+    "id": "jaynes",
+    "name": "Edwin Thompson Jaynes",
+    "born": 1922,
+    "died": 1998,
+    "image": "/images/people/feynman.jpg",
+    "gender": 1
+  },
+  {
+    "id": "jordan",
+    "name": "Camille Jordan",
+    "born": 1838,
+    "died": 1922,
+    "image": "/images/people/gauss.jpg",
+    "gender": 1
+  },
+  {
+    "id": "feynman",
+    "name": "Richard Feynman",
+    "born": 1918,
+    "died": 1988,
+    "image": "/images/people/feynman.jpg",
+    "gender": 1
+  },
+  {
+    "id": "hawking",
+    "name": "Stephen Hawking",
+    "born": 1942,
+    "died": 2018,
+    "image": "/images/people/hawking.jpg",
+    "gender": 1
+  },
+  {
+    "id": "penrose",
+    "name": "Roger Penrose",
+    "born": 1931,
+    "died": null,
+    "image": "/images/people/penrose.jpg",
+    "gender": 1
+  },
+  {
+    "id": "curie",
+    "name": "Marie Curie",
+    "born": 1867,
+    "died": 1934,
+    "image": "/images/people/curie.jpg",
+    "gender": 0
+  }
+]
+

@@ -1,0 +1,24 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+:root {
+	--cosmos-bg: #000000;
+	--card-bg: #1a1a2e;
+	--card-border: #16213e;
+	--text-primary: #eee;
+	--text-secondary: #aaa;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background: var(--cosmos-bg);
+	color: var(--text-primary);
+	font-family: system-ui, -apple-system, sans-serif;
+}
+
+canvas {
+	display: block;
+}
+
