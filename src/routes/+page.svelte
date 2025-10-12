@@ -978,6 +978,7 @@
 <!-- Card Interaction Overlay when viewing a card -->
 {#if selectedCard && viewMode === '3d'}
 	<div class="card-overlay-panel">
+		<button class="overlay-close-button" on:click={() => selectedCard = null}>✕</button>
 		{#if previousCard}
 			<button class="overlay-back-button" on:click={goToPreviousCard}>← Back</button>
 		{/if}
@@ -1391,6 +1392,31 @@
 	.overlay-back-button:hover {
 		background: rgba(99, 102, 241, 0.5);
 		transform: translateX(-3px);
+	}
+	
+	.overlay-close-button {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		width: 2rem;
+		height: 2rem;
+		border-radius: 50%;
+		background: rgba(239, 68, 68, 0.3);
+		color: white;
+		border: 1px solid rgba(239, 68, 68, 0.5);
+		font-size: 1.2rem;
+		font-weight: 700;
+		cursor: pointer;
+		transition: all 0.2s;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 1;
+	}
+	
+	.overlay-close-button:hover {
+		background: rgba(239, 68, 68, 0.6);
+		transform: scale(1.1);
 	}
 	
 	.card-overlay-panel h2 {

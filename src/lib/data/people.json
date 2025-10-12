@@ -318,6 +318,30 @@
     "died": 1934,
     "image": "/images/people/curie.jpg",
     "gender": 0
+  },
+  {
+    "id": "thom",
+    "name": "René Thom",
+    "born": 1923,
+    "died": 2002,
+    "image": "/images/people/feynman.jpg",
+    "gender": 1
+  },
+  {
+    "id": "milnor",
+    "name": "John Milnor",
+    "born": 1931,
+    "died": null,
+    "image": "/images/people/hawking.jpg",
+    "gender": 1
+  },
+  {
+    "id": "smale",
+    "name": "Stephen Smale",
+    "born": 1930,
+    "died": null,
+    "image": "/images/people/hawking.jpg",
+    "gender": 1
   }
 ]
 
