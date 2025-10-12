@@ -455,6 +455,11 @@
 		scene.add(createLabel('PURE MATH', -20));
 		scene.add(createLabel('APPLIED MATH', 20));
 		
+		// Add TIME label above the timeline
+		const timeLabel = createLabel('TIME', 0);
+		timeLabel.position.set(-CARD_SPACING_X / 2 - 15, 0, 0);
+		scene.add(timeLabel);
+		
 		// Create cards
 		const topicsByCategory = {};
 		topics.forEach(topic => {
@@ -527,6 +532,7 @@
 		
 		// Raycaster for clicking
 		const raycaster = new THREE.Raycaster();
+		raycaster.far = 1000; // Allow clicking on distant cards
 		const mouse = new THREE.Vector2();
 		
 		function onMouseClick(event) {
@@ -932,6 +938,7 @@
 <!-- Search Panel -->
 {#if searchVisible}
 	<div class="search-panel">
+		<button class="close-search-button" on:click={toggleSearch}>✕</button>
 		<h3>Find Path Between Topics</h3>
 		<select bind:value={searchFrom}>
 			<option value="">Select starting topic...</option>
@@ -967,7 +974,7 @@
 <!-- Cards are directly clickable - no popup needed -->
 
 <!-- Card Interaction Overlay when viewing a card -->
-{#if selectedCard}
+{#if selectedCard && viewMode === '3d'}
 	<div class="card-overlay-panel">
 		<h2>{selectedCard.name}</h2>
 		
@@ -1270,6 +1277,24 @@
 	.search-panel h3 {
 		margin-top: 0;
 		color: #eee;
+	}
+	
+	.close-search-button {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		background: none;
+		border: none;
+		color: #aaa;
+		font-size: 1.5rem;
+		cursor: pointer;
+		padding: 0.25rem;
+		line-height: 1;
+		transition: color 0.2s;
+	}
+	
+	.close-search-button:hover {
+		color: #fff;
 	}
 	
 	.search-panel select,
