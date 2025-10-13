@@ -1242,7 +1242,7 @@
 						{#if person}
 							<button 
 								class="overlay-button"
-								on:click={() => hoveredPerson = hoveredPerson?.id === person.id ? null : person}
+								on:click={() => hoveredPerson = hoveredPerson?.id === person.id ? null : { ...person, img: person.image }}
 							>
 								{person.name}
 							</button>
