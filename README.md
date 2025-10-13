@@ -1,5 +1,7 @@
 # Mathematical Cosmos 🌌🔢
 
+![demo](demo.png)
+
 An interactive 3D visualisation of mathematical topics floating in space like trading cards, connected by arrows showing how concepts build upon each other. Explore the evolution of mathematics from ancient geometry to modern machine learning.
 
 ![Mathematical Cosmos Preview](https://img.shields.io/badge/SvelteKit-FF3E00?style=for-the-badge&logo=svelte&logoColor=white)

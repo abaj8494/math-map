@@ -678,12 +678,12 @@
 					if (clickedCard) break;
 				}
 				
-				if (clickedCard) {
-					selectedCard = clickedCard.userData.topic;
-					zoomToCard(clickedCard);
-				}
+			if (clickedCard) {
+				zoomToCard(clickedCard);
+				selectedCard = clickedCard.userData.topic;
 			}
 		}
+	}
 		
 		renderer.domElement.addEventListener('click', onMouseClick);
 		
@@ -698,8 +698,15 @@
 			if (earliestTopic) {
 				const earliestCard = cardMeshes.find(m => m.userData.topic.id === earliestTopic.id);
 				if (earliestCard) {
+					// Don't add to history on initial load
 					selectedCard = earliestTopic;
-					zoomToCard(earliestCard);
+					// Just position camera without history
+					const targetPosition = earliestCard.position.clone();
+					const offset = new THREE.Vector3(0, 0, 18);
+					const cameraTarget = targetPosition.clone().add(offset);
+					camera.position.copy(cameraTarget);
+					controls.target.copy(targetPosition);
+					controls.update();
 				}
 			}
 		}, 500); // Small delay to let scene fully initialize
@@ -1323,16 +1330,16 @@
 					{#each selectedCard.leadsTo as targetId}
 						{@const targetTopic = topics.find(t => t.id === targetId)}
 						{#if targetTopic}
-						<button 
-							class="overlay-button leads-button"
-							on:click={() => {
+							<button 
+								class="overlay-button leads-button"
+								on:click={() => {
 								const targetCard = cardMeshes.find(m => m.userData.topic.id === targetId);
 								if (targetCard) {
-									selectedCard = targetTopic;
 									zoomToCard(targetCard);
+									selectedCard = targetTopic;
 								}
 							}}
-						>
+							>
 								{targetTopic.name}
 							</button>
 						{/if}
@@ -1349,16 +1356,16 @@
 					{#each selectedCard.prerequisites as prereq}
 						{@const prereqTopic = topics.find(t => t.id === prereq.id)}
 						{#if prereqTopic}
-							<button 
-								class="overlay-button prereq-button"
-								on:click={() => {
+								<button 
+									class="overlay-button prereq-button"
+									on:click={() => {
 									const targetCard = cardMeshes.find(m => m.userData.topic.id === prereq.id);
 									if (targetCard) {
-										selectedCard = prereqTopic;
 										zoomToCard(targetCard);
+										selectedCard = prereqTopic;
 									}
 								}}
-							>
+								>
 								{prereqTopic.name}
 								<span class="strength-badge">{prereq.strength}%</span>
 							</button>
@@ -2139,6 +2146,14 @@
 		
 		.search-button {
 			bottom: 5rem;
+			right: 1rem;
+			width: 3rem;
+			height: 3rem;
+			font-size: 1.25rem;
+		}
+		
+		.quick-search-button {
+			bottom: 9rem;
 			right: 1rem;
 			width: 3rem;
 			height: 3rem;
