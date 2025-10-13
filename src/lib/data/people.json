@@ -366,6 +366,78 @@
     "died": 2010,
     "image": "/images/people/feynman.jpg",
     "gender": 1
+  },
+  {
+    "id": "frege",
+    "name": "Gottlob Frege",
+    "born": 1848,
+    "died": 1925,
+    "image": "/images/people/cantor.jpg",
+    "gender": 1
+  },
+  {
+    "id": "church",
+    "name": "Alonzo Church",
+    "born": 1903,
+    "died": 1995,
+    "image": "/images/people/turing.jpg",
+    "gender": 1
+  },
+  {
+    "id": "peano",
+    "name": "Giuseppe Peano",
+    "born": 1858,
+    "died": 1932,
+    "image": "/images/people/cantor.jpg",
+    "gender": 1
+  },
+  {
+    "id": "weierstrass",
+    "name": "Karl Weierstrass",
+    "born": 1815,
+    "died": 1897,
+    "image": "/images/people/gauss.jpg",
+    "gender": 1
+  },
+  {
+    "id": "dedekind",
+    "name": "Richard Dedekind",
+    "born": 1831,
+    "died": 1916,
+    "image": "/images/people/cantor.jpg",
+    "gender": 1
+  },
+  {
+    "id": "noether",
+    "name": "Emmy Noether",
+    "born": 1882,
+    "died": 1935,
+    "image": "/images/people/curie.jpg",
+    "gender": 0
+  },
+  {
+    "id": "dirac",
+    "name": "Paul Dirac",
+    "born": 1902,
+    "died": 1984,
+    "image": "/images/people/einstein.jpg",
+    "gender": 1
+  },
+  {
+    "id": "nash",
+    "name": "John Nash",
+    "born": 1928,
+    "died": 2015,
+    "image": "/images/people/hawking.jpg",
+    "gender": 1
+  },
+  {
+    "id": "shannon",
+    "name": "Claude Shannon",
+    "born": 1916,
+    "died": 2001,
+    "image": "/images/people/turing.jpg",
+    "gender": 1
   }
 ]
 

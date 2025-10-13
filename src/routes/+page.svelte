@@ -11,6 +11,7 @@
 	let arrowMeshes = [];
 	let selectedCard = null;
 	let previousCard = null;
+	let selectedArrow = null;
 	let hoveredPerson = null;
 	let searchVisible = false;
 	let searchFrom = '';
@@ -165,8 +166,8 @@
 			frontCtx.fillText('Contributors', frontCanvas.width / 2, yOffset);
 			yOffset += 40;
 			
-			// Show contributor names
-			frontCtx.font = '22px Arial';
+			// Show contributor names (increased from 22px to 28px)
+			frontCtx.font = '28px Arial';
 			frontCtx.fillStyle = '#aaaaaa';
 			frontCtx.textAlign = 'left';
 			
@@ -174,7 +175,7 @@
 				const person = people.find(p => p.id === id);
 				const name = person ? person.name : id.charAt(0).toUpperCase() + id.slice(1);
 				frontCtx.fillText(`• ${name}`, 60, yOffset);
-				yOffset += 28;
+				yOffset += 34;
 			});
 			
 			if (topic.contributors.length > 8) {
@@ -195,7 +196,7 @@
 			frontCtx.fillText('Leads To', frontCanvas.width / 2, yOffset);
 			yOffset += 40;
 			
-			frontCtx.font = '20px Arial';
+			frontCtx.font = '26px Arial';  // Increased from 20px to 26px
 			frontCtx.fillStyle = '#6366f1';
 			frontCtx.textAlign = 'left';
 			topic.leadsTo.slice(0, 10).forEach(targetId => {
@@ -203,7 +204,7 @@
 				if (targetTopic) {
 					const text = `➜ ${targetTopic.name}`;
 					frontCtx.fillText(text, 60, yOffset);
-					yOffset += 30;
+					yOffset += 34;  // Increased from 30 to 34
 				}
 			});
 			if (topic.leadsTo.length > 10) {
@@ -239,7 +240,7 @@
 			backCtx.fillText('Prerequisites', backCanvas.width / 2, yOffset);
 			yOffset += 35;
 			
-			backCtx.font = '18px Arial';
+			backCtx.font = '24px Arial';  // Increased from 18px to 24px
 			backCtx.fillStyle = '#aaaaaa';
 			backCtx.textAlign = 'left';
 			topic.prerequisites.forEach(prereq => {
@@ -247,7 +248,7 @@
 				if (prereqTopic) {
 					const text = `• ${prereqTopic.name} (${prereq.strength}%)`;
 					backCtx.fillText(text, 60, yOffset);
-					yOffset += 28;
+					yOffset += 32;  // Increased from 28 to 32
 				}
 			});
 			backCtx.textAlign = 'center';
@@ -261,7 +262,7 @@
 			backCtx.fillText('Notes', backCanvas.width / 2, yOffset);
 			yOffset += 35;
 			
-			backCtx.font = '18px Arial';
+			backCtx.font = '24px Arial';  // Increased from 18px to 24px
 			backCtx.fillStyle = '#aaaaaa';
 			backCtx.textAlign = 'left';
 			
@@ -273,7 +274,7 @@
 				const width = backCtx.measureText(testLine).width;
 				if (width > backCanvas.width - 100 && noteLine) {
 					backCtx.fillText(noteLine, 50, yOffset);
-					yOffset += 26;
+					yOffset += 32;  // Increased from 26 to 32
 					noteLine = word;
 				} else {
 					noteLine = testLine;
@@ -379,6 +380,10 @@
 		head.position.copy(endPos).add(direction.clone().multiplyScalar(headHeight * 0.5));
 		head.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction);
 		arrowGroup.add(head);
+		
+		// Store original materials for reset
+		arrowGroup.userData.originalMaterial = shaftMaterial.clone();
+		arrowGroup.userData.isArrow = true;
 		
 		return arrowGroup;
 	}
@@ -565,6 +570,52 @@
 			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 			
 			raycaster.setFromCamera(mouse, camera);
+			
+			// First check for arrow clicks
+			const arrowIntersects = raycaster.intersectObjects(arrowMeshes, true);
+			if (arrowIntersects.length > 0) {
+				// Find clicked arrow - traverse up to find the arrow group
+				let clickedArrow = null;
+				for (let intersect of arrowIntersects) {
+					let obj = intersect.object;
+					while (obj) {
+						if (obj.userData && obj.userData.isArrow) {
+							clickedArrow = obj;
+							break;
+						}
+						obj = obj.parent;
+					}
+					if (clickedArrow) break;
+				}
+				
+				if (clickedArrow) {
+					// Reset previous arrow if any
+					if (selectedArrow && selectedArrow !== clickedArrow) {
+						selectedArrow.children.forEach(child => {
+							if (child.material) {
+								child.material.color.set(0x6366f1);
+								child.material.emissive.set(0x4f46e5);
+								child.material.emissiveIntensity = 0.2;
+								child.material.opacity = 0.6;
+							}
+						});
+					}
+					
+					// Highlight the clicked arrow
+					selectedArrow = clickedArrow;
+					clickedArrow.children.forEach(child => {
+						if (child.material) {
+							child.material.color.set(0xffffff);
+							child.material.emissive.set(0xcccccc);
+							child.material.emissiveIntensity = 0.5;
+							child.material.opacity = 1.0;
+						}
+					});
+					return; // Don't check for card clicks
+				}
+			}
+			
+			// Then check for card clicks
 			const intersects = raycaster.intersectObjects(cardMeshes, true);
 			
 			if (intersects.length > 0) {
@@ -1049,6 +1100,34 @@
 				</div>
 			</div>
 		{/if}
+		
+		<!-- Prerequisites Section -->
+		{#if selectedCard.prerequisites && selectedCard.prerequisites.length > 0}
+			<div class="overlay-section">
+				<h3>📚 Prerequisites</h3>
+				<div class="overlay-grid">
+					{#each selectedCard.prerequisites as prereq}
+						{@const prereqTopic = topics.find(t => t.id === prereq.id)}
+						{#if prereqTopic}
+							<button 
+								class="overlay-button prereq-button"
+								on:click={() => {
+									const targetCard = cardMeshes.find(m => m.userData.topic.id === prereq.id);
+									if (targetCard) {
+										previousCard = selectedCard;
+										selectedCard = prereqTopic;
+										zoomToCard(targetCard);
+									}
+								}}
+							>
+								{prereqTopic.name}
+								<span class="strength-badge">{prereq.strength}%</span>
+							</button>
+						{/if}
+					{/each}
+				</div>
+			</div>
+		{/if}
 	</div>
 {/if}
 
@@ -1418,8 +1497,8 @@
 	
 	.overlay-close-button {
 		position: absolute;
-		top: 1rem;
-		right: 1rem;
+		top: 0.5rem;  /* Moved up from 1rem to 0.5rem */
+		right: 0.5rem;  /* Moved right from 1rem to 0.5rem */
 		width: 2rem;
 		height: 2rem;
 		border-radius: 50%;
@@ -1434,6 +1513,7 @@
 		align-items: center;
 		justify-content: center;
 		line-height: 1;
+		z-index: 10;
 	}
 	
 	.overlay-close-button:hover {
@@ -1492,6 +1572,25 @@
 	
 	.leads-button:hover {
 		color: #818cf8;
+	}
+	
+	.prereq-button {
+		color: #f59e0b;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	
+	.prereq-button:hover {
+		color: #fbbf24;
+	}
+	
+	.strength-badge {
+		background: rgba(245, 158, 11, 0.2);
+		padding: 0.25rem 0.5rem;
+		border-radius: 0.25rem;
+		font-size: 0.8rem;
+		margin-left: 0.5rem;
 	}
 	
 	.person-detail-card {
