@@ -715,7 +715,8 @@
 	function zoomToCard(cardMesh) {
 		// Track previous card in history stack
 		if (selectedCard && selectedCard.id !== cardMesh.userData.topic.id) {
-			cardHistory.push(selectedCard);
+			cardHistory = [...cardHistory, selectedCard]; // Use spread to trigger reactivity
+			console.log('Added to history:', selectedCard.name, 'History length:', cardHistory.length);
 		}
 		
 		const targetPosition = cardMesh.position.clone();
@@ -747,8 +748,11 @@
 	}
 	
 	function goToPreviousCard() {
+		console.log('goToPreviousCard called, history length:', cardHistory.length);
 		if (cardHistory.length > 0) {
-			const previousCard = cardHistory.pop();
+			const previousCard = cardHistory[cardHistory.length - 1];
+			cardHistory = cardHistory.slice(0, -1); // Use slice to trigger reactivity
+			console.log('Going back to:', previousCard.name, 'New history length:', cardHistory.length);
 			const prevCardMesh = cardMeshes.find(m => m.userData.topic.id === previousCard.id);
 			if (prevCardMesh) {
 				// Don't add current card to history when going back
@@ -1104,13 +1108,14 @@
 {/if}
 
 <!-- Back Button (top left) -->
+<!-- Debug: cardHistory length = {cardHistory.length} -->
 {#if viewMode === '3d' && cardHistory.length > 0}
 	<button
 		class="back-button"
 		on:click={goToPreviousCard}
 		aria-label="Go to previous card"
 	>
-		← Back
+		← Back ({cardHistory.length})
 	</button>
 {/if}
 

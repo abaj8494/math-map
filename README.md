@@ -1,4 +1,4 @@
-# Mathematical Cosmos 🌌🔢
+# The Math Map:
 
 ![demo](demo.png)
 
