@@ -11,7 +11,7 @@
 	let arrowMeshes = [];
 	let selectedCard = null;
 	let previousCard = null;
-	let selectedArrow = null;
+	let selectedArrows = new Map(); // Map<arrow, {clickCount, fromCard, toCard}>
 	let hoveredPerson = null;
 	let searchVisible = false;
 	let searchFrom = '';
@@ -432,7 +432,7 @@
 		controls.enableDamping = true;
 		controls.dampingFactor = 0.05;
 		controls.screenSpacePanning = true;
-		controls.minDistance = 10;
+		controls.minDistance = 2; // Decreased from 10 to allow closer zoom
 		controls.maxDistance = 600; // Doubled for doubled spacing
 		
 		// Lighting
@@ -531,6 +531,8 @@
 					if (toCard) {
 						const arrow = createArrow(fromCard.position, toCard.position, 75);
 						if (arrow) {
+							arrow.userData.fromCard = fromCard;
+							arrow.userData.toCard = toCard;
 							scene.add(arrow);
 							arrowMeshes.push(arrow);
 						}
@@ -607,21 +609,15 @@
 					if (clickedArrow) break;
 				}
 				
-				if (clickedArrow) {
-					// Reset previous arrow if any
-					if (selectedArrow && selectedArrow !== clickedArrow) {
-						selectedArrow.children.forEach(child => {
-							if (child.material) {
-								child.material.color.set(0x6366f1);
-								child.material.emissive.set(0x4f46e5);
-								child.material.emissiveIntensity = 0.2;
-								child.material.opacity = 0.6;
-							}
-						});
-					}
+			if (clickedArrow) {
+				// Get or create arrow state
+				let arrowState = selectedArrows.get(clickedArrow);
+				
+				if (!arrowState) {
+					// First click: highlight white
+					arrowState = { clickCount: 1, fromCard: clickedArrow.userData.fromCard, toCard: clickedArrow.userData.toCard };
+					selectedArrows.set(clickedArrow, arrowState);
 					
-					// Highlight the clicked arrow
-					selectedArrow = clickedArrow;
 					clickedArrow.children.forEach(child => {
 						if (child.material) {
 							child.material.color.set(0xffffff);
@@ -630,8 +626,37 @@
 							child.material.opacity = 1.0;
 						}
 					});
-					return; // Don't check for card clicks
+				} else if (arrowState.clickCount === 1) {
+					// Second click: teleport to "to" card
+					arrowState.clickCount = 2;
+					if (arrowState.toCard) {
+						previousCard = selectedCard;
+						selectedCard = arrowState.toCard.userData.topic;
+						zoomToCard(arrowState.toCard);
+					}
+				} else if (arrowState.clickCount === 2) {
+					// Third click: teleport to "from" card
+					arrowState.clickCount = 3;
+					if (arrowState.fromCard) {
+						previousCard = selectedCard;
+						selectedCard = arrowState.fromCard.userData.topic;
+						zoomToCard(arrowState.fromCard);
+					}
+				} else {
+					// Fourth click: reset to original color and remove from selection
+					clickedArrow.children.forEach(child => {
+						if (child.material) {
+							child.material.color.set(0x6366f1);
+							child.material.emissive.set(0x4f46e5);
+							child.material.emissiveIntensity = 0.2;
+							child.material.opacity = 0.6;
+						}
+					});
+					selectedArrows.delete(clickedArrow);
 				}
+				
+				return; // Don't check for card clicks
+			}
 			}
 			
 			// Then check for card clicks
@@ -1299,8 +1324,8 @@
 	
 	.difficulty-filter {
 		position: fixed;
-		top: 2rem;
-		right: 2rem;
+		bottom: 2rem;
+		right: 11rem;
 		z-index: 100;
 	}
 	

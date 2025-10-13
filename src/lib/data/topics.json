@@ -541,6 +541,14 @@
     "prerequisites": [
       {
         "id": "elementary-geometry",
+        "strength": 70
+      },
+      {
+        "id": "elementary-algebra",
+        "strength": 80
+      },
+      {
+        "id": "trigonometry",
         "strength": 60
       }
     ]
