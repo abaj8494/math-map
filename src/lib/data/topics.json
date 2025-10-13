@@ -5,13 +5,36 @@
     "type": "Pure Math",
     "category": "Foundations",
     "year": -350,
-    "era": { "start": -350, "peak": 1930, "end": null },
-    "difficulty": { "tier": 2 },
-    "aka": ["Philosophical Logic", "Mathematical Logic"],
-    "notableYears": [-350, 1879, 1931],
-    "notes": "Classical syllogistic (Aristotle), modern predicate logic (Frege 1879), incompleteness (Gödel 1931).",
-    "leadsTo": ["axiomatic-set-theory", "category-theory", "computation", "model-theory"],
-    "contributors": ["aristotle", "frege", "peano", "tarski", "godel", "church"],
+    "era": {
+      "start": -350,
+      "peak": 1930,
+      "end": null
+    },
+    "difficulty": "High School",
+    "aka": [
+      "Philosophical Logic",
+      "Mathematical Logic"
+    ],
+    "notableYears": [
+      -350,
+      1879,
+      1931
+    ],
+    "notes": "Classical syllogistic (Aristotle), modern predicate logic (Frege 1879), incompleteness (G\u00f6del 1931).",
+    "leadsTo": [
+      "axiomatic-set-theory",
+      "category-theory",
+      "computation",
+      "model-theory"
+    ],
+    "contributors": [
+      "aristotle",
+      "frege",
+      "peano",
+      "tarski",
+      "godel",
+      "church"
+    ],
     "prerequisites": []
   },
   {
@@ -20,14 +43,42 @@
     "type": "Pure Math",
     "category": "Foundations",
     "year": 1908,
-    "era": { "start": 1874, "peak": 1922, "end": null },
-    "difficulty": { "tier": 3 },
-    "aka": ["ZFC", "ZF + Choice"],
-    "notableYears": [1874, 1908, 1922],
-    "notes": "Cantor’s set theory (1870s), Zermelo axioms (1908), Fraenkel–Skolem refinements (1922).",
-    "leadsTo": ["category-theory", "measure-theory", "topology", "model-theory"],
-    "contributors": ["cantor", "zermelo", "fraenkel", "skolem", "godel", "hilbert"],
-    "prerequisites": [{ "id": "logic", "strength": 75 }]
+    "era": {
+      "start": 1874,
+      "peak": 1922,
+      "end": null
+    },
+    "difficulty": "UGrad",
+    "aka": [
+      "ZFC",
+      "ZF + Choice"
+    ],
+    "notableYears": [
+      1874,
+      1908,
+      1922
+    ],
+    "notes": "Cantor\u2019s set theory (1870s), Zermelo axioms (1908), Fraenkel\u2013Skolem refinements (1922).",
+    "leadsTo": [
+      "category-theory",
+      "measure-theory",
+      "topology",
+      "model-theory"
+    ],
+    "contributors": [
+      "cantor",
+      "zermelo",
+      "fraenkel",
+      "skolem",
+      "godel",
+      "hilbert"
+    ],
+    "prerequisites": [
+      {
+        "id": "logic",
+        "strength": 75
+      }
+    ]
   },
   {
     "id": "category-theory",
@@ -35,14 +86,42 @@
     "type": "Pure Math",
     "category": "Foundations",
     "year": 1945,
-    "era": { "start": 1945, "peak": 1960, "end": null },
-    "difficulty": { "tier": 4 },
-    "aka": ["Eilenberg–Mac Lane framework"],
-    "notableYears": [1945, 1957, 1970],
+    "era": {
+      "start": 1945,
+      "peak": 1960,
+      "end": null
+    },
+    "difficulty": "PGrad",
+    "aka": [
+      "Eilenberg\u2013Mac Lane framework"
+    ],
+    "notableYears": [
+      1945,
+      1957,
+      1970
+    ],
     "notes": "Introduced by Eilenberg & Mac Lane (1945); natural transformations, adjunctions; Grothendieck toposes.",
-    "leadsTo": ["algebraic-topology", "homological-algebra", "type-theory"],
-    "contributors": ["eilenberg", "maclane", "grothendieck", "lawvere"],
-    "prerequisites": [{ "id": "axiomatic-set-theory", "strength": 80 }, { "id": "abstract-algebra", "strength": 75 }]
+    "leadsTo": [
+      "algebraic-topology",
+      "homological-algebra",
+      "type-theory"
+    ],
+    "contributors": [
+      "eilenberg",
+      "maclane",
+      "grothendieck",
+      "lawvere"
+    ],
+    "prerequisites": [
+      {
+        "id": "axiomatic-set-theory",
+        "strength": 80
+      },
+      {
+        "id": "abstract-algebra",
+        "strength": 75
+      }
+    ]
   },
   {
     "id": "elementary-geometry",
@@ -50,13 +129,30 @@
     "type": "Pure Math",
     "category": "Geometry and Topology",
     "year": -300,
-    "era": { "start": -600, "peak": -300, "end": null },
-    "difficulty": { "tier": 1 },
-    "aka": ["Euclidean Geometry"],
-    "notableYears": [-300],
-    "notes": "Euclid’s Elements (~300 BCE); foundation for classical geometry and trigonometry.",
-    "leadsTo": ["calculus", "topology", "differential-geometry", "trigonometry"],
-    "contributors": ["euclid", "pythagoras", "archimedes"],
+    "era": {
+      "start": -600,
+      "peak": -300,
+      "end": null
+    },
+    "difficulty": "High School",
+    "aka": [
+      "Euclidean Geometry"
+    ],
+    "notableYears": [
+      -300
+    ],
+    "notes": "Euclid\u2019s Elements (~300 BCE); foundation for classical geometry and trigonometry.",
+    "leadsTo": [
+      "calculus",
+      "topology",
+      "differential-geometry",
+      "trigonometry"
+    ],
+    "contributors": [
+      "euclid",
+      "pythagoras",
+      "archimedes"
+    ],
     "prerequisites": []
   },
   {
@@ -65,13 +161,35 @@
     "type": "Pure Math",
     "category": "Algebra and Discrete",
     "year": 1870,
-    "era": { "start": 1840, "peak": 1870, "end": null },
-    "difficulty": { "tier": 2 },
-    "aka": ["Matrix Theory", "Vector Spaces"],
-    "notableYears": [1844, 1858, 1870],
+    "era": {
+      "start": 1840,
+      "peak": 1870,
+      "end": null
+    },
+    "difficulty": "High School",
+    "aka": [
+      "Matrix Theory",
+      "Vector Spaces"
+    ],
+    "notableYears": [
+      1844,
+      1858,
+      1870
+    ],
     "notes": "Grassmann (1844), Cayley (1858), Jordan normal form (1870s).",
-    "leadsTo": ["abstract-algebra", "functional-analysis", "computational-linear-algebra", "machine-learning"],
-    "contributors": ["gauss", "cauchy", "cayley", "jordan", "sylvester"],
+    "leadsTo": [
+      "abstract-algebra",
+      "functional-analysis",
+      "computational-linear-algebra",
+      "machine-learning"
+    ],
+    "contributors": [
+      "gauss",
+      "cauchy",
+      "cayley",
+      "jordan",
+      "sylvester"
+    ],
     "prerequisites": []
   },
   {
@@ -80,14 +198,42 @@
     "type": "Pure Math",
     "category": "Algebra and Discrete",
     "year": 1870,
-    "era": { "start": 1830, "peak": 1890, "end": null },
-    "difficulty": { "tier": 3 },
-    "aka": ["Modern Algebra"],
-    "notableYears": [1830, 1846, 1870],
+    "era": {
+      "start": 1830,
+      "peak": 1890,
+      "end": null
+    },
+    "difficulty": "UGrad",
+    "aka": [
+      "Modern Algebra"
+    ],
+    "notableYears": [
+      1830,
+      1846,
+      1870
+    ],
     "notes": "From groups (Galois) to rings/fields (Dedekind, Kronecker); consolidation late 19th c.",
-    "leadsTo": ["galois-theory", "lie-groups", "representation-theory", "homological-algebra", "commutative-algebra"],
-    "contributors": ["galois", "cauchy", "gauss", "dedekind", "noether", "kronecker"],
-    "prerequisites": [{ "id": "linear-algebra", "strength": 70 }]
+    "leadsTo": [
+      "galois-theory",
+      "lie-groups",
+      "representation-theory",
+      "homological-algebra",
+      "commutative-algebra"
+    ],
+    "contributors": [
+      "galois",
+      "cauchy",
+      "gauss",
+      "dedekind",
+      "noether",
+      "kronecker"
+    ],
+    "prerequisites": [
+      {
+        "id": "linear-algebra",
+        "strength": 70
+      }
+    ]
   },
   {
     "id": "galois-theory",
@@ -95,14 +241,35 @@
     "type": "Pure Math",
     "category": "Algebra and Discrete",
     "year": 1832,
-    "era": { "start": 1832, "peak": 1870, "end": null },
-    "difficulty": { "tier": 4 },
-    "aka": ["Theory of Field Extensions"],
-    "notableYears": [1832, 1870],
+    "era": {
+      "start": 1832,
+      "peak": 1870,
+      "end": null
+    },
+    "difficulty": "PGrad",
+    "aka": [
+      "Theory of Field Extensions"
+    ],
+    "notableYears": [
+      1832,
+      1870
+    ],
     "notes": "Galois (1832); Jordan, Dedekind elaborations later.",
-    "leadsTo": ["number-theory", "algebraic-geometry"],
-    "contributors": ["galois", "jordan", "dedekind"],
-    "prerequisites": [{ "id": "abstract-algebra", "strength": 90 }]
+    "leadsTo": [
+      "number-theory",
+      "algebraic-geometry"
+    ],
+    "contributors": [
+      "galois",
+      "jordan",
+      "dedekind"
+    ],
+    "prerequisites": [
+      {
+        "id": "abstract-algebra",
+        "strength": 90
+      }
+    ]
   },
   {
     "id": "representation-theory",
@@ -110,14 +277,44 @@
     "type": "Pure Math",
     "category": "Algebra and Discrete",
     "year": 1897,
-    "era": { "start": 1897, "peak": 1930, "end": null },
-    "difficulty": { "tier": 4 },
-    "aka": ["Linear Representations", "Module Theory"],
-    "notableYears": [1897, 1900, 1930],
-    "notes": "Frobenius and Schur (1897–1905) for finite groups; module theory (Noether).",
-    "leadsTo": ["lie-groups", "homological-algebra", "harmonic-analysis"],
-    "contributors": ["frobenius", "schur", "noether", "weilang", "artin"],
-    "prerequisites": [{ "id": "abstract-algebra", "strength": 85 }, { "id": "linear-algebra", "strength": 80 }]
+    "era": {
+      "start": 1897,
+      "peak": 1930,
+      "end": null
+    },
+    "difficulty": "PGrad",
+    "aka": [
+      "Linear Representations",
+      "Module Theory"
+    ],
+    "notableYears": [
+      1897,
+      1900,
+      1930
+    ],
+    "notes": "Frobenius and Schur (1897\u20131905) for finite groups; module theory (Noether).",
+    "leadsTo": [
+      "lie-groups",
+      "homological-algebra",
+      "harmonic-analysis"
+    ],
+    "contributors": [
+      "frobenius",
+      "schur",
+      "noether",
+      "weilang",
+      "artin"
+    ],
+    "prerequisites": [
+      {
+        "id": "abstract-algebra",
+        "strength": 85
+      },
+      {
+        "id": "linear-algebra",
+        "strength": 80
+      }
+    ]
   },
   {
     "id": "lie-groups",
@@ -125,14 +322,41 @@
     "type": "Pure Math",
     "category": "Algebra and Discrete",
     "year": 1873,
-    "era": { "start": 1870, "peak": 1890, "end": null },
-    "difficulty": { "tier": 4 },
-    "aka": ["Continuous Groups"],
-    "notableYears": [1873, 1880, 1893],
-    "notes": "Sophus Lie’s theory of continuous symmetry; Cartan classification in early 20th c.",
-    "leadsTo": ["differential-geometry", "representation-theory", "theoretical-physics"],
-    "contributors": ["lie", "cartan", "weyl"],
-    "prerequisites": [{ "id": "abstract-algebra", "strength": 85 }, { "id": "calculus", "strength": 75 }]
+    "era": {
+      "start": 1870,
+      "peak": 1890,
+      "end": null
+    },
+    "difficulty": "PGrad",
+    "aka": [
+      "Continuous Groups"
+    ],
+    "notableYears": [
+      1873,
+      1880,
+      1893
+    ],
+    "notes": "Sophus Lie\u2019s theory of continuous symmetry; Cartan classification in early 20th c.",
+    "leadsTo": [
+      "differential-geometry",
+      "representation-theory",
+      "theoretical-physics"
+    ],
+    "contributors": [
+      "lie",
+      "cartan",
+      "weyl"
+    ],
+    "prerequisites": [
+      {
+        "id": "abstract-algebra",
+        "strength": 85
+      },
+      {
+        "id": "calculus",
+        "strength": 75
+      }
+    ]
   },
   {
     "id": "homological-algebra",
@@ -140,14 +364,41 @@
     "type": "Pure Math",
     "category": "Algebra and Discrete",
     "year": 1956,
-    "era": { "start": 1945, "peak": 1956, "end": null },
-    "difficulty": { "tier": 5 },
-    "aka": ["Derived Functors", "Ext/Tor"],
-    "notableYears": [1945, 1956],
-    "notes": "Cartan–Eilenberg (1956); tools for modern algebra/topology.",
-    "leadsTo": ["algebraic-topology", "category-theory", "algebraic-geometry"],
-    "contributors": ["cartan", "eilenberg", "grothendieck"],
-    "prerequisites": [{ "id": "abstract-algebra", "strength": 90 }, { "id": "category-theory", "strength": 75 }]
+    "era": {
+      "start": 1945,
+      "peak": 1956,
+      "end": null
+    },
+    "difficulty": "Research",
+    "aka": [
+      "Derived Functors",
+      "Ext/Tor"
+    ],
+    "notableYears": [
+      1945,
+      1956
+    ],
+    "notes": "Cartan\u2013Eilenberg (1956); tools for modern algebra/topology.",
+    "leadsTo": [
+      "algebraic-topology",
+      "category-theory",
+      "algebraic-geometry"
+    ],
+    "contributors": [
+      "cartan",
+      "eilenberg",
+      "grothendieck"
+    ],
+    "prerequisites": [
+      {
+        "id": "abstract-algebra",
+        "strength": 90
+      },
+      {
+        "id": "category-theory",
+        "strength": 75
+      }
+    ]
   },
   {
     "id": "number-theory",
@@ -155,13 +406,33 @@
     "type": "Pure Math",
     "category": "Algebra and Discrete",
     "year": -300,
-    "era": { "start": -600, "peak": 1801, "end": null },
-    "difficulty": { "tier": 2 },
-    "aka": ["Elementary Number Theory"],
-    "notableYears": [1801, 1859],
-    "notes": "Ancient roots; Gauss’s Disquisitiones (1801); Riemann’s 1859 memoir.",
-    "leadsTo": ["abstract-algebra", "galois-theory", "algebraic-number-theory"],
-    "contributors": ["euclid", "euler", "gauss", "riemann", "ramanujan", "dirichlet"],
+    "era": {
+      "start": -600,
+      "peak": 1801,
+      "end": null
+    },
+    "difficulty": "High School",
+    "aka": [
+      "Elementary Number Theory"
+    ],
+    "notableYears": [
+      1801,
+      1859
+    ],
+    "notes": "Ancient roots; Gauss\u2019s Disquisitiones (1801); Riemann\u2019s 1859 memoir.",
+    "leadsTo": [
+      "abstract-algebra",
+      "galois-theory",
+      "algebraic-number-theory"
+    ],
+    "contributors": [
+      "euclid",
+      "euler",
+      "gauss",
+      "riemann",
+      "ramanujan",
+      "dirichlet"
+    ],
     "prerequisites": []
   },
   {
@@ -170,13 +441,33 @@
     "type": "Pure Math",
     "category": "Algebra and Discrete",
     "year": 1736,
-    "era": { "start": 1736, "peak": 1970, "end": null },
-    "difficulty": { "tier": 2 },
-    "aka": ["Networks", "Discrete Mathematics"],
-    "notableYears": [1736, 1959, 1976],
-    "notes": "Euler (1736); Erdős–Rényi random graphs (1959); Four Color Theorem (1976).",
-    "leadsTo": ["computation", "optimization"],
-    "contributors": ["euler", "erdos", "renyi", "tutte", "conway"],
+    "era": {
+      "start": 1736,
+      "peak": 1970,
+      "end": null
+    },
+    "difficulty": "High School",
+    "aka": [
+      "Networks",
+      "Discrete Mathematics"
+    ],
+    "notableYears": [
+      1736,
+      1959,
+      1976
+    ],
+    "notes": "Euler (1736); Erd\u0151s\u2013R\u00e9nyi random graphs (1959); Four Color Theorem (1976).",
+    "leadsTo": [
+      "computation",
+      "optimization"
+    ],
+    "contributors": [
+      "euler",
+      "erdos",
+      "renyi",
+      "tutte",
+      "conway"
+    ],
     "prerequisites": []
   },
   {
@@ -185,14 +476,37 @@
     "type": "Pure Math",
     "category": "Analysis",
     "year": 1684,
-    "era": { "start": 1665, "peak": 1687, "end": null },
-    "difficulty": { "tier": 1 },
-    "aka": ["Differential and Integral Calculus"],
-    "notableYears": [1684, 1687],
-    "notes": "Leibniz’s papers (1684–1686); Newton’s Principia (1687).",
-    "leadsTo": ["vector-calculus", "real-analysis", "differential-equations", "complex-analysis"],
-    "contributors": ["newton", "leibniz", "euler"],
-    "prerequisites": [{ "id": "elementary-geometry", "strength": 60 }]
+    "era": {
+      "start": 1665,
+      "peak": 1687,
+      "end": null
+    },
+    "difficulty": "High School",
+    "aka": [
+      "Differential and Integral Calculus"
+    ],
+    "notableYears": [
+      1684,
+      1687
+    ],
+    "notes": "Leibniz\u2019s papers (1684\u20131686); Newton\u2019s Principia (1687).",
+    "leadsTo": [
+      "vector-calculus",
+      "real-analysis",
+      "differential-equations",
+      "complex-analysis"
+    ],
+    "contributors": [
+      "newton",
+      "leibniz",
+      "euler"
+    ],
+    "prerequisites": [
+      {
+        "id": "elementary-geometry",
+        "strength": 60
+      }
+    ]
   },
   {
     "id": "vector-calculus",
@@ -200,14 +514,41 @@
     "type": "Pure Math",
     "category": "Analysis",
     "year": 1854,
-    "era": { "start": 1813, "peak": 1861, "end": null },
-    "difficulty": { "tier": 2 },
-    "aka": ["Multivariable Calculus"],
-    "notableYears": [1813, 1854, 1861],
-    "notes": "Gauss’s divergence (1813), Stokes’ theorem (1854), Maxwell’s equations (1861–62).",
-    "leadsTo": ["differential-equations", "differential-geometry"],
-    "contributors": ["gauss", "stokes", "green", "maxwell"],
-    "prerequisites": [{ "id": "calculus", "strength": 90 }, { "id": "linear-algebra", "strength": 70 }]
+    "era": {
+      "start": 1813,
+      "peak": 1861,
+      "end": null
+    },
+    "difficulty": "High School",
+    "aka": [
+      "Multivariable Calculus"
+    ],
+    "notableYears": [
+      1813,
+      1854,
+      1861
+    ],
+    "notes": "Gauss\u2019s divergence (1813), Stokes\u2019 theorem (1854), Maxwell\u2019s equations (1861\u201362).",
+    "leadsTo": [
+      "differential-equations",
+      "differential-geometry"
+    ],
+    "contributors": [
+      "gauss",
+      "stokes",
+      "green",
+      "maxwell"
+    ],
+    "prerequisites": [
+      {
+        "id": "calculus",
+        "strength": 90
+      },
+      {
+        "id": "linear-algebra",
+        "strength": 70
+      }
+    ]
   },
   {
     "id": "calculus-of-variations",
@@ -215,14 +556,36 @@
     "type": "Pure Math",
     "category": "Analysis",
     "year": 1755,
-    "era": { "start": 1755, "peak": 1788, "end": null },
-    "difficulty": { "tier": 3 },
-    "aka": ["Variational Calculus"],
-    "notableYears": [1755, 1788],
-    "notes": "Euler (1755) and Lagrange’s Méchanique Analytique (1788).",
-    "leadsTo": ["optimal-control", "pde"],
-    "contributors": ["euler", "lagrange", "hilbert", "tonelli"],
-    "prerequisites": [{ "id": "calculus", "strength": 85 }]
+    "era": {
+      "start": 1755,
+      "peak": 1788,
+      "end": null
+    },
+    "difficulty": "UGrad",
+    "aka": [
+      "Variational Calculus"
+    ],
+    "notableYears": [
+      1755,
+      1788
+    ],
+    "notes": "Euler (1755) and Lagrange\u2019s M\u00e9chanique Analytique (1788).",
+    "leadsTo": [
+      "optimal-control",
+      "pde"
+    ],
+    "contributors": [
+      "euler",
+      "lagrange",
+      "hilbert",
+      "tonelli"
+    ],
+    "prerequisites": [
+      {
+        "id": "calculus",
+        "strength": 85
+      }
+    ]
   },
   {
     "id": "fractional-analysis",
@@ -230,14 +593,39 @@
     "type": "Pure Math",
     "category": "Analysis",
     "year": 1965,
-    "era": { "start": 1695, "peak": 1965, "end": null },
-    "difficulty": { "tier": 4 },
-    "aka": ["Fractional Calculus"],
-    "notableYears": [1695, 1965],
+    "era": {
+      "start": 1695,
+      "peak": 1965,
+      "end": null
+    },
+    "difficulty": "PGrad",
+    "aka": [
+      "Fractional Calculus"
+    ],
+    "notableYears": [
+      1695,
+      1965
+    ],
     "notes": "Fractional derivatives first queried by Leibniz (1695); modern theory flourished in mid-20th century.",
-    "leadsTo": ["dynamical-systems"],
-    "contributors": ["liouville", "riemann", "grunwald", "lettnikov"],
-    "prerequisites": [{ "id": "real-analysis", "strength": 90 }, { "id": "functional-analysis", "strength": 85 }]
+    "leadsTo": [
+      "dynamical-systems"
+    ],
+    "contributors": [
+      "liouville",
+      "riemann",
+      "grunwald",
+      "lettnikov"
+    ],
+    "prerequisites": [
+      {
+        "id": "real-analysis",
+        "strength": 90
+      },
+      {
+        "id": "functional-analysis",
+        "strength": 85
+      }
+    ]
   },
   {
     "id": "complex-analysis",
@@ -245,14 +633,37 @@
     "type": "Pure Math",
     "category": "Analysis",
     "year": 1851,
-    "era": { "start": 1814, "peak": 1851, "end": null },
-    "difficulty": { "tier": 3 },
-    "aka": ["Theory of Holomorphic Functions"],
-    "notableYears": [1814, 1825, 1851],
+    "era": {
+      "start": 1814,
+      "peak": 1851,
+      "end": null
+    },
+    "difficulty": "UGrad",
+    "aka": [
+      "Theory of Holomorphic Functions"
+    ],
+    "notableYears": [
+      1814,
+      1825,
+      1851
+    ],
     "notes": "Cauchy integral theorem (1814/1825); Riemann surfaces (1851).",
-    "leadsTo": ["harmonic-analysis", "number-theory"],
-    "contributors": ["cauchy", "riemann", "gauss", "weierstrass"],
-    "prerequisites": [{ "id": "calculus", "strength": 90 }]
+    "leadsTo": [
+      "harmonic-analysis",
+      "number-theory"
+    ],
+    "contributors": [
+      "cauchy",
+      "riemann",
+      "gauss",
+      "weierstrass"
+    ],
+    "prerequisites": [
+      {
+        "id": "calculus",
+        "strength": 90
+      }
+    ]
   },
   {
     "id": "real-analysis",
@@ -260,14 +671,39 @@
     "type": "Pure Math",
     "category": "Analysis",
     "year": 1872,
-    "era": { "start": 1821, "peak": 1900, "end": null },
-    "difficulty": { "tier": 3 },
-    "aka": ["Mathematical Analysis"],
-    "notableYears": [1821, 1872, 1890],
-    "notes": "Cauchy’s Cours d’Analyse (1821); arithmetization with Dedekind/Cantor/Weierstrass (1870s).",
-    "leadsTo": ["measure-theory", "functional-analysis", "topology"],
-    "contributors": ["cauchy", "riemann", "weierstrass", "cantor", "dedekind"],
-    "prerequisites": [{ "id": "calculus", "strength": 95 }]
+    "era": {
+      "start": 1821,
+      "peak": 1900,
+      "end": null
+    },
+    "difficulty": "UGrad",
+    "aka": [
+      "Mathematical Analysis"
+    ],
+    "notableYears": [
+      1821,
+      1872,
+      1890
+    ],
+    "notes": "Cauchy\u2019s Cours d\u2019Analyse (1821); arithmetization with Dedekind/Cantor/Weierstrass (1870s).",
+    "leadsTo": [
+      "measure-theory",
+      "functional-analysis",
+      "topology"
+    ],
+    "contributors": [
+      "cauchy",
+      "riemann",
+      "weierstrass",
+      "cantor",
+      "dedekind"
+    ],
+    "prerequisites": [
+      {
+        "id": "calculus",
+        "strength": 95
+      }
+    ]
   },
   {
     "id": "measure-theory",
@@ -275,14 +711,42 @@
     "type": "Pure Math",
     "category": "Analysis",
     "year": 1902,
-    "era": { "start": 1899, "peak": 1902, "end": null },
-    "difficulty": { "tier": 4 },
-    "aka": ["Lebesgue Integration"],
-    "notableYears": [1902, 1904, 1933],
-    "notes": "Lebesgue’s thesis (1902); extension to probability by Kolmogorov axioms (1933).",
-    "leadsTo": ["functional-analysis", "probability-theory", "stochastic-analysis"],
-    "contributors": ["lebesgue", "borel", "caratheodory", "kolmogorov"],
-    "prerequisites": [{ "id": "real-analysis", "strength": 95 }, { "id": "axiomatic-set-theory", "strength": 70 }]
+    "era": {
+      "start": 1899,
+      "peak": 1902,
+      "end": null
+    },
+    "difficulty": "PGrad",
+    "aka": [
+      "Lebesgue Integration"
+    ],
+    "notableYears": [
+      1902,
+      1904,
+      1933
+    ],
+    "notes": "Lebesgue\u2019s thesis (1902); extension to probability by Kolmogorov axioms (1933).",
+    "leadsTo": [
+      "functional-analysis",
+      "probability-theory",
+      "stochastic-analysis"
+    ],
+    "contributors": [
+      "lebesgue",
+      "borel",
+      "caratheodory",
+      "kolmogorov"
+    ],
+    "prerequisites": [
+      {
+        "id": "real-analysis",
+        "strength": 95
+      },
+      {
+        "id": "axiomatic-set-theory",
+        "strength": 70
+      }
+    ]
   },
   {
     "id": "functional-analysis",
@@ -290,14 +754,49 @@
     "type": "Pure Math",
     "category": "Analysis",
     "year": 1920,
-    "era": { "start": 1907, "peak": 1932, "end": null },
-    "difficulty": { "tier": 4 },
-    "aka": ["Banach & Hilbert Space Theory", "Operator Theory"],
-    "notableYears": [1907, 1932, 1940],
-    "notes": "Fréchet metric spaces (1907), Banach spaces (1932), von Neumann operator algebras.",
-    "leadsTo": ["pde", "stochastic-analysis", "quantum-mechanics", "harmonic-analysis"],
-    "contributors": ["hilbert", "banach", "vonneumann", "riesz", "stoner"],
-    "prerequisites": [{ "id": "real-analysis", "strength": 90 }, { "id": "linear-algebra", "strength": 85 }, { "id": "measure-theory", "strength": 80 }]
+    "era": {
+      "start": 1907,
+      "peak": 1932,
+      "end": null
+    },
+    "difficulty": "PGrad",
+    "aka": [
+      "Banach & Hilbert Space Theory",
+      "Operator Theory"
+    ],
+    "notableYears": [
+      1907,
+      1932,
+      1940
+    ],
+    "notes": "Fr\u00e9chet metric spaces (1907), Banach spaces (1932), von Neumann operator algebras.",
+    "leadsTo": [
+      "pde",
+      "stochastic-analysis",
+      "quantum-mechanics",
+      "harmonic-analysis"
+    ],
+    "contributors": [
+      "hilbert",
+      "banach",
+      "vonneumann",
+      "riesz",
+      "stoner"
+    ],
+    "prerequisites": [
+      {
+        "id": "real-analysis",
+        "strength": 90
+      },
+      {
+        "id": "linear-algebra",
+        "strength": 85
+      },
+      {
+        "id": "measure-theory",
+        "strength": 80
+      }
+    ]
   },
   {
     "id": "harmonic-analysis",
@@ -305,14 +804,42 @@
     "type": "Pure Math",
     "category": "Analysis",
     "year": 1807,
-    "era": { "start": 1807, "peak": 1915, "end": null },
-    "difficulty": { "tier": 4 },
-    "aka": ["Fourier Analysis"],
-    "notableYears": [1807, 1822, 1915],
-    "notes": "Fourier series (1807–1822); Plancherel theorem (1910s); modern non-commutative directions.",
-    "leadsTo": ["signal-processing", "pde"],
-    "contributors": ["fourier", "riemann", "plancherel", "hardy", "littlewood"],
-    "prerequisites": [{ "id": "calculus", "strength": 85 }, { "id": "complex-analysis", "strength": 75 }]
+    "era": {
+      "start": 1807,
+      "peak": 1915,
+      "end": null
+    },
+    "difficulty": "PGrad",
+    "aka": [
+      "Fourier Analysis"
+    ],
+    "notableYears": [
+      1807,
+      1822,
+      1915
+    ],
+    "notes": "Fourier series (1807\u20131822); Plancherel theorem (1910s); modern non-commutative directions.",
+    "leadsTo": [
+      "signal-processing",
+      "pde"
+    ],
+    "contributors": [
+      "fourier",
+      "riemann",
+      "plancherel",
+      "hardy",
+      "littlewood"
+    ],
+    "prerequisites": [
+      {
+        "id": "calculus",
+        "strength": 85
+      },
+      {
+        "id": "complex-analysis",
+        "strength": 75
+      }
+    ]
   },
   {
     "id": "topology",
@@ -320,14 +847,43 @@
     "type": "Pure Math",
     "category": "Geometry and Topology",
     "year": 1895,
-    "era": { "start": 1895, "peak": 1930, "end": null },
-    "difficulty": { "tier": 3 },
-    "aka": ["General Topology", "Point-Set Topology"],
-    "notableYears": [1895, 1914, 1930],
-    "notes": "Poincaré (1895); Hausdorff spaces (1914); foundations of modern topology in early 20th c.",
-    "leadsTo": ["algebraic-topology", "differential-topology", "functional-analysis"],
-    "contributors": ["poincare", "hausdorff", "cantor", "hilbert"],
-    "prerequisites": [{ "id": "real-analysis", "strength": 75 }, { "id": "axiomatic-set-theory", "strength": 70 }]
+    "era": {
+      "start": 1895,
+      "peak": 1930,
+      "end": null
+    },
+    "difficulty": "UGrad",
+    "aka": [
+      "General Topology",
+      "Point-Set Topology"
+    ],
+    "notableYears": [
+      1895,
+      1914,
+      1930
+    ],
+    "notes": "Poincar\u00e9 (1895); Hausdorff spaces (1914); foundations of modern topology in early 20th c.",
+    "leadsTo": [
+      "algebraic-topology",
+      "differential-topology",
+      "functional-analysis"
+    ],
+    "contributors": [
+      "poincare",
+      "hausdorff",
+      "cantor",
+      "hilbert"
+    ],
+    "prerequisites": [
+      {
+        "id": "real-analysis",
+        "strength": 75
+      },
+      {
+        "id": "axiomatic-set-theory",
+        "strength": 70
+      }
+    ]
   },
   {
     "id": "algebraic-topology",
@@ -335,14 +891,42 @@
     "type": "Pure Math",
     "category": "Geometry and Topology",
     "year": 1910,
-    "era": { "start": 1895, "peak": 1950, "end": null },
-    "difficulty": { "tier": 5 },
-    "aka": ["Homology and Homotopy Theory"],
-    "notableYears": [1895, 1935, 1950],
-    "notes": "From Poincaré’s analysis situs to Eilenberg–Steenrod axioms; Postnikov, Serre, and beyond.",
-    "leadsTo": ["differential-topology", "category-theory"],
-    "contributors": ["poincare", "eilenberg", "steenrod", "hurewicz", "serre"],
-    "prerequisites": [{ "id": "topology", "strength": 90 }, { "id": "abstract-algebra", "strength": 85 }]
+    "era": {
+      "start": 1895,
+      "peak": 1950,
+      "end": null
+    },
+    "difficulty": "Research",
+    "aka": [
+      "Homology and Homotopy Theory"
+    ],
+    "notableYears": [
+      1895,
+      1935,
+      1950
+    ],
+    "notes": "From Poincar\u00e9\u2019s analysis situs to Eilenberg\u2013Steenrod axioms; Postnikov, Serre, and beyond.",
+    "leadsTo": [
+      "differential-topology",
+      "category-theory"
+    ],
+    "contributors": [
+      "poincare",
+      "eilenberg",
+      "steenrod",
+      "hurewicz",
+      "serre"
+    ],
+    "prerequisites": [
+      {
+        "id": "topology",
+        "strength": 90
+      },
+      {
+        "id": "abstract-algebra",
+        "strength": 85
+      }
+    ]
   },
   {
     "id": "differential-geometry",
@@ -350,14 +934,41 @@
     "type": "Pure Math",
     "category": "Geometry and Topology",
     "year": 1827,
-    "era": { "start": 1827, "peak": 1854, "end": null },
-    "difficulty": { "tier": 4 },
-    "aka": ["Riemannian Geometry"],
-    "notableYears": [1827, 1854],
-    "notes": "Gauss’s Theorema Egregium (1827), Riemann’s habilitation (1854).",
-    "leadsTo": ["differential-topology", "general-relativity", "symplectic-geometry"],
-    "contributors": ["gauss", "riemann", "poincare", "cartan"],
-    "prerequisites": [{ "id": "vector-calculus", "strength": 90 }, { "id": "linear-algebra", "strength": 75 }]
+    "era": {
+      "start": 1827,
+      "peak": 1854,
+      "end": null
+    },
+    "difficulty": "PGrad",
+    "aka": [
+      "Riemannian Geometry"
+    ],
+    "notableYears": [
+      1827,
+      1854
+    ],
+    "notes": "Gauss\u2019s Theorema Egregium (1827), Riemann\u2019s habilitation (1854).",
+    "leadsTo": [
+      "differential-topology",
+      "general-relativity",
+      "symplectic-geometry"
+    ],
+    "contributors": [
+      "gauss",
+      "riemann",
+      "poincare",
+      "cartan"
+    ],
+    "prerequisites": [
+      {
+        "id": "vector-calculus",
+        "strength": 90
+      },
+      {
+        "id": "linear-algebra",
+        "strength": 75
+      }
+    ]
   },
   {
     "id": "differential-topology",
@@ -365,14 +976,36 @@
     "type": "Pure Math",
     "category": "Geometry and Topology",
     "year": 1950,
-    "era": { "start": 1950, "peak": 1961, "end": null },
-    "difficulty": { "tier": 5 },
-    "aka": ["Smooth Manifolds & Cobordism"],
-    "notableYears": [1950, 1961],
-    "notes": "Thom’s cobordism (1950s), Milnor’s discoveries (exotic 7-spheres, 1956).",
+    "era": {
+      "start": 1950,
+      "peak": 1961,
+      "end": null
+    },
+    "difficulty": "Research",
+    "aka": [
+      "Smooth Manifolds & Cobordism"
+    ],
+    "notableYears": [
+      1950,
+      1961
+    ],
+    "notes": "Thom\u2019s cobordism (1950s), Milnor\u2019s discoveries (exotic 7-spheres, 1956).",
     "leadsTo": [],
-    "contributors": ["thom", "milnor", "smale"],
-    "prerequisites": [{ "id": "topology", "strength": 85 }, { "id": "differential-geometry", "strength": 85 }]
+    "contributors": [
+      "thom",
+      "milnor",
+      "smale"
+    ],
+    "prerequisites": [
+      {
+        "id": "topology",
+        "strength": 85
+      },
+      {
+        "id": "differential-geometry",
+        "strength": 85
+      }
+    ]
   },
   {
     "id": "probability-theory",
@@ -380,14 +1013,39 @@
     "type": "Applied Math",
     "category": "Probability, Statistics and Stochastic Processes",
     "year": 1933,
-    "era": { "start": 1654, "peak": 1933, "end": null },
-    "difficulty": { "tier": 3 },
-    "aka": ["Measure-Theoretic Probability"],
-    "notableYears": [1654, 1703, 1933],
-    "notes": "Pascal–Fermat correspondence (1654); Bernoulli (1703); Kolmogorov’s axioms (1933).",
-    "leadsTo": ["statistical-inference", "stochastic-processes", "information-theory"],
-    "contributors": ["pascal", "fermat", "bernoulli", "laplace", "kolmogorov"],
-    "prerequisites": [{ "id": "calculus", "strength": 70 }]
+    "era": {
+      "start": 1654,
+      "peak": 1933,
+      "end": null
+    },
+    "difficulty": "UGrad",
+    "aka": [
+      "Measure-Theoretic Probability"
+    ],
+    "notableYears": [
+      1654,
+      1703,
+      1933
+    ],
+    "notes": "Pascal\u2013Fermat correspondence (1654); Bernoulli (1703); Kolmogorov\u2019s axioms (1933).",
+    "leadsTo": [
+      "statistical-inference",
+      "stochastic-processes",
+      "information-theory"
+    ],
+    "contributors": [
+      "pascal",
+      "fermat",
+      "bernoulli",
+      "laplace",
+      "kolmogorov"
+    ],
+    "prerequisites": [
+      {
+        "id": "calculus",
+        "strength": 70
+      }
+    ]
   },
   {
     "id": "statistical-inference",
@@ -395,14 +1053,44 @@
     "type": "Applied Math",
     "category": "Probability, Statistics and Stochastic Processes",
     "year": 1935,
-    "era": { "start": 1805, "peak": 1935, "end": null },
-    "difficulty": { "tier": 3 },
-    "aka": ["Mathematical Statistics"],
-    "notableYears": [1805, 1809, 1922, 1933],
-    "notes": "Least squares (Legendre 1805, Gauss 1809); Fisher (1922); Neyman–Pearson (1933).",
-    "leadsTo": ["bayesian-inference", "regression-analysis", "machine-learning"],
-    "contributors": ["legendre", "gauss", "fisher", "neyman", "pearson"],
-    "prerequisites": [{ "id": "probability-theory", "strength": 85 }, { "id": "linear-algebra", "strength": 65 }]
+    "era": {
+      "start": 1805,
+      "peak": 1935,
+      "end": null
+    },
+    "difficulty": "UGrad",
+    "aka": [
+      "Mathematical Statistics"
+    ],
+    "notableYears": [
+      1805,
+      1809,
+      1922,
+      1933
+    ],
+    "notes": "Least squares (Legendre 1805, Gauss 1809); Fisher (1922); Neyman\u2013Pearson (1933).",
+    "leadsTo": [
+      "bayesian-inference",
+      "regression-analysis",
+      "machine-learning"
+    ],
+    "contributors": [
+      "legendre",
+      "gauss",
+      "fisher",
+      "neyman",
+      "pearson"
+    ],
+    "prerequisites": [
+      {
+        "id": "probability-theory",
+        "strength": 85
+      },
+      {
+        "id": "linear-algebra",
+        "strength": 65
+      }
+    ]
   },
   {
     "id": "stochastic-processes",
@@ -410,14 +1098,42 @@
     "type": "Applied Math",
     "category": "Probability, Statistics and Stochastic Processes",
     "year": 1906,
-    "era": { "start": 1906, "peak": 1930, "end": null },
-    "difficulty": { "tier": 4 },
-    "aka": ["Markov Processes", "Wiener Processes"],
-    "notableYears": [1906, 1923, 1931],
+    "era": {
+      "start": 1906,
+      "peak": 1930,
+      "end": null
+    },
+    "difficulty": "PGrad",
+    "aka": [
+      "Markov Processes",
+      "Wiener Processes"
+    ],
+    "notableYears": [
+      1906,
+      1923,
+      1931
+    ],
     "notes": "Markov chains (1906), Wiener process (1923), Kolmogorov forward/backward equations (1931).",
-    "leadsTo": ["stochastic-analysis", "time-series"],
-    "contributors": ["markov", "wiener", "kolmogorov", "doob"],
-    "prerequisites": [{ "id": "probability-theory", "strength": 90 }, { "id": "real-analysis", "strength": 75 }]
+    "leadsTo": [
+      "stochastic-analysis",
+      "time-series"
+    ],
+    "contributors": [
+      "markov",
+      "wiener",
+      "kolmogorov",
+      "doob"
+    ],
+    "prerequisites": [
+      {
+        "id": "probability-theory",
+        "strength": 90
+      },
+      {
+        "id": "real-analysis",
+        "strength": 75
+      }
+    ]
   },
   {
     "id": "bayesian-inference",
@@ -425,14 +1141,42 @@
     "type": "Applied Math",
     "category": "Probability, Statistics and Stochastic Processes",
     "year": 1763,
-    "era": { "start": 1763, "peak": 1990, "end": null },
-    "difficulty": { "tier": 3 },
-    "aka": ["Bayesian Statistics"],
-    "notableYears": [1763, 1950, 1990],
+    "era": {
+      "start": 1763,
+      "peak": 1990,
+      "end": null
+    },
+    "difficulty": "UGrad",
+    "aka": [
+      "Bayesian Statistics"
+    ],
+    "notableYears": [
+      1763,
+      1950,
+      1990
+    ],
     "notes": "Bayes (1763) and Laplace; computational renaissance with MCMC/VI in 1990s.",
-    "leadsTo": ["machine-learning"],
-    "contributors": ["bayes", "laplace", "jeffreys", "jaynes", "metropolis", "hastings"],
-    "prerequisites": [{ "id": "probability-theory", "strength": 85 }, { "id": "statistical-inference", "strength": 80 }]
+    "leadsTo": [
+      "machine-learning"
+    ],
+    "contributors": [
+      "bayes",
+      "laplace",
+      "jeffreys",
+      "jaynes",
+      "metropolis",
+      "hastings"
+    ],
+    "prerequisites": [
+      {
+        "id": "probability-theory",
+        "strength": 85
+      },
+      {
+        "id": "statistical-inference",
+        "strength": 80
+      }
+    ]
   },
   {
     "id": "stochastic-analysis",
@@ -440,14 +1184,41 @@
     "type": "Applied Math",
     "category": "Probability, Statistics and Stochastic Processes",
     "year": 1944,
-    "era": { "start": 1944, "peak": 1970, "end": null },
-    "difficulty": { "tier": 5 },
-    "aka": ["Itô Calculus"],
-    "notableYears": [1944, 1951, 1979],
-    "notes": "Itô integral (1944), martingale theory (Doob), Malliavin calculus (1970s).",
+    "era": {
+      "start": 1944,
+      "peak": 1970,
+      "end": null
+    },
+    "difficulty": "Research",
+    "aka": [
+      "It\u00f4 Calculus"
+    ],
+    "notableYears": [
+      1944,
+      1951,
+      1979
+    ],
+    "notes": "It\u00f4 integral (1944), martingale theory (Doob), Malliavin calculus (1970s).",
     "leadsTo": [],
-    "contributors": ["ito", "doob", "malliavin"],
-    "prerequisites": [{ "id": "stochastic-processes", "strength": 90 }, { "id": "measure-theory", "strength": 85 }, { "id": "functional-analysis", "strength": 80 }]
+    "contributors": [
+      "ito",
+      "doob",
+      "malliavin"
+    ],
+    "prerequisites": [
+      {
+        "id": "stochastic-processes",
+        "strength": 90
+      },
+      {
+        "id": "measure-theory",
+        "strength": 85
+      },
+      {
+        "id": "functional-analysis",
+        "strength": 80
+      }
+    ]
   },
   {
     "id": "regression-analysis",
@@ -455,14 +1226,41 @@
     "type": "Applied Math",
     "category": "Probability, Statistics and Stochastic Processes",
     "year": 1805,
-    "era": { "start": 1805, "peak": 1900, "end": null },
-    "difficulty": { "tier": 2 },
-    "aka": ["Least Squares", "Linear Models"],
-    "notableYears": [1805, 1809, 1877],
+    "era": {
+      "start": 1805,
+      "peak": 1900,
+      "end": null
+    },
+    "difficulty": "High School",
+    "aka": [
+      "Least Squares",
+      "Linear Models"
+    ],
+    "notableYears": [
+      1805,
+      1809,
+      1877
+    ],
     "notes": "Legendre (1805), Gauss (1809); Pearson correlation (1890s).",
-    "leadsTo": ["machine-learning"],
-    "contributors": ["legendre", "gauss", "pearson", "fisher"],
-    "prerequisites": [{ "id": "statistical-inference", "strength": 85 }, { "id": "linear-algebra", "strength": 75 }]
+    "leadsTo": [
+      "machine-learning"
+    ],
+    "contributors": [
+      "legendre",
+      "gauss",
+      "pearson",
+      "fisher"
+    ],
+    "prerequisites": [
+      {
+        "id": "statistical-inference",
+        "strength": 85
+      },
+      {
+        "id": "linear-algebra",
+        "strength": 75
+      }
+    ]
   },
   {
     "id": "time-series",
@@ -470,14 +1268,40 @@
     "type": "Applied Math",
     "category": "Probability, Statistics and Stochastic Processes",
     "year": 1927,
-    "era": { "start": 1927, "peak": 1970, "end": null },
-    "difficulty": { "tier": 3 },
-    "aka": ["ARMA/ARIMA Models"],
-    "notableYears": [1927, 1938, 1970],
-    "notes": "Yule (1927), Wold decomposition (1938), Box–Jenkins (1970).",
-    "leadsTo": ["machine-learning"],
-    "contributors": ["yule", "wold", "box", "jenkins"],
-    "prerequisites": [{ "id": "stochastic-processes", "strength": 85 }, { "id": "statistical-inference", "strength": 80 }]
+    "era": {
+      "start": 1927,
+      "peak": 1970,
+      "end": null
+    },
+    "difficulty": "UGrad",
+    "aka": [
+      "ARMA/ARIMA Models"
+    ],
+    "notableYears": [
+      1927,
+      1938,
+      1970
+    ],
+    "notes": "Yule (1927), Wold decomposition (1938), Box\u2013Jenkins (1970).",
+    "leadsTo": [
+      "machine-learning"
+    ],
+    "contributors": [
+      "yule",
+      "wold",
+      "box",
+      "jenkins"
+    ],
+    "prerequisites": [
+      {
+        "id": "stochastic-processes",
+        "strength": 85
+      },
+      {
+        "id": "statistical-inference",
+        "strength": 80
+      }
+    ]
   },
   {
     "id": "information-theory",
@@ -485,14 +1309,35 @@
     "type": "Applied Math",
     "category": "Probability, Statistics and Stochastic Processes",
     "year": 1948,
-    "era": { "start": 1948, "peak": 1960, "end": null },
-    "difficulty": { "tier": 3 },
-    "aka": ["Shannon Theory"],
-    "notableYears": [1948, 1959],
-    "notes": "Shannon (1948) founded the field; coding theorems and rate–distortion theory followed.",
-    "leadsTo": ["machine-learning"],
-    "contributors": ["shannon", "cover", "gallager", "jaynes"],
-    "prerequisites": [{ "id": "probability-theory", "strength": 85 }]
+    "era": {
+      "start": 1948,
+      "peak": 1960,
+      "end": null
+    },
+    "difficulty": "UGrad",
+    "aka": [
+      "Shannon Theory"
+    ],
+    "notableYears": [
+      1948,
+      1959
+    ],
+    "notes": "Shannon (1948) founded the field; coding theorems and rate\u2013distortion theory followed.",
+    "leadsTo": [
+      "machine-learning"
+    ],
+    "contributors": [
+      "shannon",
+      "cover",
+      "gallager",
+      "jaynes"
+    ],
+    "prerequisites": [
+      {
+        "id": "probability-theory",
+        "strength": 85
+      }
+    ]
   },
   {
     "id": "machine-learning",
@@ -500,14 +1345,45 @@
     "type": "Applied Math",
     "category": "Probability, Statistics and Stochastic Processes",
     "year": 1957,
-    "era": { "start": 1957, "peak": 2012, "end": null },
-    "difficulty": { "tier": 4 },
-    "aka": ["Statistical Learning Theory"],
-    "notableYears": [1957, 1984, 2001, 2012],
-    "notes": "Perceptron (1957), PAC learning (1984), kernel methods (1990s–2000s), deep learning surge (2012).",
+    "era": {
+      "start": 1957,
+      "peak": 2012,
+      "end": null
+    },
+    "difficulty": "PGrad",
+    "aka": [
+      "Statistical Learning Theory"
+    ],
+    "notableYears": [
+      1957,
+      1984,
+      2001,
+      2012
+    ],
+    "notes": "Perceptron (1957), PAC learning (1984), kernel methods (1990s\u20132000s), deep learning surge (2012).",
     "leadsTo": [],
-    "contributors": ["rosenblatt", "vapnik", "valiant", "lecun", "hinton", "bengio"],
-    "prerequisites": [{ "id": "linear-algebra", "strength": 80 }, { "id": "statistical-inference", "strength": 85 }, { "id": "optimization", "strength": 75 }]
+    "contributors": [
+      "rosenblatt",
+      "vapnik",
+      "valiant",
+      "lecun",
+      "hinton",
+      "bengio"
+    ],
+    "prerequisites": [
+      {
+        "id": "linear-algebra",
+        "strength": 80
+      },
+      {
+        "id": "statistical-inference",
+        "strength": 85
+      },
+      {
+        "id": "optimization",
+        "strength": 75
+      }
+    ]
   },
   {
     "id": "optimization",
@@ -515,14 +1391,43 @@
     "type": "Applied Math",
     "category": "Optimisation and Control",
     "year": 1947,
-    "era": { "start": 1947, "peak": 2004, "end": null },
-    "difficulty": { "tier": 3 },
-    "aka": ["Mathematical Programming"],
-    "notableYears": [1947, 1951, 1994, 2004],
+    "era": {
+      "start": 1947,
+      "peak": 2004,
+      "end": null
+    },
+    "difficulty": "UGrad",
+    "aka": [
+      "Mathematical Programming"
+    ],
+    "notableYears": [
+      1947,
+      1951,
+      1994,
+      2004
+    ],
     "notes": "Linear programming (Dantzig 1947), convex analysis (Fenchel 1951), interior-point (Karmarkar 1984), convex optimization textbooks (2004).",
-    "leadsTo": ["machine-learning", "optimal-control"],
-    "contributors": ["dantzig", "fenchel", "rockafellar", "nesterov", "boyd"],
-    "prerequisites": [{ "id": "calculus", "strength": 85 }, { "id": "linear-algebra", "strength": 80 }]
+    "leadsTo": [
+      "machine-learning",
+      "optimal-control"
+    ],
+    "contributors": [
+      "dantzig",
+      "fenchel",
+      "rockafellar",
+      "nesterov",
+      "boyd"
+    ],
+    "prerequisites": [
+      {
+        "id": "calculus",
+        "strength": 85
+      },
+      {
+        "id": "linear-algebra",
+        "strength": 80
+      }
+    ]
   },
   {
     "id": "optimal-control",
@@ -530,14 +1435,40 @@
     "type": "Applied Math",
     "category": "Optimisation and Control",
     "year": 1956,
-    "era": { "start": 1956, "peak": 1962, "end": null },
-    "difficulty": { "tier": 4 },
-    "aka": ["Pontryagin Maximum Principle", "Dynamic Programming"],
-    "notableYears": [1956, 1962],
-    "notes": "Bellman’s dynamic programming (1950s); Pontryagin maximum principle (1956–62).",
+    "era": {
+      "start": 1956,
+      "peak": 1962,
+      "end": null
+    },
+    "difficulty": "PGrad",
+    "aka": [
+      "Pontryagin Maximum Principle",
+      "Dynamic Programming"
+    ],
+    "notableYears": [
+      1956,
+      1962
+    ],
+    "notes": "Bellman\u2019s dynamic programming (1950s); Pontryagin maximum principle (1956\u201362).",
     "leadsTo": [],
-    "contributors": ["bellman", "pontryagin"],
-    "prerequisites": [{ "id": "calculus-of-variations", "strength": 85 }, { "id": "differential-equations", "strength": 80 }, { "id": "optimization", "strength": 75 }]
+    "contributors": [
+      "bellman",
+      "pontryagin"
+    ],
+    "prerequisites": [
+      {
+        "id": "calculus-of-variations",
+        "strength": 85
+      },
+      {
+        "id": "differential-equations",
+        "strength": 80
+      },
+      {
+        "id": "optimization",
+        "strength": 75
+      }
+    ]
   },
   {
     "id": "game-theory",
@@ -545,14 +1476,37 @@
     "type": "Applied Math",
     "category": "Optimisation and Control",
     "year": 1944,
-    "era": { "start": 1928, "peak": 1951, "end": null },
-    "difficulty": { "tier": 3 },
-    "aka": ["Non-cooperative Games"],
-    "notableYears": [1928, 1944, 1951],
-    "notes": "von Neumann minimax (1928), Theory of Games and Economic Behavior (1944), Nash equilibrium (1950–51).",
+    "era": {
+      "start": 1928,
+      "peak": 1951,
+      "end": null
+    },
+    "difficulty": "UGrad",
+    "aka": [
+      "Non-cooperative Games"
+    ],
+    "notableYears": [
+      1928,
+      1944,
+      1951
+    ],
+    "notes": "von Neumann minimax (1928), Theory of Games and Economic Behavior (1944), Nash equilibrium (1950\u201351).",
     "leadsTo": [],
-    "contributors": ["vonneumann", "morgenstern", "nash"],
-    "prerequisites": [{ "id": "probability-theory", "strength": 70 }, { "id": "optimization", "strength": 70 }]
+    "contributors": [
+      "vonneumann",
+      "morgenstern",
+      "nash"
+    ],
+    "prerequisites": [
+      {
+        "id": "probability-theory",
+        "strength": 70
+      },
+      {
+        "id": "optimization",
+        "strength": 70
+      }
+    ]
   },
   {
     "id": "numerical-analysis",
@@ -560,14 +1514,39 @@
     "type": "Applied Math",
     "category": "Computation",
     "year": 1940,
-    "era": { "start": 1940, "peak": 1970, "end": null },
-    "difficulty": { "tier": 3 },
-    "aka": ["Scientific Computing"],
-    "notableYears": [1947, 1965],
+    "era": {
+      "start": 1940,
+      "peak": 1970,
+      "end": null
+    },
+    "difficulty": "UGrad",
+    "aka": [
+      "Scientific Computing"
+    ],
+    "notableYears": [
+      1947,
+      1965
+    ],
     "notes": "Field matured with electronic computing; focus on stability, convergence, error.",
-    "leadsTo": ["computational-linear-algebra"],
-    "contributors": ["vonneumann", "turing", "householder", "golub"],
-    "prerequisites": [{ "id": "calculus", "strength": 80 }, { "id": "linear-algebra", "strength": 75 }]
+    "leadsTo": [
+      "computational-linear-algebra"
+    ],
+    "contributors": [
+      "vonneumann",
+      "turing",
+      "householder",
+      "golub"
+    ],
+    "prerequisites": [
+      {
+        "id": "calculus",
+        "strength": 80
+      },
+      {
+        "id": "linear-algebra",
+        "strength": 75
+      }
+    ]
   },
   {
     "id": "computational-linear-algebra",
@@ -575,14 +1554,40 @@
     "type": "Applied Math",
     "category": "Computation",
     "year": 1965,
-    "era": { "start": 1950, "peak": 1970, "end": null },
-    "difficulty": { "tier": 3 },
-    "aka": ["Numerical Linear Algebra"],
-    "notableYears": [1959, 1965, 1977],
-    "notes": "QR algorithm (1959), Householder methods (1960s), Golub–Van Loan textbook (1977).",
-    "leadsTo": ["machine-learning"],
-    "contributors": ["golub", "vanloan", "householder", "givens"],
-    "prerequisites": [{ "id": "linear-algebra", "strength": 90 }, { "id": "numerical-analysis", "strength": 75 }]
+    "era": {
+      "start": 1950,
+      "peak": 1970,
+      "end": null
+    },
+    "difficulty": "UGrad",
+    "aka": [
+      "Numerical Linear Algebra"
+    ],
+    "notableYears": [
+      1959,
+      1965,
+      1977
+    ],
+    "notes": "QR algorithm (1959), Householder methods (1960s), Golub\u2013Van Loan textbook (1977).",
+    "leadsTo": [
+      "machine-learning"
+    ],
+    "contributors": [
+      "golub",
+      "vanloan",
+      "householder",
+      "givens"
+    ],
+    "prerequisites": [
+      {
+        "id": "linear-algebra",
+        "strength": 90
+      },
+      {
+        "id": "numerical-analysis",
+        "strength": 75
+      }
+    ]
   },
   {
     "id": "computation",
@@ -590,14 +1595,40 @@
     "type": "Applied Math",
     "category": "Computation",
     "year": 1936,
-    "era": { "start": 1936, "peak": 1971, "end": null },
-    "difficulty": { "tier": 3 },
-    "aka": ["Automata, Complexity, Computability"],
-    "notableYears": [1936, 1943, 1971],
-    "notes": "Church–Turing (1936), Kleene (1943), Cook–Levin theorem (1971).",
+    "era": {
+      "start": 1936,
+      "peak": 1971,
+      "end": null
+    },
+    "difficulty": "UGrad",
+    "aka": [
+      "Automata, Complexity, Computability"
+    ],
+    "notableYears": [
+      1936,
+      1943,
+      1971
+    ],
+    "notes": "Church\u2013Turing (1936), Kleene (1943), Cook\u2013Levin theorem (1971).",
     "leadsTo": [],
-    "contributors": ["turing", "church", "kleene", "cook", "levin", "knuth"],
-    "prerequisites": [{ "id": "logic", "strength": 85 }, { "id": "graph-theory", "strength": 70 }]
+    "contributors": [
+      "turing",
+      "church",
+      "kleene",
+      "cook",
+      "levin",
+      "knuth"
+    ],
+    "prerequisites": [
+      {
+        "id": "logic",
+        "strength": 85
+      },
+      {
+        "id": "graph-theory",
+        "strength": 70
+      }
+    ]
   },
   {
     "id": "differential-equations",
@@ -605,14 +1636,38 @@
     "type": "Applied Math",
     "category": "Physics",
     "year": 1687,
-    "era": { "start": 1671, "peak": 1750, "end": null },
-    "difficulty": { "tier": 2 },
-    "aka": ["ODEs"],
-    "notableYears": [1687, 1736, 1760],
-    "notes": "From Newton’s laws to Euler’s methods; existence/uniqueness developed in 19th c.",
-    "leadsTo": ["pde", "dynamical-systems"],
-    "contributors": ["newton", "euler", "leibniz", "lagrange", "cauchy"],
-    "prerequisites": [{ "id": "calculus", "strength": 90 }]
+    "era": {
+      "start": 1671,
+      "peak": 1750,
+      "end": null
+    },
+    "difficulty": "High School",
+    "aka": [
+      "ODEs"
+    ],
+    "notableYears": [
+      1687,
+      1736,
+      1760
+    ],
+    "notes": "From Newton\u2019s laws to Euler\u2019s methods; existence/uniqueness developed in 19th c.",
+    "leadsTo": [
+      "pde",
+      "dynamical-systems"
+    ],
+    "contributors": [
+      "newton",
+      "euler",
+      "leibniz",
+      "lagrange",
+      "cauchy"
+    ],
+    "prerequisites": [
+      {
+        "id": "calculus",
+        "strength": 90
+      }
+    ]
   },
   {
     "id": "pde",
@@ -620,14 +1675,43 @@
     "type": "Applied Math",
     "category": "Physics",
     "year": 1750,
-    "era": { "start": 1750, "peak": 1910, "end": null },
-    "difficulty": { "tier": 4 },
-    "aka": ["Elliptic/Parabolic/Hyperbolic PDEs"],
-    "notableYears": [1750, 1822, 1910],
-    "notes": "Vibrating string and heat equation (d’Alembert, Fourier), Hilbert’s problems shaped 20th c PDE.",
-    "leadsTo": ["dynamical-systems", "quantum-mechanics", "general-relativity"],
-    "contributors": ["euler", "fourier", "lagrange", "hilbert", "sobolev"],
-    "prerequisites": [{ "id": "vector-calculus", "strength": 90 }, { "id": "differential-equations", "strength": 85 }]
+    "era": {
+      "start": 1750,
+      "peak": 1910,
+      "end": null
+    },
+    "difficulty": "PGrad",
+    "aka": [
+      "Elliptic/Parabolic/Hyperbolic PDEs"
+    ],
+    "notableYears": [
+      1750,
+      1822,
+      1910
+    ],
+    "notes": "Vibrating string and heat equation (d\u2019Alembert, Fourier), Hilbert\u2019s problems shaped 20th c PDE.",
+    "leadsTo": [
+      "dynamical-systems",
+      "quantum-mechanics",
+      "general-relativity"
+    ],
+    "contributors": [
+      "euler",
+      "fourier",
+      "lagrange",
+      "hilbert",
+      "sobolev"
+    ],
+    "prerequisites": [
+      {
+        "id": "vector-calculus",
+        "strength": 90
+      },
+      {
+        "id": "differential-equations",
+        "strength": 85
+      }
+    ]
   },
   {
     "id": "dynamical-systems",
@@ -635,14 +1719,38 @@
     "type": "Applied Math",
     "category": "Physics",
     "year": 1890,
-    "era": { "start": 1890, "peak": 1963, "end": null },
-    "difficulty": { "tier": 4 },
-    "aka": ["Qualitative Theory of Differential Equations", "Chaos"],
-    "notableYears": [1890, 1963],
-    "notes": "Poincaré (1890) qualitative theory; Lorenz (1963) chaos.",
+    "era": {
+      "start": 1890,
+      "peak": 1963,
+      "end": null
+    },
+    "difficulty": "PGrad",
+    "aka": [
+      "Qualitative Theory of Differential Equations",
+      "Chaos"
+    ],
+    "notableYears": [
+      1890,
+      1963
+    ],
+    "notes": "Poincar\u00e9 (1890) qualitative theory; Lorenz (1963) chaos.",
     "leadsTo": [],
-    "contributors": ["poincare", "birkhoff", "smale", "lorenz"],
-    "prerequisites": [{ "id": "differential-equations", "strength": 90 }, { "id": "topology", "strength": 70 }]
+    "contributors": [
+      "poincare",
+      "birkhoff",
+      "smale",
+      "lorenz"
+    ],
+    "prerequisites": [
+      {
+        "id": "differential-equations",
+        "strength": 90
+      },
+      {
+        "id": "topology",
+        "strength": 70
+      }
+    ]
   },
   {
     "id": "quantum-mechanics",
@@ -650,14 +1758,39 @@
     "type": "Applied Math",
     "category": "Physics",
     "year": 1926,
-    "era": { "start": 1925, "peak": 1932, "end": null },
-    "difficulty": { "tier": 4 },
-    "aka": ["Wave & Matrix Mechanics"],
-    "notableYears": [1925, 1926, 1932],
-    "notes": "Heisenberg (1925) matrix mechanics; Schrödinger (1926) wave mechanics; von Neumann mathematical foundations (1932).",
+    "era": {
+      "start": 1925,
+      "peak": 1932,
+      "end": null
+    },
+    "difficulty": "PGrad",
+    "aka": [
+      "Wave & Matrix Mechanics"
+    ],
+    "notableYears": [
+      1925,
+      1926,
+      1932
+    ],
+    "notes": "Heisenberg (1925) matrix mechanics; Schr\u00f6dinger (1926) wave mechanics; von Neumann mathematical foundations (1932).",
     "leadsTo": [],
-    "contributors": ["heisenberg", "schrodinger", "dirac", "vonneumann", "feynman"],
-    "prerequisites": [{ "id": "functional-analysis", "strength": 85 }, { "id": "pde", "strength": 80 }]
+    "contributors": [
+      "heisenberg",
+      "schrodinger",
+      "dirac",
+      "vonneumann",
+      "feynman"
+    ],
+    "prerequisites": [
+      {
+        "id": "functional-analysis",
+        "strength": 85
+      },
+      {
+        "id": "pde",
+        "strength": 80
+      }
+    ]
   },
   {
     "id": "general-relativity",
@@ -665,14 +1798,39 @@
     "type": "Applied Math",
     "category": "Physics",
     "year": 1915,
-    "era": { "start": 1915, "peak": 1916, "end": null },
-    "difficulty": { "tier": 5 },
-    "aka": ["GR"],
-    "notableYears": [1915, 1916],
-    "notes": "Einstein’s field equations (1915–16); differential geometry as the mathematical core.",
+    "era": {
+      "start": 1915,
+      "peak": 1916,
+      "end": null
+    },
+    "difficulty": "Research",
+    "aka": [
+      "GR"
+    ],
+    "notableYears": [
+      1915,
+      1916
+    ],
+    "notes": "Einstein\u2019s field equations (1915\u201316); differential geometry as the mathematical core.",
     "leadsTo": [],
-    "contributors": ["einstein", "riemann", "levicivita", "weyl", "hawking", "penrose"],
-    "prerequisites": [{ "id": "differential-geometry", "strength": 95 }, { "id": "pde", "strength": 80 }]
+    "contributors": [
+      "einstein",
+      "riemann",
+      "levicivita",
+      "weyl",
+      "hawking",
+      "penrose"
+    ],
+    "prerequisites": [
+      {
+        "id": "differential-geometry",
+        "strength": 95
+      },
+      {
+        "id": "pde",
+        "strength": 80
+      }
+    ]
   },
   {
     "id": "signal-processing",
@@ -680,14 +1838,41 @@
     "type": "Applied Math",
     "category": "Computation",
     "year": 1965,
-    "era": { "start": 1948, "peak": 1975, "end": null },
-    "difficulty": { "tier": 3 },
-    "aka": ["DSP", "Fourier & Wavelet Methods"],
-    "notableYears": [1948, 1965, 1987],
-    "notes": "Shannon lays groundwork (1948); digital signal processing (1960s–70s); wavelets (Daubechies 1987–92).",
-    "leadsTo": ["machine-learning"],
-    "contributors": ["fourier", "shannon", "oppenheim", "daubechies"],
-    "prerequisites": [{ "id": "harmonic-analysis", "strength": 85 }, { "id": "linear-algebra", "strength": 75 }]
+    "era": {
+      "start": 1948,
+      "peak": 1975,
+      "end": null
+    },
+    "difficulty": "UGrad",
+    "aka": [
+      "DSP",
+      "Fourier & Wavelet Methods"
+    ],
+    "notableYears": [
+      1948,
+      1965,
+      1987
+    ],
+    "notes": "Shannon lays groundwork (1948); digital signal processing (1960s\u201370s); wavelets (Daubechies 1987\u201392).",
+    "leadsTo": [
+      "machine-learning"
+    ],
+    "contributors": [
+      "fourier",
+      "shannon",
+      "oppenheim",
+      "daubechies"
+    ],
+    "prerequisites": [
+      {
+        "id": "harmonic-analysis",
+        "strength": 85
+      },
+      {
+        "id": "linear-algebra",
+        "strength": 75
+      }
+    ]
   },
   {
     "id": "trigonometry",
@@ -695,13 +1880,32 @@
     "type": "Pure Math",
     "category": "Analysis",
     "year": -150,
-    "era": { "start": -150, "peak": 1748, "end": null },
-    "difficulty": { "tier": 1 },
-    "aka": ["Circular Functions"],
-    "notableYears": [-150, 1748],
-    "notes": "Hipparchus & Ptolemy tables (classical); Euler’s Introductio in analysin infinitorum (1748) modernizes trig via analytic functions.",
-    "leadsTo": ["calculus", "harmonic-analysis", "complex-analysis"],
-    "contributors": ["hipparchus", "ptolemy", "al-biruni", "bhaskara-ii", "euler"],
+    "era": {
+      "start": -150,
+      "peak": 1748,
+      "end": null
+    },
+    "difficulty": "High School",
+    "aka": [
+      "Circular Functions"
+    ],
+    "notableYears": [
+      -150,
+      1748
+    ],
+    "notes": "Hipparchus & Ptolemy tables (classical); Euler\u2019s Introductio in analysin infinitorum (1748) modernizes trig via analytic functions.",
+    "leadsTo": [
+      "calculus",
+      "harmonic-analysis",
+      "complex-analysis"
+    ],
+    "contributors": [
+      "hipparchus",
+      "ptolemy",
+      "al-biruni",
+      "bhaskara-ii",
+      "euler"
+    ],
     "prerequisites": []
   }
 ]

@@ -1,3 +1,5 @@
+https://abaj8494.github.io/math-map/
+
 # Mathematical Cosmos 🌌🔢
 
 An interactive 3D visualization of mathematical topics floating in space like trading cards, connected by arrows showing how concepts build upon each other. Explore the evolution of mathematics from ancient geometry to modern machine learning.

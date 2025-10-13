@@ -18,7 +18,8 @@
 	let searchTo = '';
 	let pathResult = null;
 	let viewMode = '3d'; // '3d' or 'list'
-	let sortBy = 'year'; // 'year', 'name', 'category', 'type'
+	let sortBy = 'year'; // ''year', 'name', 'category', 'type'
+	let difficultyFilter = 'All'; // 'All', 'High School', 'UGrad', 'PGrad', 'Research'
 	
 	// ========== SPACING PARAMETERS (TWEAK THESE) ==========
 	const CARD_SPACING_X = 600;  // Timeline spread (tripled from 200)
@@ -38,6 +39,14 @@
 		'Optimisation and Control': '#ec4899', // Pink
 		'Computation': '#06b6d4',          // Cyan
 		'Physics': '#f97316'               // Deep Orange
+	};
+	
+	// Difficulty colors for tags
+	const difficultyColors = {
+		'High School': '#22c55e',  // Green
+		'UGrad': '#3b82f6',         // Blue
+		'PGrad': '#f59e0b',         // Orange
+		'Research': '#ef4444'       // Red
 	};
 	
 	// Position cards in 3D space based on year and category
@@ -117,7 +126,17 @@
 			yOffset += 75;
 		});
 		
-		yOffset += 20;
+		// Difficulty Tag (beside title, centered below)
+		if (topic.difficulty) {
+			const diffColor = difficultyColors[topic.difficulty] || '#888888';
+			frontCtx.fillStyle = diffColor;
+			frontCtx.font = 'bold 28px Arial';
+			frontCtx.textAlign = 'center';
+			frontCtx.fillText(topic.difficulty.toUpperCase(), frontCanvas.width / 2, yOffset);
+			yOffset += 45;
+		}
+		
+		yOffset += 10;
 		
 		// Year (42px = 28 * 1.5)
 		frontCtx.font = '42px Arial';
@@ -754,6 +773,23 @@
 		}
 	}
 	
+	// Reactive statement to filter cards by difficulty
+	$: if (cardMeshes.length > 0 && difficultyFilter) {
+		cardMeshes.forEach(cardMesh => {
+			const topic = cardMesh.userData.topic;
+			if (difficultyFilter === 'All' || topic.difficulty === difficultyFilter) {
+				cardMesh.visible = true;
+			} else {
+				cardMesh.visible = false;
+			}
+		});
+		
+		// Also hide/show corresponding arrows
+		arrowMeshes.forEach(arrow => {
+			arrow.visible = difficultyFilter === 'All';
+		});
+	}
+	
 	function getSortedTopics() {
 		const sorted = [...topics];
 		switch (sortBy) {
@@ -944,14 +980,29 @@
 						}, 100);
 					}}
 				>
-					<div class="list-card-header">
-						<h3>{topic.name}</h3>
+				<div class="list-card-header">
+					<h3>{topic.name}</h3>
+					<div class="header-right">
+						{#if topic.difficulty}
+							<span class="difficulty-badge" style="background: {difficultyColors[topic.difficulty]}">{topic.difficulty}</span>
+						{/if}
 						<span class="year">{topic.year < 0 ? `${Math.abs(topic.year)} BC` : `${topic.year} AD`}</span>
 					</div>
-					<div class="list-card-meta">
-						<span class="badge" style="background: {categoryColors[topic.category]}">{topic.category}</span>
-						<span class="type">{topic.type}</span>
+				</div>
+				{#if topic.aka && topic.aka.length > 0}
+					<div class="list-card-aka">
+						<strong>Also known as:</strong> {topic.aka.join(', ')}
 					</div>
+				{/if}
+				{#if topic.notableYears && topic.notableYears.length > 0}
+					<div class="list-card-notable">
+						<strong>Notable Years:</strong> {topic.notableYears.map(y => y < 0 ? `${Math.abs(y)} BC` : `${y} AD`).join(', ')}
+					</div>
+				{/if}
+				<div class="list-card-meta">
+					<span class="badge" style="background: {categoryColors[topic.category]}">{topic.category}</span>
+					<span class="type">{topic.type}</span>
+				</div>
 					{#if topic.contributors && topic.contributors.length > 0}
 						{@const contribNames = topic.contributors.slice(0, 4).map(id => {
 							const person = people.find(p => p.id === id);
@@ -996,6 +1047,19 @@
 >
 	{viewMode === '3d' ? '📋' : '🌌'}
 </button>
+
+<!-- Difficulty Filter Dropdown (only in 3D mode) -->
+{#if viewMode === '3d'}
+	<div class="difficulty-filter">
+		<select bind:value={difficultyFilter} aria-label="Filter by difficulty">
+			<option value="All">All Levels</option>
+			<option value="High School">High School</option>
+			<option value="UGrad">Undergraduate</option>
+			<option value="PGrad">Postgraduate</option>
+			<option value="Research">Research</option>
+		</select>
+	</div>
+{/if}
 
 <!-- Search Button -->
 {#if viewMode === '3d'}
@@ -1227,6 +1291,36 @@
 		transform: scale(1.1);
 	}
 	
+	.difficulty-filter {
+		position: fixed;
+		top: 2rem;
+		right: 2rem;
+		z-index: 100;
+	}
+	
+	.difficulty-filter select {
+		padding: 0.75rem 1rem;
+		border-radius: 0.5rem;
+		background: rgba(26, 26, 46, 0.95);
+		color: #ffffff;
+		border: 1px solid rgba(99, 102, 241, 0.5);
+		font-size: 1rem;
+		cursor: pointer;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+		transition: all 0.2s;
+	}
+	
+	.difficulty-filter select:hover {
+		border-color: rgba(99, 102, 241, 0.8);
+		background: rgba(99, 102, 241, 0.2);
+	}
+	
+	.difficulty-filter select:focus {
+		outline: none;
+		border-color: rgba(99, 102, 241, 1);
+		box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+	}
+	
 	.list-view {
 		width: 100vw;
 		height: 100vh;
@@ -1311,6 +1405,35 @@
 		color: #aaa;
 		font-size: 1rem;
 		font-weight: 600;
+	}
+	
+	.list-card-header .header-right {
+		display: flex;
+		gap: 0.75rem;
+		align-items: center;
+	}
+	
+	.difficulty-badge {
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.5rem;
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: white;
+		text-transform: uppercase;
+	}
+	
+	.list-card-aka,
+	.list-card-notable {
+		color: #bbb;
+		font-size: 0.9rem;
+		margin-bottom: 0.75rem;
+		font-style: italic;
+	}
+	
+	.list-card-aka strong,
+	.list-card-notable strong {
+		color: #ddd;
+		font-style: normal;
 	}
 	
 	.list-card-meta {
