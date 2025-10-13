@@ -442,7 +442,7 @@
     "name": "Number Theory",
     "type": "Pure Math",
     "category": "Algebra and Discrete",
-    "year": -300,
+    "year": 1601,
     "era": {
       "start": -600,
       "peak": 1801,
@@ -453,10 +453,11 @@
       "Elementary Number Theory"
     ],
     "notableYears": [
+      1601,
       1801,
       1859
     ],
-    "notes": "Ancient roots; Gauss\u2019s Disquisitiones (1801); Riemann\u2019s 1859 memoir.",
+    "notes": "Ancient roots; Fermat\u2019s contributions (1601+); Gauss\u2019s Disquisitiones (1801); Riemann\u2019s 1859 memoir.",
     "leadsTo": [
       "abstract-algebra",
       "galois-theory",
@@ -464,6 +465,7 @@
     ],
     "contributors": [
       "euclid",
+      "fermat",
       "euler",
       "gauss",
       "riemann",
