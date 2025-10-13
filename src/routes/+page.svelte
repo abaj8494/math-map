@@ -10,10 +10,11 @@
 	let cardMeshes = [];
 	let arrowMeshes = [];
 	let selectedCard = null;
-	let previousCard = null;
+	let cardHistory = []; // Stack of previously visited cards
 	let selectedArrows = new Map(); // Map<arrow, {clickCount, fromCard, toCard}>
 	let hoveredPerson = null;
 	let searchVisible = false;
+	let quickSearchVisible = false;
 	let searchFrom = '';
 	let searchTo = '';
 	let pathResult = null;
@@ -630,7 +631,6 @@
 					// Second click: teleport to "to" card
 					arrowState.clickCount = 2;
 					if (arrowState.toCard) {
-						previousCard = selectedCard;
 						selectedCard = arrowState.toCard.userData.topic;
 						zoomToCard(arrowState.toCard);
 					}
@@ -638,7 +638,6 @@
 					// Third click: teleport to "from" card
 					arrowState.clickCount = 3;
 					if (arrowState.fromCard) {
-						previousCard = selectedCard;
 						selectedCard = arrowState.fromCard.userData.topic;
 						zoomToCard(arrowState.fromCard);
 					}
@@ -706,9 +705,9 @@
 	}
 	
 	function zoomToCard(cardMesh) {
-		// Track previous card for back button
+		// Track previous card in history stack
 		if (selectedCard && selectedCard.id !== cardMesh.userData.topic.id) {
-			previousCard = selectedCard;
+			cardHistory.push(selectedCard);
 		}
 		
 		const targetPosition = cardMesh.position.clone();
@@ -740,17 +739,35 @@
 	}
 	
 	function goToPreviousCard() {
-		if (previousCard) {
+		if (cardHistory.length > 0) {
+			const previousCard = cardHistory.pop();
 			const prevCardMesh = cardMeshes.find(m => m.userData.topic.id === previousCard.id);
 			if (prevCardMesh) {
-				const temp = selectedCard;
+				// Don't add current card to history when going back
+				const currentCard = selectedCard;
 				selectedCard = previousCard;
-				previousCard = temp;
-				zoomToCard(prevCardMesh);
-				// Don't double-track - reset after navigation
-				if (previousCard && selectedCard && previousCard.id === selectedCard.id) {
-					previousCard = null;
-				}
+				
+				// Animate to previous card without adding to history
+				const targetPosition = prevCardMesh.position.clone();
+				const offset = new THREE.Vector3(0, 0, 18);
+				const cameraTarget = targetPosition.clone().add(offset);
+				
+				gsap.to(camera.position, {
+					duration: 1,
+					x: cameraTarget.x,
+					y: cameraTarget.y,
+					z: cameraTarget.z,
+					ease: 'power2.inOut'
+				});
+				
+				gsap.to(controls.target, {
+					duration: 1,
+					x: targetPosition.x,
+					y: targetPosition.y,
+					z: targetPosition.z,
+					ease: 'power2.inOut',
+					onUpdate: () => controls.update()
+				});
 			}
 		}
 	}
@@ -1062,7 +1079,7 @@
 {/if}
 
 <!-- Back Button (top left) -->
-{#if viewMode === '3d' && previousCard}
+{#if viewMode === '3d' && cardHistory.length > 0}
 	<button
 		class="back-button"
 		on:click={goToPreviousCard}
@@ -1094,18 +1111,84 @@
 	</div>
 {/if}
 
-<!-- Search Button -->
+<!-- Pathfinding Button (was Search) -->
 {#if viewMode === '3d'}
 	<button
 		class="search-button"
 		on:click={toggleSearch}
-		aria-label="Search paths"
+		aria-label="Find path between topics"
+		title="Pathfinding"
+	>
+		🗺️
+	</button>
+{/if}
+
+<!-- Quick Search Button -->
+{#if viewMode === '3d'}
+	<button
+		class="quick-search-button"
+		on:click={() => quickSearchVisible = !quickSearchVisible}
+		aria-label="Quick search"
+		title="Quick search topics/contributors"
 	>
 		🔍
 	</button>
 {/if}
 
-<!-- Search Panel -->
+<!-- Quick Search Panel -->
+{#if quickSearchVisible}
+	<div class="quick-search-panel">
+		<button class="close-search-button" on:click={() => quickSearchVisible = false}>✕</button>
+		<h3>Quick Search</h3>
+		
+		<div class="search-section">
+			<label for="topic-search">Search Topics:</label>
+			<select id="topic-search" on:change={(e) => {
+				const topicId = e.target.value;
+				if (topicId) {
+					const topic = topics.find(t => t.id === topicId);
+					const cardMesh = cardMeshes.find(m => m.userData.topic.id === topicId);
+					if (topic && cardMesh) {
+						selectedCard = topic;
+						zoomToCard(cardMesh);
+						quickSearchVisible = false;
+					}
+				}
+			}}>
+				<option value="">Select a topic...</option>
+				{#each topics.sort((a, b) => a.name.localeCompare(b.name)) as topic}
+					<option value={topic.id}>{topic.name}</option>
+				{/each}
+			</select>
+		</div>
+		
+		<div class="search-section">
+			<label for="contributor-search">Search Contributors:</label>
+			<select id="contributor-search" on:change={(e) => {
+				const personId = e.target.value;
+				if (personId) {
+					// Find first topic with this contributor
+					const topic = topics.find(t => t.contributors && t.contributors.includes(personId));
+					if (topic) {
+						const cardMesh = cardMeshes.find(m => m.userData.topic.id === topic.id);
+						if (cardMesh) {
+							selectedCard = topic;
+							zoomToCard(cardMesh);
+							quickSearchVisible = false;
+						}
+					}
+				}
+			}}>
+				<option value="">Select a contributor...</option>
+				{#each people.sort((a, b) => a.name.localeCompare(b.name)) as person}
+					<option value={person.id}>{person.name}</option>
+				{/each}
+			</select>
+		</div>
+	</div>
+{/if}
+
+<!-- Pathfinding Panel -->
 {#if searchVisible}
 	<div class="search-panel">
 		<button class="close-search-button" on:click={toggleSearch}>✕</button>
@@ -1182,7 +1265,6 @@
 							on:click={() => {
 								const targetCard = cardMeshes.find(m => m.userData.topic.id === targetId);
 								if (targetCard) {
-									previousCard = selectedCard;
 									selectedCard = targetTopic;
 									zoomToCard(targetCard);
 								}
@@ -1209,7 +1291,6 @@
 								on:click={() => {
 									const targetCard = cardMeshes.find(m => m.userData.topic.id === prereq.id);
 									if (targetCard) {
-										previousCard = selectedCard;
 										selectedCard = prereqTopic;
 										zoomToCard(targetCard);
 									}
@@ -1322,10 +1403,30 @@
 		transform: scale(1.1);
 	}
 	
-	.difficulty-filter {
+	.quick-search-button {
 		position: fixed;
 		bottom: 2rem;
 		right: 11rem;
+		width: 3.5rem;
+		height: 3.5rem;
+		border-radius: 50%;
+		background: rgba(99, 102, 241, 0.9);
+		border: none;
+		font-size: 1.5rem;
+		cursor: pointer;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+		transition: transform 0.2s;
+		z-index: 100;
+	}
+	
+	.quick-search-button:hover {
+		transform: scale(1.1);
+	}
+	
+	.difficulty-filter {
+		position: fixed;
+		bottom: 2rem;
+		left: 2rem;
 		z-index: 100;
 	}
 	
@@ -1516,6 +1617,59 @@
 		margin-top: 1rem;
 		padding-top: 1rem;
 		border-top: 1px solid rgba(99, 102, 241, 0.3);
+	}
+	
+	.quick-search-panel {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background: rgba(26, 26, 46, 0.95);
+		padding: 2rem;
+		border-radius: 1rem;
+		border: 2px solid rgba(34, 197, 94, 0.5);
+		min-width: 400px;
+		max-width: 90vw;
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+		z-index: 1000;
+	}
+	
+	.quick-search-panel h3 {
+		margin-top: 0;
+		color: #eee;
+		margin-bottom: 1.5rem;
+	}
+	
+	.search-section {
+		margin-bottom: 1.5rem;
+	}
+	
+	.search-section label {
+		display: block;
+		color: #ccc;
+		margin-bottom: 0.5rem;
+		font-weight: 600;
+	}
+	
+	.search-section select {
+		width: 100%;
+		padding: 0.75rem;
+		background: rgba(0, 0, 0, 0.3);
+		border: 1px solid rgba(99, 102, 241, 0.5);
+		border-radius: 0.5rem;
+		color: #fff;
+		font-size: 1rem;
+		cursor: pointer;
+	}
+	
+	.search-section select:hover {
+		border-color: rgba(99, 102, 241, 0.8);
+	}
+	
+	.search-section select:focus {
+		outline: none;
+		border-color: rgba(99, 102, 241, 1);
+		box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 	}
 	
 	.search-panel {
