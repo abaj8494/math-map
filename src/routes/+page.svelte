@@ -631,15 +631,15 @@
 					// Second click: teleport to "to" card
 					arrowState.clickCount = 2;
 					if (arrowState.toCard) {
-						selectedCard = arrowState.toCard.userData.topic;
 						zoomToCard(arrowState.toCard);
+						selectedCard = arrowState.toCard.userData.topic;
 					}
 				} else if (arrowState.clickCount === 2) {
 					// Third click: teleport to "from" card
 					arrowState.clickCount = 3;
 					if (arrowState.fromCard) {
-						selectedCard = arrowState.fromCard.userData.topic;
 						zoomToCard(arrowState.fromCard);
+						selectedCard = arrowState.fromCard.userData.topic;
 					}
 				} else {
 					// Fourth click: reset to original color and remove from selection
@@ -1024,8 +1024,8 @@
 						setTimeout(() => {
 							const card = cardMeshes.find(m => m.userData.topic.id === topic.id);
 							if (card) {
-								selectedCard = topic;
 								zoomToCard(card);
+								selectedCard = topic;
 							}
 						}, 100);
 					}}
@@ -1149,8 +1149,8 @@
 					const topic = topics.find(t => t.id === topicId);
 					const cardMesh = cardMeshes.find(m => m.userData.topic.id === topicId);
 					if (topic && cardMesh) {
-						selectedCard = topic;
 						zoomToCard(cardMesh);
+						selectedCard = topic;
 						quickSearchVisible = false;
 					}
 				}
@@ -1172,8 +1172,8 @@
 					if (topic) {
 						const cardMesh = cardMeshes.find(m => m.userData.topic.id === topic.id);
 						if (cardMesh) {
-							selectedCard = topic;
 							zoomToCard(cardMesh);
+							selectedCard = topic;
 							quickSearchVisible = false;
 						}
 					}
@@ -1312,7 +1312,7 @@
 	<div class="person-detail-card">
 		<button class="close-person" on:click={() => hoveredPerson = null}>✕</button>
 		{#if hoveredPerson.img}
-			<img src={hoveredPerson.img} alt={hoveredPerson.name} />
+			<img src={hoveredPerson.img.startsWith('/') ? '.' + hoveredPerson.img : hoveredPerson.img} alt={hoveredPerson.name} />
 		{:else}
 			<div class="placeholder-img">{hoveredPerson.name.split(' ').map(n => n[0]).join('')}</div>
 		{/if}
@@ -1900,7 +1900,8 @@
 		height: 150px;
 		border-radius: 50%;
 		object-fit: cover;
-		margin-bottom: 1rem;
+		margin: 0 auto 1rem auto;
+		display: block;
 		border: 3px solid rgba(99, 102, 241, 0.5);
 	}
 	
