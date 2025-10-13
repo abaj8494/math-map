@@ -18,7 +18,7 @@
 	let searchTo = '';
 	let pathResult = null;
 	let viewMode = '3d'; // '3d' or 'list'
-	let sortBy = 'year'; // ''year', 'name', 'category', 'type'
+	let sortBy = 'year'; // 'year', 'name', 'category', 'type', 'difficulty'
 	let difficultyFilter = 'All'; // 'All', 'High School', 'UGrad', 'PGrad', 'Research'
 	
 	// ========== SPACING PARAMETERS (TWEAK THESE) ==========
@@ -792,6 +792,7 @@
 	
 	function getSortedTopics() {
 		const sorted = [...topics];
+		const difficultyOrder = { 'High School': 1, 'UGrad': 2, 'PGrad': 3, 'Research': 4 };
 		switch (sortBy) {
 			case 'year':
 				return sorted.sort((a, b) => a.year - b.year);
@@ -801,6 +802,12 @@
 				return sorted.sort((a, b) => a.category.localeCompare(b.category) || a.year - b.year);
 			case 'type':
 				return sorted.sort((a, b) => a.type.localeCompare(b.type) || a.year - b.year);
+			case 'difficulty':
+				return sorted.sort((a, b) => {
+					const orderA = difficultyOrder[a.difficulty] || 999;
+					const orderB = difficultyOrder[b.difficulty] || 999;
+					return orderA - orderB || a.year - b.year;
+				});
 			default:
 				return sorted;
 		}
@@ -960,6 +967,7 @@
 					<option value="name">Name (A-Z)</option>
 					<option value="category">Category</option>
 					<option value="type">Type (Pure/Applied)</option>
+					<option value="difficulty">Difficulty</option>
 				</select>
 			</div>
 		</div>
@@ -1114,9 +1122,6 @@
 {#if selectedCard && viewMode === '3d'}
 	<div class="card-overlay-panel">
 		<button class="overlay-close-button" on:click={() => selectedCard = null}>✕</button>
-		{#if previousCard}
-			<button class="overlay-back-button" on:click={goToPreviousCard}>← Back</button>
-		{/if}
 		<h2>{selectedCard.name}</h2>
 		
 		<!-- Contributors Section -->
@@ -1147,16 +1152,17 @@
 					{#each selectedCard.leadsTo as targetId}
 						{@const targetTopic = topics.find(t => t.id === targetId)}
 						{#if targetTopic}
-							<button 
-								class="overlay-button leads-button"
-								on:click={() => {
-									const targetCard = cardMeshes.find(m => m.userData.topic.id === targetId);
-									if (targetCard) {
-										selectedCard = targetTopic;
-										zoomToCard(targetCard);
-									}
-								}}
-							>
+						<button 
+							class="overlay-button leads-button"
+							on:click={() => {
+								const targetCard = cardMeshes.find(m => m.userData.topic.id === targetId);
+								if (targetCard) {
+									previousCard = selectedCard;
+									selectedCard = targetTopic;
+									zoomToCard(targetCard);
+								}
+							}}
+						>
 								{targetTopic.name}
 							</button>
 						{/if}
@@ -1594,28 +1600,6 @@
 		max-width: 350px;
 		max-height: 80vh;
 		overflow-y: auto;
-	}
-	
-	.overlay-back-button {
-		position: absolute;
-		top: 1rem;
-		left: 1rem;
-		padding: 0.5rem 1rem;
-		border-radius: 0.5rem;
-		background: rgba(34, 197, 94, 0.6);
-		color: white;
-		border: 1px solid rgba(34, 197, 94, 0.8);
-		font-size: 0.9rem;
-		font-weight: 700;
-		cursor: pointer;
-		transition: all 0.2s;
-		box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
-	}
-	
-	.overlay-back-button:hover {
-		background: rgba(34, 197, 94, 0.8);
-		transform: translateX(-3px);
-		box-shadow: 0 4px 12px rgba(34, 197, 94, 0.5);
 	}
 	
 	.overlay-close-button {

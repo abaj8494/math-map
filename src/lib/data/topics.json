@@ -156,6 +156,38 @@
     "prerequisites": []
   },
   {
+    "id": "elementary-algebra",
+    "name": "Elementary Algebra",
+    "type": "Pure Math",
+    "category": "Algebra and Discrete",
+    "year": -820,
+    "era": {
+      "start": -820,
+      "peak": 825,
+      "end": null
+    },
+    "difficulty": "High School",
+    "aka": [
+      "Basic Algebra",
+      "School Algebra"
+    ],
+    "notableYears": [
+      -820,
+      825,
+      1591
+    ],
+    "notes": "Ancient Babylonian algebra (~1800 BCE), Al-Khwarizmi's 'Al-Jabr' (825 CE), Viète's symbolic notation (1591).",
+    "leadsTo": [
+      "trigonometry",
+      "linear-algebra"
+    ],
+    "contributors": [
+      "euclid",
+      "descartes"
+    ],
+    "prerequisites": []
+  },
+  {
     "id": "linear-algebra",
     "name": "Linear Algebra",
     "type": "Pure Math",
@@ -166,7 +198,7 @@
       "peak": 1870,
       "end": null
     },
-    "difficulty": "High School",
+    "difficulty": "UGrad",
     "aka": [
       "Matrix Theory",
       "Vector Spaces"
@@ -190,7 +222,12 @@
       "jordan",
       "sylvester"
     ],
-    "prerequisites": []
+    "prerequisites": [
+      {
+        "id": "elementary-algebra",
+        "strength": 70
+      }
+    ]
   },
   {
     "id": "abstract-algebra",
@@ -411,7 +448,7 @@
       "peak": 1801,
       "end": null
     },
-    "difficulty": "High School",
+    "difficulty": "UGrad",
     "aka": [
       "Elementary Number Theory"
     ],
@@ -446,7 +483,7 @@
       "peak": 1970,
       "end": null
     },
-    "difficulty": "High School",
+    "difficulty": "UGrad",
     "aka": [
       "Networks",
       "Discrete Mathematics"
@@ -519,7 +556,7 @@
       "peak": 1861,
       "end": null
     },
-    "difficulty": "High School",
+    "difficulty": "UGrad",
     "aka": [
       "Multivariable Calculus"
     ],
@@ -561,7 +598,7 @@
       "peak": 1788,
       "end": null
     },
-    "difficulty": "UGrad",
+    "difficulty": "PGrad",
     "aka": [
       "Variational Calculus"
     ],
@@ -1189,7 +1226,7 @@
       "peak": 1970,
       "end": null
     },
-    "difficulty": "Research",
+    "difficulty": "PGrad",
     "aka": [
       "It\u00f4 Calculus"
     ],
@@ -1231,7 +1268,7 @@
       "peak": 1900,
       "end": null
     },
-    "difficulty": "High School",
+    "difficulty": "UGrad",
     "aka": [
       "Least Squares",
       "Linear Models"
@@ -1314,7 +1351,7 @@
       "peak": 1960,
       "end": null
     },
-    "difficulty": "UGrad",
+    "difficulty": "PGrad",
     "aka": [
       "Shannon Theory"
     ],
@@ -1641,7 +1678,7 @@
       "peak": 1750,
       "end": null
     },
-    "difficulty": "High School",
+    "difficulty": "UGrad",
     "aka": [
       "ODEs"
     ],
