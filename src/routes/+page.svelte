@@ -1374,22 +1374,31 @@
 {#if hoveredPerson}
 	<div class="person-detail-card">
 		<button class="close-person" on:click={() => hoveredPerson = null}>✕</button>
-		{#if hoveredPerson.img}
-			<img src={hoveredPerson.img.startsWith('/') ? '.' + hoveredPerson.img : hoveredPerson.img} alt={hoveredPerson.name} />
-		{:else}
-			<div class="placeholder-img">{hoveredPerson.name.split(' ').map(n => n[0]).join('')}</div>
-		{/if}
-		<h3>{hoveredPerson.name}</h3>
-		{#if hoveredPerson.born || hoveredPerson.died}
-			<p class="dates">
-				{#if hoveredPerson.born}
-					Born: {hoveredPerson.born}
-				{/if}
-				{#if hoveredPerson.died}
-					<br>Died: {hoveredPerson.died}
-				{/if}
-			</p>
-		{/if}
+		<div class="person-detail-content">
+			{#if hoveredPerson.img && hoveredPerson.showImage !== false}
+				<img 
+					src={hoveredPerson.img.startsWith('/') ? '.' + hoveredPerson.img : hoveredPerson.img} 
+					alt={hoveredPerson.name}
+					on:error={() => {
+						hoveredPerson.showImage = false;
+						hoveredPerson = hoveredPerson; // Trigger reactivity
+					}}
+				/>
+			{:else}
+				<div class="placeholder-img">{hoveredPerson.name.split(' ').map(n => n[0]).join('')}</div>
+			{/if}
+			<h3>{hoveredPerson.name}</h3>
+			{#if hoveredPerson.born || hoveredPerson.died}
+				<p class="dates">
+					{#if hoveredPerson.born}
+						Born: {hoveredPerson.born}
+					{/if}
+					{#if hoveredPerson.died}
+						<br>Died: {hoveredPerson.died}
+					{/if}
+				</p>
+			{/if}
+		</div>
 	</div>
 {/if}
 
@@ -1410,15 +1419,15 @@
 		left: 2rem;
 		padding: 0.75rem 1.5rem;
 		border-radius: 0.5rem;
-		background: rgba(99, 102, 241, 0.9);
+		background: rgba(99, 102, 241, 0.95);
 		color: white;
-		border: none;
+		border: 2px solid rgba(99, 102, 241, 1);
 		font-size: 1rem;
 		font-weight: 600;
 		cursor: pointer;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 		transition: all 0.2s;
-		z-index: 100;
+		z-index: 150;
 	}
 	
 	.back-button:hover {
@@ -2005,14 +2014,22 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 		background: rgba(26, 26, 46, 0.98);
-		padding: 2rem;
 		border-radius: 1rem;
 		border: 2px solid rgba(99, 102, 241, 0.6);
 		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
 		z-index: 2000;
 		min-width: 300px;
 		max-width: 400px;
+		max-height: 80vh;
 		text-align: center;
+		display: flex;
+		flex-direction: column;
+	}
+	
+	.person-detail-content {
+		padding: 2rem;
+		overflow-y: auto;
+		overflow-x: hidden;
 	}
 	
 	.person-detail-card img {
@@ -2055,20 +2072,30 @@
 	
 	.close-person {
 		position: absolute;
-		top: 1rem;
-		right: 1rem;
-		background: none;
-		border: none;
+		top: 0.75rem;
+		right: 0.75rem;
+		background: rgba(26, 26, 46, 0.95);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: 50%;
 		color: #aaa;
-		font-size: 1.5rem;
+		font-size: 1.25rem;
 		cursor: pointer;
-		padding: 0.25rem;
+		padding: 0.5rem;
 		line-height: 1;
-		transition: color 0.2s;
+		width: 2rem;
+		height: 2rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.2s;
+		z-index: 10;
 	}
 	
 	.close-person:hover {
 		color: #fff;
+		background: rgba(255, 0, 0, 0.2);
+		border-color: rgba(255, 0, 0, 0.5);
+		transform: scale(1.1);
 	}
 	
 	@media (max-width: 768px) {
