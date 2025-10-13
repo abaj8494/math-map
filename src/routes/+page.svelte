@@ -755,31 +755,34 @@
 			console.log('Going back to:', previousCard.name, 'New history length:', cardHistory.length);
 			const prevCardMesh = cardMeshes.find(m => m.userData.topic.id === previousCard.id);
 			if (prevCardMesh) {
-				// Don't add current card to history when going back
-				const currentCard = selectedCard;
+				// Update selectedCard to show overlay for previous card
 				selectedCard = previousCard;
 				
-				// Animate to previous card without adding to history
+				// Animate camera to previous card (same as zoomToCard but without adding to history)
 				const targetPosition = prevCardMesh.position.clone();
 				const offset = new THREE.Vector3(0, 0, 18);
 				const cameraTarget = targetPosition.clone().add(offset);
 				
-				gsap.to(camera.position, {
-					duration: 1,
-					x: cameraTarget.x,
-					y: cameraTarget.y,
-					z: cameraTarget.z,
-					ease: 'power2.inOut'
-				});
+				const startPos = camera.position.clone();
+				const startTarget = controls.target.clone();
+				let progress = 0;
 				
-				gsap.to(controls.target, {
-					duration: 1,
-					x: targetPosition.x,
-					y: targetPosition.y,
-					z: targetPosition.z,
-					ease: 'power2.inOut',
-					onUpdate: () => controls.update()
-				});
+				function animateCamera() {
+					progress += 0.03;
+					if (progress >= 1) {
+						camera.position.copy(cameraTarget);
+						controls.target.copy(targetPosition);
+						controls.update();
+						return;
+					}
+					
+					camera.position.lerpVectors(startPos, cameraTarget, progress);
+					controls.target.lerpVectors(startTarget, targetPosition, progress);
+					controls.update();
+					requestAnimationFrame(animateCamera);
+				}
+				
+				animateCamera();
 			}
 		}
 	}
