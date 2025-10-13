@@ -1312,7 +1312,7 @@
 						{#if person}
 							<button 
 								class="overlay-button"
-								on:click={() => hoveredPerson = hoveredPerson?.id === person.id ? null : { ...person, img: person.image }}
+								on:click={() => hoveredPerson = hoveredPerson?.id === person.id ? null : { ...person }}
 							>
 								{person.name}
 							</button>
@@ -1382,18 +1382,8 @@
 	<div class="person-detail-card">
 		<button class="close-person" on:click={() => hoveredPerson = null}>✕</button>
 		<div class="person-detail-content">
-			{#if hoveredPerson.img && hoveredPerson.showImage !== false}
-				<img 
-					src={hoveredPerson.img.startsWith('/') ? '.' + hoveredPerson.img : hoveredPerson.img} 
-					alt={hoveredPerson.name}
-					on:error={() => {
-						hoveredPerson.showImage = false;
-						hoveredPerson = hoveredPerson; // Trigger reactivity
-					}}
-				/>
-			{:else}
-				<div class="placeholder-img">{hoveredPerson.name.split(' ').map(n => n[0]).join('')}</div>
-			{/if}
+			<!-- Always show initials for now until we have verified contributor images -->
+			<div class="placeholder-img">{hoveredPerson.name.split(' ').map(n => n[0]).join('')}</div>
 			<h3>{hoveredPerson.name}</h3>
 			{#if hoveredPerson.born || hoveredPerson.died}
 				<p class="dates">
