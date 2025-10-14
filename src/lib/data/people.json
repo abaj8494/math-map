@@ -1,10 +1,101 @@
 [
   {
+    "id": "al-biruni",
+    "name": "Al-Biruni",
+    "born": 973,
+    "died": 1048,
+    "gender": 1
+  },
+  {
+    "id": "archimedes",
+    "name": "Archimedes",
+    "born": -287,
+    "died": -212,
+    "gender": 1
+  },
+  {
     "id": "aristotle",
     "name": "Aristotle",
     "born": -384,
     "died": -322,
     "image": "/images/people/aristotle.jpg",
+    "gender": 1
+  },
+  {
+    "id": "artin",
+    "name": "Emil Artin",
+    "born": 1898,
+    "died": 1962,
+    "gender": 1
+  },
+  {
+    "id": "banach",
+    "name": "Stefan Banach",
+    "born": 1892,
+    "died": 1945,
+    "gender": 1
+  },
+  {
+    "id": "bayes",
+    "name": "Thomas Bayes",
+    "born": 1701,
+    "died": 1761,
+    "gender": 1
+  },
+  {
+    "id": "bellman",
+    "name": "Richard Bellman",
+    "born": 1920,
+    "died": 1984,
+    "gender": 1
+  },
+  {
+    "id": "bengio",
+    "name": "Yoshua Bengio",
+    "born": 1964,
+    "died": null,
+    "gender": 1
+  },
+  {
+    "id": "bernoulli",
+    "name": "Jacob Bernoulli",
+    "born": 1654,
+    "died": 1705,
+    "gender": 1
+  },
+  {
+    "id": "bhaskara-ii",
+    "name": "Bhaskara II",
+    "born": 1114,
+    "died": 1185,
+    "gender": 1
+  },
+  {
+    "id": "birkhoff",
+    "name": "George Birkhoff",
+    "born": 1884,
+    "died": 1944,
+    "gender": 1
+  },
+  {
+    "id": "borel",
+    "name": "Émile Borel",
+    "born": 1871,
+    "died": 1956,
+    "gender": 1
+  },
+  {
+    "id": "box",
+    "name": "George Box",
+    "born": 1919,
+    "died": 2013,
+    "gender": 1
+  },
+  {
+    "id": "boyd",
+    "name": "Stephen Boyd",
+    "born": 1958,
+    "died": null,
     "gender": 1
   },
   {
@@ -16,6 +107,41 @@
     "gender": 1
   },
   {
+    "id": "caratheodory",
+    "name": "Constantin Carathéodory",
+    "born": 1873,
+    "died": 1950,
+    "gender": 1
+  },
+  {
+    "id": "cartan",
+    "name": "Élie Cartan",
+    "born": 1869,
+    "died": 1951,
+    "gender": 1
+  },
+  {
+    "id": "cauchy",
+    "name": "Augustin-Louis Cauchy",
+    "born": 1789,
+    "died": 1857,
+    "gender": 1
+  },
+  {
+    "id": "cayley",
+    "name": "Arthur Cayley",
+    "born": 1821,
+    "died": 1895,
+    "gender": 1
+  },
+  {
+    "id": "church",
+    "name": "Alonzo Church",
+    "born": 1903,
+    "died": 1995,
+    "gender": 1
+  },
+  {
     "id": "conway",
     "name": "John Conway",
     "born": 1937,
@@ -24,12 +150,39 @@
     "gender": 1
   },
   {
-    "id": "curie",
-    "name": "Marie Curie",
-    "born": 1867,
-    "died": 1934,
-    "image": "/images/people/curie.jpg",
+    "id": "cook",
+    "name": "Stephen Cook",
+    "born": 1939,
+    "died": null,
+    "gender": 1
+  },
+  {
+    "id": "cover",
+    "name": "Thomas Cover",
+    "born": 1938,
+    "died": 2012,
+    "gender": 1
+  },
+  {
+    "id": "dantzig",
+    "name": "George Dantzig",
+    "born": 1914,
+    "died": 2005,
+    "gender": 1
+  },
+  {
+    "id": "daubechies",
+    "name": "Ingrid Daubechies",
+    "born": 1954,
+    "died": null,
     "gender": 0
+  },
+  {
+    "id": "dedekind",
+    "name": "Richard Dedekind",
+    "born": 1831,
+    "died": 1916,
+    "gender": 1
   },
   {
     "id": "descartes",
@@ -40,11 +193,46 @@
     "gender": 1
   },
   {
+    "id": "dirac",
+    "name": "Paul Dirac",
+    "born": 1902,
+    "died": 1984,
+    "gender": 1
+  },
+  {
+    "id": "dirichlet",
+    "name": "Peter Dirichlet",
+    "born": 1805,
+    "died": 1859,
+    "gender": 1
+  },
+  {
+    "id": "doob",
+    "name": "Joseph Doob",
+    "born": 1910,
+    "died": 2004,
+    "gender": 1
+  },
+  {
+    "id": "eilenberg",
+    "name": "Samuel Eilenberg",
+    "born": 1913,
+    "died": 1998,
+    "gender": 1
+  },
+  {
     "id": "einstein",
     "name": "Einstein",
     "born": 1879,
     "died": 1955,
     "image": "/images/people/einstein.jpg",
+    "gender": 1
+  },
+  {
+    "id": "erdos",
+    "name": "Paul Erdős",
+    "born": 1913,
+    "died": 1996,
     "gender": 1
   },
   {
@@ -64,6 +252,13 @@
     "gender": 1
   },
   {
+    "id": "fenchel",
+    "name": "Werner Fenchel",
+    "born": 1905,
+    "died": 1988,
+    "gender": 1
+  },
+  {
     "id": "fermat",
     "name": "Pierre de Fermat",
     "born": 1607,
@@ -80,11 +275,53 @@
     "gender": 1
   },
   {
+    "id": "fisher",
+    "name": "Ronald Fisher",
+    "born": 1890,
+    "died": 1962,
+    "gender": 1
+  },
+  {
     "id": "fourier",
     "name": "Joseph Fourier",
     "born": 1768,
     "died": 1830,
     "image": "/images/people/fourier.jpg",
+    "gender": 1
+  },
+  {
+    "id": "fraenkel",
+    "name": "Abraham Fraenkel",
+    "born": 1891,
+    "died": 1965,
+    "gender": 1
+  },
+  {
+    "id": "frege",
+    "name": "Gottlob Frege",
+    "born": 1848,
+    "died": 1925,
+    "gender": 1
+  },
+  {
+    "id": "frobenius",
+    "name": "Ferdinand Frobenius",
+    "born": 1849,
+    "died": 1917,
+    "gender": 1
+  },
+  {
+    "id": "gallager",
+    "name": "Robert Gallager",
+    "born": 1931,
+    "died": null,
+    "gender": 1
+  },
+  {
+    "id": "galois",
+    "name": "Évariste Galois",
+    "born": 1811,
+    "died": 1832,
     "gender": 1
   },
   {
@@ -96,6 +333,69 @@
     "gender": 1
   },
   {
+    "id": "givens",
+    "name": "Wallace Givens",
+    "born": 1910,
+    "died": 1993,
+    "gender": 1
+  },
+  {
+    "id": "godel",
+    "name": "Kurt Gödel",
+    "born": 1906,
+    "died": 1978,
+    "gender": 1
+  },
+  {
+    "id": "golub",
+    "name": "Gene Golub",
+    "born": 1932,
+    "died": 2007,
+    "gender": 1
+  },
+  {
+    "id": "green",
+    "name": "George Green",
+    "born": 1793,
+    "died": 1841,
+    "gender": 1
+  },
+  {
+    "id": "grothendieck",
+    "name": "Alexander Grothendieck",
+    "born": 1928,
+    "died": 2014,
+    "gender": 1
+  },
+  {
+    "id": "grunwald",
+    "name": "Wolfgang Grünwald",
+    "born": 1909,
+    "died": 1941,
+    "gender": 1
+  },
+  {
+    "id": "hardy",
+    "name": "G.H. Hardy",
+    "born": 1877,
+    "died": 1947,
+    "gender": 1
+  },
+  {
+    "id": "hastings",
+    "name": "W.K. Hastings",
+    "born": 1930,
+    "died": 2016,
+    "gender": 1
+  },
+  {
+    "id": "hausdorff",
+    "name": "Felix Hausdorff",
+    "born": 1868,
+    "died": 1942,
+    "gender": 1
+  },
+  {
     "id": "hawking",
     "name": "Stephen Hawking",
     "born": 1942,
@@ -104,11 +404,88 @@
     "gender": 1
   },
   {
+    "id": "heisenberg",
+    "name": "Werner Heisenberg",
+    "born": 1901,
+    "died": 1976,
+    "gender": 1
+  },
+  {
     "id": "hilbert",
     "name": "David Hilbert",
     "born": 1862,
     "died": 1943,
     "image": "/images/people/hilbert.jpg",
+    "gender": 1
+  },
+  {
+    "id": "hinton",
+    "name": "Geoffrey Hinton",
+    "born": 1947,
+    "died": null,
+    "gender": 1
+  },
+  {
+    "id": "hipparchus",
+    "name": "Hipparchus",
+    "born": -190,
+    "died": -120,
+    "gender": 1
+  },
+  {
+    "id": "householder",
+    "name": "Alston Householder",
+    "born": 1904,
+    "died": 1993,
+    "gender": 1
+  },
+  {
+    "id": "hurewicz",
+    "name": "Witold Hurewicz",
+    "born": 1904,
+    "died": 1956,
+    "gender": 1
+  },
+  {
+    "id": "ito",
+    "name": "Kiyosi Itô",
+    "born": 1915,
+    "died": 2008,
+    "gender": 1
+  },
+  {
+    "id": "jaynes",
+    "name": "Edwin Jaynes",
+    "born": 1922,
+    "died": 1998,
+    "gender": 1
+  },
+  {
+    "id": "jeffreys",
+    "name": "Harold Jeffreys",
+    "born": 1891,
+    "died": 1989,
+    "gender": 1
+  },
+  {
+    "id": "jenkins",
+    "name": "Gwilym Jenkins",
+    "born": 1933,
+    "died": 1982,
+    "gender": 1
+  },
+  {
+    "id": "jordan",
+    "name": "Camille Jordan",
+    "born": 1838,
+    "died": 1922,
+    "gender": 1
+  },
+  {
+    "id": "kleene",
+    "name": "Stephen Kleene",
+    "born": 1909,
+    "died": 1994,
     "gender": 1
   },
   {
@@ -128,12 +505,172 @@
     "gender": 1
   },
   {
-    "id": "lovelace",
-    "name": "Ada Lovelace",
-    "born": 1815,
-    "died": 1852,
-    "image": "/images/people/lovelace.jpg",
-    "gender": 0
+    "id": "kronecker",
+    "name": "Leopold Kronecker",
+    "born": 1823,
+    "died": 1891,
+    "gender": 1
+  },
+  {
+    "id": "lagrange",
+    "name": "Joseph-Louis Lagrange",
+    "born": 1736,
+    "died": 1813,
+    "gender": 1
+  },
+  {
+    "id": "laplace",
+    "name": "Pierre-Simon Laplace",
+    "born": 1749,
+    "died": 1827,
+    "gender": 1
+  },
+  {
+    "id": "lawvere",
+    "name": "William Lawvere",
+    "born": 1937,
+    "died": null,
+    "gender": 1
+  },
+  {
+    "id": "lebesgue",
+    "name": "Henri Lebesgue",
+    "born": 1875,
+    "died": 1941,
+    "gender": 1
+  },
+  {
+    "id": "lecun",
+    "name": "Yann LeCun",
+    "born": 1960,
+    "died": null,
+    "gender": 1
+  },
+  {
+    "id": "legendre",
+    "name": "Adrien-Marie Legendre",
+    "born": 1752,
+    "died": 1833,
+    "gender": 1
+  },
+  {
+    "id": "leibniz",
+    "name": "Gottfried Leibniz",
+    "born": 1646,
+    "died": 1716,
+    "gender": 1
+  },
+  {
+    "id": "lettnikov",
+    "name": "Alexey Letnikov",
+    "born": 1837,
+    "died": 1888,
+    "gender": 1
+  },
+  {
+    "id": "levicivita",
+    "name": "Tullio Levi-Civita",
+    "born": 1873,
+    "died": 1941,
+    "gender": 1
+  },
+  {
+    "id": "levin",
+    "name": "Leonid Levin",
+    "born": 1948,
+    "died": null,
+    "gender": 1
+  },
+  {
+    "id": "lie",
+    "name": "Sophus Lie",
+    "born": 1842,
+    "died": 1899,
+    "gender": 1
+  },
+  {
+    "id": "liouville",
+    "name": "Joseph Liouville",
+    "born": 1809,
+    "died": 1882,
+    "gender": 1
+  },
+  {
+    "id": "littlewood",
+    "name": "John Littlewood",
+    "born": 1885,
+    "died": 1977,
+    "gender": 1
+  },
+  {
+    "id": "lorenz",
+    "name": "Edward Lorenz",
+    "born": 1917,
+    "died": 2008,
+    "gender": 1
+  },
+  {
+    "id": "maclane",
+    "name": "Saunders Mac Lane",
+    "born": 1909,
+    "died": 2005,
+    "gender": 1
+  },
+  {
+    "id": "malliavin",
+    "name": "Paul Malliavin",
+    "born": 1925,
+    "died": 2010,
+    "gender": 1
+  },
+  {
+    "id": "markov",
+    "name": "Andrey Markov",
+    "born": 1856,
+    "died": 1922,
+    "gender": 1
+  },
+  {
+    "id": "maxwell",
+    "name": "James Clerk Maxwell",
+    "born": 1831,
+    "died": 1879,
+    "gender": 1
+  },
+  {
+    "id": "metropolis",
+    "name": "Nicholas Metropolis",
+    "born": 1915,
+    "died": 1999,
+    "gender": 1
+  },
+  {
+    "id": "milnor",
+    "name": "John Milnor",
+    "born": 1931,
+    "died": null,
+    "gender": 1
+  },
+  {
+    "id": "morgenstern",
+    "name": "Oskar Morgenstern",
+    "born": 1902,
+    "died": 1977,
+    "gender": 1
+  },
+  {
+    "id": "nash",
+    "name": "John Nash",
+    "born": 1928,
+    "died": 2015,
+    "gender": 1
+  },
+  {
+    "id": "nesterov",
+    "name": "Yurii Nesterov",
+    "born": 1956,
+    "died": null,
+    "gender": 1
   },
   {
     "id": "newton",
@@ -141,6 +678,48 @@
     "born": 1643,
     "died": 1727,
     "image": "/images/people/newton.jpg",
+    "gender": 1
+  },
+  {
+    "id": "neyman",
+    "name": "Jerzy Neyman",
+    "born": 1894,
+    "died": 1981,
+    "gender": 1
+  },
+  {
+    "id": "noether",
+    "name": "Emmy Noether",
+    "born": 1882,
+    "died": 1935,
+    "gender": 0
+  },
+  {
+    "id": "oppenheim",
+    "name": "Alan Oppenheim",
+    "born": 1937,
+    "died": null,
+    "gender": 1
+  },
+  {
+    "id": "pascal",
+    "name": "Blaise Pascal",
+    "born": 1623,
+    "died": 1662,
+    "gender": 1
+  },
+  {
+    "id": "peano",
+    "name": "Giuseppe Peano",
+    "born": 1858,
+    "died": 1932,
+    "gender": 1
+  },
+  {
+    "id": "pearson",
+    "name": "Karl Pearson",
+    "born": 1857,
+    "died": 1936,
     "gender": 1
   },
   {
@@ -152,11 +731,39 @@
     "gender": 1
   },
   {
+    "id": "plancherel",
+    "name": "Michel Plancherel",
+    "born": 1885,
+    "died": 1967,
+    "gender": 1
+  },
+  {
     "id": "poincare",
     "name": "Henri Poincaré",
     "born": 1854,
     "died": 1912,
     "image": "/images/people/poincare.jpg",
+    "gender": 1
+  },
+  {
+    "id": "pontryagin",
+    "name": "Lev Pontryagin",
+    "born": 1908,
+    "died": 1988,
+    "gender": 1
+  },
+  {
+    "id": "ptolemy",
+    "name": "Ptolemy",
+    "born": 100,
+    "died": 170,
+    "gender": 1
+  },
+  {
+    "id": "pythagoras",
+    "name": "Pythagoras",
+    "born": -570,
+    "died": -495,
     "gender": 1
   },
   {
@@ -168,11 +775,116 @@
     "gender": 1
   },
   {
+    "id": "renyi",
+    "name": "Alfréd Rényi",
+    "born": 1921,
+    "died": 1970,
+    "gender": 1
+  },
+  {
+    "id": "riemann",
+    "name": "Bernhard Riemann",
+    "born": 1826,
+    "died": 1866,
+    "gender": 1
+  },
+  {
+    "id": "riesz",
+    "name": "Frigyes Riesz",
+    "born": 1880,
+    "died": 1956,
+    "gender": 1
+  },
+  {
+    "id": "rockafellar",
+    "name": "R. Tyrrell Rockafellar",
+    "born": 1935,
+    "died": null,
+    "gender": 1
+  },
+  {
+    "id": "rosenblatt",
+    "name": "Frank Rosenblatt",
+    "born": 1928,
+    "died": 1971,
+    "gender": 1
+  },
+  {
     "id": "schrodinger",
     "name": "Erwin Schrödinger",
     "born": 1887,
     "died": 1961,
     "image": "/images/people/schrodinger.jpg",
+    "gender": 1
+  },
+  {
+    "id": "schur",
+    "name": "Issai Schur",
+    "born": 1875,
+    "died": 1941,
+    "gender": 1
+  },
+  {
+    "id": "serre",
+    "name": "Jean-Pierre Serre",
+    "born": 1926,
+    "died": null,
+    "gender": 1
+  },
+  {
+    "id": "shannon",
+    "name": "Claude Shannon",
+    "born": 1916,
+    "died": 2001,
+    "gender": 1
+  },
+  {
+    "id": "skolem",
+    "name": "Thoralf Skolem",
+    "born": 1887,
+    "died": 1963,
+    "gender": 1
+  },
+  {
+    "id": "smale",
+    "name": "Stephen Smale",
+    "born": 1930,
+    "died": null,
+    "gender": 1
+  },
+  {
+    "id": "sobolev",
+    "name": "Sergei Sobolev",
+    "born": 1908,
+    "died": 1989,
+    "gender": 1
+  },
+  {
+    "id": "steenrod",
+    "name": "Norman Steenrod",
+    "born": 1910,
+    "died": 1971,
+    "gender": 1
+  },
+  {
+    "id": "stokes",
+    "name": "George Stokes",
+    "born": 1819,
+    "died": 1903,
+    "gender": 1
+  },
+  {
+    "id": "stoner",
+    "name": "Edmund Stoner",
+    "born": 1899,
+    "died": 1968,
+    "gender": 1
+  },
+  {
+    "id": "sylvester",
+    "name": "James Sylvester",
+    "born": 1814,
+    "died": 1897,
     "gender": 1
   },
   {
@@ -184,11 +896,109 @@
     "gender": 1
   },
   {
+    "id": "thom",
+    "name": "René Thom",
+    "born": 1923,
+    "died": 2002,
+    "gender": 1
+  },
+  {
+    "id": "tonelli",
+    "name": "Leonida Tonelli",
+    "born": 1885,
+    "died": 1946,
+    "gender": 1
+  },
+  {
     "id": "turing",
     "name": "Alan Turing",
     "born": 1912,
     "died": 1954,
     "image": "/images/people/turing.jpg",
+    "gender": 1
+  },
+  {
+    "id": "tutte",
+    "name": "William Tutte",
+    "born": 1917,
+    "died": 2002,
+    "gender": 1
+  },
+  {
+    "id": "valiant",
+    "name": "Leslie Valiant",
+    "born": 1949,
+    "died": null,
+    "gender": 1
+  },
+  {
+    "id": "vanloan",
+    "name": "Charles Van Loan",
+    "born": 1946,
+    "died": null,
+    "gender": 1
+  },
+  {
+    "id": "vapnik",
+    "name": "Vladimir Vapnik",
+    "born": 1936,
+    "died": null,
+    "gender": 1
+  },
+  {
+    "id": "vonneumann",
+    "name": "John von Neumann",
+    "born": 1903,
+    "died": 1957,
+    "gender": 1
+  },
+  {
+    "id": "weierstrass",
+    "name": "Karl Weierstrass",
+    "born": 1815,
+    "died": 1897,
+    "gender": 1
+  },
+  {
+    "id": "weilang",
+    "name": "Hermann Weyl",
+    "born": 1885,
+    "died": 1955,
+    "gender": 1
+  },
+  {
+    "id": "weyl",
+    "name": "Hermann Weyl",
+    "born": 1885,
+    "died": 1955,
+    "gender": 1
+  },
+  {
+    "id": "wiener",
+    "name": "Norbert Wiener",
+    "born": 1894,
+    "died": 1964,
+    "gender": 1
+  },
+  {
+    "id": "wold",
+    "name": "Herman Wold",
+    "born": 1908,
+    "died": 1992,
+    "gender": 1
+  },
+  {
+    "id": "yule",
+    "name": "George Udny Yule",
+    "born": 1871,
+    "died": 1951,
+    "gender": 1
+  },
+  {
+    "id": "zermelo",
+    "name": "Ernst Zermelo",
+    "born": 1871,
+    "died": 1953,
     "gender": 1
   }
 ]
