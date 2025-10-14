@@ -1,10 +1,50 @@
 [
   {
-    "id": "pythagoras",
-    "name": "Pythagoras",
-    "born": -570,
-    "died": -495,
-    "image": "/images/people/thales.jpg",
+    "id": "aristotle",
+    "name": "Aristotle",
+    "born": -384,
+    "died": -322,
+    "image": "/images/people/aristotle.jpg",
+    "gender": 1
+  },
+  {
+    "id": "cantor",
+    "name": "Georg Cantor",
+    "born": 1845,
+    "died": 1918,
+    "image": "/images/people/cantor.jpg",
+    "gender": 1
+  },
+  {
+    "id": "conway",
+    "name": "John Conway",
+    "born": 1937,
+    "died": 2020,
+    "image": "/images/people/conway.jpg",
+    "gender": 1
+  },
+  {
+    "id": "curie",
+    "name": "Marie Curie",
+    "born": 1867,
+    "died": 1934,
+    "image": "/images/people/curie.jpg",
+    "gender": 0
+  },
+  {
+    "id": "descartes",
+    "name": "Descartes",
+    "born": 1596,
+    "died": 1650,
+    "image": "/images/people/descartes.jpg",
+    "gender": 1
+  },
+  {
+    "id": "einstein",
+    "name": "Einstein",
+    "born": 1879,
+    "died": 1955,
+    "image": "/images/people/einstein.jpg",
     "gender": 1
   },
   {
@@ -16,38 +56,6 @@
     "gender": 1
   },
   {
-    "id": "aristotle",
-    "name": "Aristotle",
-    "born": -384,
-    "died": -322,
-    "image": "/images/people/aristotle.jpg",
-    "gender": 1
-  },
-  {
-    "id": "descartes",
-    "name": "René Descartes",
-    "born": 1596,
-    "died": 1650,
-    "image": "/images/people/descartes.jpg",
-    "gender": 1
-  },
-  {
-    "id": "newton",
-    "name": "Isaac Newton",
-    "born": 1643,
-    "died": 1727,
-    "image": "/images/people/newton.jpg",
-    "gender": 1
-  },
-  {
-    "id": "leibniz",
-    "name": "Gottfried Wilhelm Leibniz",
-    "born": 1646,
-    "died": 1716,
-    "image": "/images/people/newton.jpg",
-    "gender": 1
-  },
-  {
     "id": "euler",
     "name": "Leonhard Euler",
     "born": 1707,
@@ -56,11 +64,19 @@
     "gender": 1
   },
   {
-    "id": "lagrange",
-    "name": "Joseph-Louis Lagrange",
-    "born": 1736,
-    "died": 1813,
-    "image": "/images/people/euler.jpg",
+    "id": "fermat",
+    "name": "Pierre de Fermat",
+    "born": 1607,
+    "died": 1665,
+    "image": "/images/people/fermat.jpg",
+    "gender": 1
+  },
+  {
+    "id": "feynman",
+    "name": "Richard Feynman",
+    "born": 1918,
+    "died": 1988,
+    "image": "/images/people/feynman.jpg",
     "gender": 1
   },
   {
@@ -80,43 +96,11 @@
     "gender": 1
   },
   {
-    "id": "cauchy",
-    "name": "Augustin-Louis Cauchy",
-    "born": 1789,
-    "died": 1857,
-    "image": "/images/people/gauss.jpg",
-    "gender": 1
-  },
-  {
-    "id": "galois",
-    "name": "Évariste Galois",
-    "born": 1811,
-    "died": 1832,
-    "image": "/images/people/gauss.jpg",
-    "gender": 1
-  },
-  {
-    "id": "lovelace",
-    "name": "Ada Lovelace",
-    "born": 1815,
-    "died": 1852,
-    "image": "/images/people/lovelace.jpg",
-    "gender": 0
-  },
-  {
-    "id": "cantor",
-    "name": "Georg Cantor",
-    "born": 1845,
-    "died": 1918,
-    "image": "/images/people/cantor.jpg",
-    "gender": 1
-  },
-  {
-    "id": "riemann",
-    "name": "Bernhard Riemann",
-    "born": 1826,
-    "died": 1866,
-    "image": "/images/people/gauss.jpg",
+    "id": "hawking",
+    "name": "Stephen Hawking",
+    "born": 1942,
+    "died": 2018,
+    "image": "/images/people/hawking.jpg",
     "gender": 1
   },
   {
@@ -128,94 +112,6 @@
     "gender": 1
   },
   {
-    "id": "poincare",
-    "name": "Henri Poincaré",
-    "born": 1854,
-    "died": 1912,
-    "image": "/images/people/hilbert.jpg",
-    "gender": 1
-  },
-  {
-    "id": "ramanujan",
-    "name": "Srinivasa Ramanujan",
-    "born": 1887,
-    "died": 1920,
-    "image": "/images/people/einstein.jpg",
-    "gender": 1
-  },
-  {
-    "id": "einstein",
-    "name": "Albert Einstein",
-    "born": 1879,
-    "died": 1955,
-    "image": "/images/people/einstein.jpg",
-    "gender": 1
-  },
-  {
-    "id": "tarski",
-    "name": "Alfred Tarski",
-    "born": 1901,
-    "died": 1983,
-    "image": "/images/people/tarski.jpg",
-    "gender": 1
-  },
-  {
-    "id": "banach",
-    "name": "Stefan Banach",
-    "born": 1892,
-    "died": 1945,
-    "image": "/images/people/hilbert.jpg",
-    "gender": 1
-  },
-  {
-    "id": "lebesgue",
-    "name": "Henri Lebesgue",
-    "born": 1875,
-    "died": 1941,
-    "image": "/images/people/hilbert.jpg",
-    "gender": 1
-  },
-  {
-    "id": "kolmogorov",
-    "name": "Andrey Kolmogorov",
-    "born": 1903,
-    "died": 1987,
-    "image": "/images/people/hawking.jpg",
-    "gender": 1
-  },
-  {
-    "id": "turing",
-    "name": "Alan Turing",
-    "born": 1912,
-    "died": 1954,
-    "image": "/images/people/turing.jpg",
-    "gender": 1
-  },
-  {
-    "id": "godel",
-    "name": "Kurt Gödel",
-    "born": 1906,
-    "died": 1978,
-    "image": "/images/people/einstein.jpg",
-    "gender": 1
-  },
-  {
-    "id": "vonneumann",
-    "name": "John von Neumann",
-    "born": 1903,
-    "died": 1957,
-    "image": "/images/people/einstein.jpg",
-    "gender": 1
-  },
-  {
-    "id": "conway",
-    "name": "John Horton Conway",
-    "born": 1937,
-    "died": 2020,
-    "image": "/images/people/conway.jpg",
-    "gender": 1
-  },
-  {
     "id": "knuth",
     "name": "Donald Knuth",
     "born": 1938,
@@ -224,83 +120,27 @@
     "gender": 1
   },
   {
-    "id": "rudin",
-    "name": "Walter Rudin",
-    "born": 1921,
-    "died": 2010,
-    "image": "/images/people/feynman.jpg",
+    "id": "kolmogorov",
+    "name": "Andrey Kolmogorov",
+    "born": 1903,
+    "died": 1987,
+    "image": "/images/people/kolmogorov.jpg",
     "gender": 1
   },
   {
-    "id": "halmos",
-    "name": "Paul Halmos",
-    "born": 1916,
-    "died": 2006,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
+    "id": "lovelace",
+    "name": "Ada Lovelace",
+    "born": 1815,
+    "died": 1852,
+    "image": "/images/people/lovelace.jpg",
+    "gender": 0
   },
   {
-    "id": "axler",
-    "name": "Sheldon Axler",
-    "born": 1949,
-    "died": null,
-    "image": "/images/people/hawking.jpg",
-    "gender": 1
-  },
-  {
-    "id": "strang",
-    "name": "Gilbert Strang",
-    "born": 1934,
-    "died": null,
-    "image": "/images/people/hawking.jpg",
-    "gender": 1
-  },
-  {
-    "id": "tao",
-    "name": "Terence Tao",
-    "born": 1975,
-    "died": null,
-    "image": "/images/people/hawking.jpg",
-    "gender": 1
-  },
-  {
-    "id": "wasserman",
-    "name": "Larry Wasserman",
-    "born": 1959,
-    "died": null,
-    "image": "/images/people/hawking.jpg",
-    "gender": 1
-  },
-  {
-    "id": "jaynes",
-    "name": "Edwin Thompson Jaynes",
-    "born": 1922,
-    "died": 1998,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "jordan",
-    "name": "Camille Jordan",
-    "born": 1838,
-    "died": 1922,
-    "image": "/images/people/gauss.jpg",
-    "gender": 1
-  },
-  {
-    "id": "feynman",
-    "name": "Richard Feynman",
-    "born": 1918,
-    "died": 1988,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "hawking",
-    "name": "Stephen Hawking",
-    "born": 1942,
-    "died": 2018,
-    "image": "/images/people/hawking.jpg",
+    "id": "newton",
+    "name": "Newton",
+    "born": 1643,
+    "died": 1727,
+    "image": "/images/people/newton.jpg",
     "gender": 1
   },
   {
@@ -312,835 +152,19 @@
     "gender": 1
   },
   {
-    "id": "curie",
-    "name": "Marie Curie",
-    "born": 1867,
-    "died": 1934,
-    "image": "/images/people/curie.jpg",
-    "gender": 0
-  },
-  {
-    "id": "thom",
-    "name": "René Thom",
-    "born": 1923,
-    "died": 2002,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "milnor",
-    "name": "John Milnor",
-    "born": 1931,
-    "died": null,
-    "image": "/images/people/hawking.jpg",
-    "gender": 1
-  },
-  {
-    "id": "smale",
-    "name": "Stephen Smale",
-    "born": 1930,
-    "died": null,
-    "image": "/images/people/hawking.jpg",
-    "gender": 1
-  },
-  {
-    "id": "ito",
-    "name": "Kiyoshi Itô",
-    "born": 1915,
-    "died": 2008,
-    "image": "/images/people/hawking.jpg",
-    "gender": 1
-  },
-  {
-    "id": "doob",
-    "name": "Joseph Doob",
-    "born": 1910,
-    "died": 2004,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "malliavin",
-    "name": "Paul Malliavin",
-    "born": 1925,
-    "died": 2010,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "frege",
-    "name": "Gottlob Frege",
-    "born": 1848,
-    "died": 1925,
-    "image": "/images/people/cantor.jpg",
-    "gender": 1
-  },
-  {
-    "id": "church",
-    "name": "Alonzo Church",
-    "born": 1903,
-    "died": 1995,
-    "image": "/images/people/turing.jpg",
-    "gender": 1
-  },
-  {
-    "id": "peano",
-    "name": "Giuseppe Peano",
-    "born": 1858,
-    "died": 1932,
-    "image": "/images/people/cantor.jpg",
-    "gender": 1
-  },
-  {
-    "id": "weierstrass",
-    "name": "Karl Weierstrass",
-    "born": 1815,
-    "died": 1897,
-    "image": "/images/people/gauss.jpg",
-    "gender": 1
-  },
-  {
-    "id": "dedekind",
-    "name": "Richard Dedekind",
-    "born": 1831,
-    "died": 1916,
-    "image": "/images/people/cantor.jpg",
-    "gender": 1
-  },
-  {
-    "id": "noether",
-    "name": "Emmy Noether",
-    "born": 1882,
-    "died": 1935,
-    "image": "/images/people/curie.jpg",
-    "gender": 0
-  },
-  {
-    "id": "dirac",
-    "name": "Paul Dirac",
-    "born": 1902,
-    "died": 1984,
-    "image": "/images/people/einstein.jpg",
-    "gender": 1
-  },
-  {
-    "id": "nash",
-    "name": "John Nash",
-    "born": 1928,
-    "died": 2015,
-    "image": "/images/people/hawking.jpg",
-    "gender": 1
-  },
-  {
-    "id": "shannon",
-    "name": "Claude Shannon",
-    "born": 1916,
-    "died": 2001,
-    "image": "/images/people/turing.jpg",
-    "gender": 1
-  },
-  {
-    "id": "archimedes",
-    "name": "Archimedes",
-    "born": -287,
-    "died": -212,
-    "image": "/images/people/euclid.jpg",
-    "gender": 1
-  },
-  {
-    "id": "hipparchus",
-    "name": "Hipparchus",
-    "born": -190,
-    "died": -120,
-    "image": "/images/people/euclid.jpg",
-    "gender": 1
-  },
-  {
-    "id": "ptolemy",
-    "name": "Claudius Ptolemy",
-    "born": 100,
-    "died": 170,
-    "image": "/images/people/euclid.jpg",
-    "gender": 1
-  },
-  {
-    "id": "al-biruni",
-    "name": "Al-Biruni",
-    "born": 973,
-    "died": 1050,
-    "image": "/images/people/euclid.jpg",
-    "gender": 1
-  },
-  {
-    "id": "bhaskara-ii",
-    "name": "Bhaskara II",
-    "born": 1114,
-    "died": 1185,
-    "image": "/images/people/euclid.jpg",
-    "gender": 1
-  },
-  {
-    "id": "pascal",
-    "name": "Blaise Pascal",
-    "born": 1623,
-    "died": 1662,
-    "image": "/images/people/descartes.jpg",
-    "gender": 1
-  },
-  {
-    "id": "fermat",
-    "name": "Pierre de Fermat",
-    "born": 1607,
-    "died": 1665,
-    "image": "/images/people/fermat.jpg",
-    "gender": 1
-  },
-  {
-    "id": "bernoulli",
-    "name": "Jacob Bernoulli",
-    "born": 1654,
-    "died": 1705,
-    "image": "/images/people/newton.jpg",
-    "gender": 1
-  },
-  {
-    "id": "laplace",
-    "name": "Pierre-Simon Laplace",
-    "born": 1749,
-    "died": 1827,
-    "image": "/images/people/euler.jpg",
-    "gender": 1
-  },
-  {
-    "id": "legendre",
-    "name": "Adrien-Marie Legendre",
-    "born": 1752,
-    "died": 1833,
-    "image": "/images/people/euler.jpg",
-    "gender": 1
-  },
-  {
-    "id": "kronecker",
-    "name": "Leopold Kronecker",
-    "born": 1823,
-    "died": 1891,
-    "image": "/images/people/gauss.jpg",
-    "gender": 1
-  },
-  {
-    "id": "cayley",
-    "name": "Arthur Cayley",
-    "born": 1821,
-    "died": 1895,
-    "image": "/images/people/gauss.jpg",
-    "gender": 1
-  },
-  {
-    "id": "sylvester",
-    "name": "James Joseph Sylvester",
-    "born": 1814,
-    "died": 1897,
-    "image": "/images/people/gauss.jpg",
-    "gender": 1
-  },
-  {
-    "id": "dirichlet",
-    "name": "Peter Gustav Lejeune Dirichlet",
-    "born": 1805,
-    "died": 1859,
-    "image": "/images/people/gauss.jpg",
-    "gender": 1
-  },
-  {
-    "id": "liouville",
-    "name": "Joseph Liouville",
-    "born": 1809,
-    "died": 1882,
-    "image": "/images/people/gauss.jpg",
-    "gender": 1
-  },
-  {
-    "id": "stokes",
-    "name": "George Gabriel Stokes",
-    "born": 1819,
-    "died": 1903,
-    "image": "/images/people/gauss.jpg",
-    "gender": 1
-  },
-  {
-    "id": "green",
-    "name": "George Green",
-    "born": 1793,
-    "died": 1841,
-    "image": "/images/people/gauss.jpg",
-    "gender": 1
-  },
-  {
-    "id": "maxwell",
-    "name": "James Clerk Maxwell",
-    "born": 1831,
-    "died": 1879,
-    "image": "/images/people/gauss.jpg",
-    "gender": 1
-  },
-  {
-    "id": "borel",
-    "name": "Émile Borel",
-    "born": 1871,
-    "died": 1956,
+    "id": "poincare",
+    "name": "Henri Poincaré",
+    "born": 1854,
+    "died": 1912,
     "image": "/images/people/poincare.jpg",
     "gender": 1
   },
   {
-    "id": "caratheodory",
-    "name": "Constantin Carathéodory",
-    "born": 1873,
-    "died": 1950,
-    "image": "/images/people/hilbert.jpg",
-    "gender": 1
-  },
-  {
-    "id": "hausdorff",
-    "name": "Felix Hausdorff",
-    "born": 1868,
-    "died": 1942,
-    "image": "/images/people/cantor.jpg",
-    "gender": 1
-  },
-  {
-    "id": "zermelo",
-    "name": "Ernst Zermelo",
-    "born": 1871,
-    "died": 1953,
-    "image": "/images/people/cantor.jpg",
-    "gender": 1
-  },
-  {
-    "id": "fraenkel",
-    "name": "Abraham Fraenkel",
-    "born": 1891,
-    "died": 1965,
-    "image": "/images/people/cantor.jpg",
-    "gender": 1
-  },
-  {
-    "id": "skolem",
-    "name": "Thoralf Skolem",
+    "id": "ramanujan",
+    "name": "Srinivasa Ramanujan",
     "born": 1887,
-    "died": 1963,
-    "image": "/images/people/hilbert.jpg",
-    "gender": 1
-  },
-  {
-    "id": "frobenius",
-    "name": "Ferdinand Georg Frobenius",
-    "born": 1849,
-    "died": 1917,
-    "image": "/images/people/cantor.jpg",
-    "gender": 1
-  },
-  {
-    "id": "schur",
-    "name": "Issai Schur",
-    "born": 1875,
-    "died": 1941,
-    "image": "/images/people/hilbert.jpg",
-    "gender": 1
-  },
-  {
-    "id": "artin",
-    "name": "Emil Artin",
-    "born": 1898,
-    "died": 1962,
-    "image": "/images/people/hilbert.jpg",
-    "gender": 1
-  },
-  {
-    "id": "lie",
-    "name": "Sophus Lie",
-    "born": 1842,
-    "died": 1899,
-    "image": "/images/people/cantor.jpg",
-    "gender": 1
-  },
-  {
-    "id": "cartan",
-    "name": "Élie Cartan",
-    "born": 1869,
-    "died": 1951,
-    "image": "/images/people/poincare.jpg",
-    "gender": 1
-  },
-  {
-    "id": "weyl",
-    "name": "Hermann Weyl",
-    "born": 1885,
-    "died": 1955,
-    "image": "/images/people/hilbert.jpg",
-    "gender": 1
-  },
-  {
-    "id": "eilenberg",
-    "name": "Samuel Eilenberg",
-    "born": 1913,
-    "died": 1998,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "maclane",
-    "name": "Saunders Mac Lane",
-    "born": 1909,
-    "died": 2005,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "grothendieck",
-    "name": "Alexander Grothendieck",
-    "born": 1928,
-    "died": 2014,
-    "image": "/images/people/hawking.jpg",
-    "gender": 1
-  },
-  {
-    "id": "lawvere",
-    "name": "F. William Lawvere",
-    "born": 1937,
-    "died": 2023,
-    "image": "/images/people/hawking.jpg",
-    "gender": 1
-  },
-  {
-    "id": "erdos",
-    "name": "Paul Erdős",
-    "born": 1913,
-    "died": 1996,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "renyi",
-    "name": "Alfréd Rényi",
-    "born": 1921,
-    "died": 1970,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "tutte",
-    "name": "W. T. Tutte",
-    "born": 1917,
-    "died": 2002,
-    "image": "/images/people/turing.jpg",
-    "gender": 1
-  },
-  {
-    "id": "tonelli",
-    "name": "Leonida Tonelli",
-    "born": 1885,
-    "died": 1946,
-    "image": "/images/people/hilbert.jpg",
-    "gender": 1
-  },
-  {
-    "id": "grunwald",
-    "name": "Anton Karl Grünwald",
-    "born": 1838,
     "died": 1920,
-    "image": "/images/people/cantor.jpg",
-    "gender": 1
-  },
-  {
-    "id": "lettnikov",
-    "name": "Aleksey Vasilievich Letnikov",
-    "born": 1837,
-    "died": 1888,
-    "image": "/images/people/cantor.jpg",
-    "gender": 1
-  },
-  {
-    "id": "riesz",
-    "name": "Frigyes Riesz",
-    "born": 1880,
-    "died": 1956,
-    "image": "/images/people/hilbert.jpg",
-    "gender": 1
-  },
-  {
-    "id": "stoner",
-    "name": "Marshall Stone",
-    "born": 1903,
-    "died": 1989,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "plancherel",
-    "name": "Michel Plancherel",
-    "born": 1885,
-    "died": 1967,
-    "image": "/images/people/hilbert.jpg",
-    "gender": 1
-  },
-  {
-    "id": "hardy",
-    "name": "G. H. Hardy",
-    "born": 1877,
-    "died": 1947,
     "image": "/images/people/ramanujan.jpg",
-    "gender": 1
-  },
-  {
-    "id": "littlewood",
-    "name": "J. E. Littlewood",
-    "born": 1885,
-    "died": 1977,
-    "image": "/images/people/ramanujan.jpg",
-    "gender": 1
-  },
-  {
-    "id": "steenrod",
-    "name": "Norman Steenrod",
-    "born": 1910,
-    "died": 1971,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "hurewicz",
-    "name": "Witold Hurewicz",
-    "born": 1904,
-    "died": 1956,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "serre",
-    "name": "Jean-Pierre Serre",
-    "born": 1926,
-    "died": null,
-    "image": "/images/people/hawking.jpg",
-    "gender": 1
-  },
-  {
-    "id": "fisher",
-    "name": "Ronald Fisher",
-    "born": 1890,
-    "died": 1962,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "neyman",
-    "name": "Jerzy Neyman",
-    "born": 1894,
-    "died": 1981,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "pearson",
-    "name": "Karl Pearson",
-    "born": 1857,
-    "died": 1936,
-    "image": "/images/people/cantor.jpg",
-    "gender": 1
-  },
-  {
-    "id": "markov",
-    "name": "Andrey Markov",
-    "born": 1856,
-    "died": 1922,
-    "image": "/images/people/cantor.jpg",
-    "gender": 1
-  },
-  {
-    "id": "wiener",
-    "name": "Norbert Wiener",
-    "born": 1894,
-    "died": 1964,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "bayes",
-    "name": "Thomas Bayes",
-    "born": 1701,
-    "died": 1761,
-    "image": "/images/people/euler.jpg",
-    "gender": 1
-  },
-  {
-    "id": "jeffreys",
-    "name": "Harold Jeffreys",
-    "born": 1891,
-    "died": 1989,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "metropolis",
-    "name": "Nicholas Metropolis",
-    "born": 1915,
-    "died": 1999,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "hastings",
-    "name": "W. K. Hastings",
-    "born": 1930,
-    "died": 2016,
-    "image": "/images/people/hawking.jpg",
-    "gender": 1
-  },
-  {
-    "id": "yule",
-    "name": "George Udny Yule",
-    "born": 1871,
-    "died": 1951,
-    "image": "/images/people/poincare.jpg",
-    "gender": 1
-  },
-  {
-    "id": "wold",
-    "name": "Herman Wold",
-    "born": 1908,
-    "died": 1992,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "box",
-    "name": "George E. P. Box",
-    "born": 1919,
-    "died": 2013,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "jenkins",
-    "name": "Gwilym Jenkins",
-    "born": 1932,
-    "died": 1982,
-    "image": "/images/people/hawking.jpg",
-    "gender": 1
-  },
-  {
-    "id": "cover",
-    "name": "Thomas M. Cover",
-    "born": 1938,
-    "died": 2012,
-    "image": "/images/people/hawking.jpg",
-    "gender": 1
-  },
-  {
-    "id": "gallager",
-    "name": "Robert G. Gallager",
-    "born": 1931,
-    "died": null,
-    "image": "/images/people/hawking.jpg",
-    "gender": 1
-  },
-  {
-    "id": "rosenblatt",
-    "name": "Frank Rosenblatt",
-    "born": 1928,
-    "died": 1971,
-    "image": "/images/people/turing.jpg",
-    "gender": 1
-  },
-  {
-    "id": "vapnik",
-    "name": "Vladimir Vapnik",
-    "born": 1936,
-    "died": null,
-    "image": "/images/people/hawking.jpg",
-    "gender": 1
-  },
-  {
-    "id": "valiant",
-    "name": "Leslie Valiant",
-    "born": 1949,
-    "died": null,
-    "image": "/images/people/knuth.jpg",
-    "gender": 1
-  },
-  {
-    "id": "lecun",
-    "name": "Yann LeCun",
-    "born": 1960,
-    "died": null,
-    "image": "/images/people/knuth.jpg",
-    "gender": 1
-  },
-  {
-    "id": "hinton",
-    "name": "Geoffrey Hinton",
-    "born": 1947,
-    "died": null,
-    "image": "/images/people/knuth.jpg",
-    "gender": 1
-  },
-  {
-    "id": "bengio",
-    "name": "Yoshua Bengio",
-    "born": 1964,
-    "died": null,
-    "image": "/images/people/knuth.jpg",
-    "gender": 1
-  },
-  {
-    "id": "dantzig",
-    "name": "George Dantzig",
-    "born": 1914,
-    "died": 2005,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "fenchel",
-    "name": "Werner Fenchel",
-    "born": 1905,
-    "died": 1988,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "rockafellar",
-    "name": "R. Tyrrell Rockafellar",
-    "born": 1935,
-    "died": null,
-    "image": "/images/people/hawking.jpg",
-    "gender": 1
-  },
-  {
-    "id": "nesterov",
-    "name": "Yurii Nesterov",
-    "born": 1956,
-    "died": null,
-    "image": "/images/people/knuth.jpg",
-    "gender": 1
-  },
-  {
-    "id": "boyd",
-    "name": "Stephen Boyd",
-    "born": 1958,
-    "died": null,
-    "image": "/images/people/knuth.jpg",
-    "gender": 1
-  },
-  {
-    "id": "bellman",
-    "name": "Richard Bellman",
-    "born": 1920,
-    "died": 1984,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "pontryagin",
-    "name": "Lev Pontryagin",
-    "born": 1908,
-    "died": 1988,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "morgenstern",
-    "name": "Oskar Morgenstern",
-    "born": 1902,
-    "died": 1977,
-    "image": "/images/people/vonneumann.jpg",
-    "gender": 1
-  },
-  {
-    "id": "householder",
-    "name": "Alston Householder",
-    "born": 1904,
-    "died": 1993,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "golub",
-    "name": "Gene H. Golub",
-    "born": 1932,
-    "died": 2007,
-    "image": "/images/people/knuth.jpg",
-    "gender": 1
-  },
-  {
-    "id": "vanloan",
-    "name": "Charles F. Van Loan",
-    "born": 1947,
-    "died": null,
-    "image": "/images/people/knuth.jpg",
-    "gender": 1
-  },
-  {
-    "id": "givens",
-    "name": "Wallace Givens",
-    "born": 1910,
-    "died": 1993,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "kleene",
-    "name": "Stephen Cole Kleene",
-    "born": 1909,
-    "died": 1994,
-    "image": "/images/people/turing.jpg",
-    "gender": 1
-  },
-  {
-    "id": "cook",
-    "name": "Stephen Cook",
-    "born": 1939,
-    "died": null,
-    "image": "/images/people/knuth.jpg",
-    "gender": 1
-  },
-  {
-    "id": "levin",
-    "name": "Leonid Levin",
-    "born": 1948,
-    "died": null,
-    "image": "/images/people/knuth.jpg",
-    "gender": 1
-  },
-  {
-    "id": "sobolev",
-    "name": "Sergei Sobolev",
-    "born": 1908,
-    "died": 1989,
-    "image": "/images/people/kolmogorov.jpg",
-    "gender": 1
-  },
-  {
-    "id": "birkhoff",
-    "name": "George David Birkhoff",
-    "born": 1884,
-    "died": 1944,
-    "image": "/images/people/poincare.jpg",
-    "gender": 1
-  },
-  {
-    "id": "lorenz",
-    "name": "Edward Norton Lorenz",
-    "born": 1917,
-    "died": 2008,
-    "image": "/images/people/feynman.jpg",
-    "gender": 1
-  },
-  {
-    "id": "heisenberg",
-    "name": "Werner Heisenberg",
-    "born": 1901,
-    "died": 1976,
-    "image": "/images/people/einstein.jpg",
     "gender": 1
   },
   {
@@ -1148,40 +172,23 @@
     "name": "Erwin Schrödinger",
     "born": 1887,
     "died": 1961,
-    "image": "/images/people/einstein.jpg",
+    "image": "/images/people/schrodinger.jpg",
     "gender": 1
   },
   {
-    "id": "levicivita",
-    "name": "Tullio Levi-Civita",
-    "born": 1873,
-    "died": 1941,
-    "image": "/images/people/poincare.jpg",
+    "id": "tarski",
+    "name": "Alfred Tarski",
+    "born": 1901,
+    "died": 1983,
+    "image": "/images/people/tarski.jpg",
     "gender": 1
   },
   {
-    "id": "oppenheim",
-    "name": "Alan V. Oppenheim",
-    "born": 1937,
-    "died": null,
-    "image": "/images/people/knuth.jpg",
-    "gender": 1
-  },
-  {
-    "id": "daubechies",
-    "name": "Ingrid Daubechies",
-    "born": 1954,
-    "died": null,
-    "image": "/images/people/curie.jpg",
-    "gender": 0
-  },
-  {
-    "id": "weilang",
-    "name": "André Weil",
-    "born": 1906,
-    "died": 1998,
-    "image": "/images/people/feynman.jpg",
+    "id": "turing",
+    "name": "Alan Turing",
+    "born": 1912,
+    "died": 1954,
+    "image": "/images/people/turing.jpg",
     "gender": 1
   }
 ]
-
