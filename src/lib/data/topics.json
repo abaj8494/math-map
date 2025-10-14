@@ -1453,7 +1453,7 @@
       1994,
       2004
     ],
-    "notes": "Linear programming (Dantzig 1947), convex analysis (Fenchel 1951), interior-point (Karmarkar 1984), convex optimization textbooks (2004).",
+    "notes": "Linear programming (Dantzig 1947), convex analysis (Fenchel 1951), interior-point (Karmarkar 1984), convex optimisation textbooks (2004).",
     "leadsTo": [
       "machine-learning",
       "optimal-control"
@@ -1940,7 +1940,7 @@
       -150,
       1748
     ],
-    "notes": "Hipparchus & Ptolemy tables (classical); Euler\u2019s Introductio in analysin infinitorum (1748) modernizes trig via analytic functions.",
+    "notes": "Hipparchus & Ptolemy tables (classical); Euler\u2019s Introductio in analysin infinitorum (1748) modernises trig via analytic functions.",
     "leadsTo": [
       "calculus",
       "harmonic-analysis",

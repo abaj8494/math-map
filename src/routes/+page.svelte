@@ -253,14 +253,14 @@
 		
 		yOffset = 80;
 		
-		// Prerequisites (on back)
+		// Prerequisites (on back) - always show heading
+		backCtx.fillStyle = '#cccccc';
+		backCtx.font = 'bold 22px Arial';
+		backCtx.textAlign = 'center';
+		backCtx.fillText('Prerequisites', backCanvas.width / 2, yOffset);
+		yOffset += 35;
+		
 		if (topic.prerequisites && topic.prerequisites.length > 0) {
-			backCtx.fillStyle = '#cccccc';
-			backCtx.font = 'bold 22px Arial';
-			backCtx.textAlign = 'center';
-			backCtx.fillText('Prerequisites', backCanvas.width / 2, yOffset);
-			yOffset += 35;
-			
 			backCtx.font = '24px Arial';  // Increased from 18px to 24px
 			backCtx.fillStyle = '#aaaaaa';
 			backCtx.textAlign = 'left';
@@ -274,6 +274,12 @@
 			});
 			backCtx.textAlign = 'center';
 			yOffset += 20;
+		} else {
+			backCtx.font = '24px Arial';
+			backCtx.fillStyle = '#999999';
+			backCtx.textAlign = 'center';
+			backCtx.fillText('None', backCanvas.width / 2, yOffset);
+			yOffset += 40;
 		}
 		
 		// Notes (on back)
@@ -702,7 +708,7 @@
 					selectedCard = earliestTopic;
 					// Just position camera without history
 					const targetPosition = earliestCard.position.clone();
-					const offset = new THREE.Vector3(0, 0, 18);
+					const offset = new THREE.Vector3(0, 0, 12);
 					const cameraTarget = targetPosition.clone().add(offset);
 					camera.position.copy(cameraTarget);
 					controls.target.copy(targetPosition);
@@ -720,8 +726,8 @@
 		}
 		
 		const targetPosition = cardMesh.position.clone();
-		// Increase distance for larger cards (was 15, now 18)
-		const offset = new THREE.Vector3(0, 0, 18);
+		// Closer zoom for better card visibility
+		const offset = new THREE.Vector3(0, 0, 12);
 		const cameraTarget = targetPosition.clone().add(offset);
 		
 		// Smoothly animate camera
@@ -760,7 +766,7 @@
 				
 				// Animate camera to previous card (same as zoomToCard but without adding to history)
 				const targetPosition = prevCardMesh.position.clone();
-				const offset = new THREE.Vector3(0, 0, 18);
+				const offset = new THREE.Vector3(0, 0, 12);
 				const cameraTarget = targetPosition.clone().add(offset);
 				
 				const startPos = camera.position.clone();
@@ -842,9 +848,16 @@
 			}
 		});
 		
-		// Also hide/show corresponding arrows
+		// Also hide/show corresponding arrows - show arrow if both source and destination cards are visible
 		arrowMeshes.forEach(arrow => {
-			arrow.visible = difficultyFilter.size === 0; // Only show arrows when showing all
+			if (difficultyFilter.size === 0) {
+				arrow.visible = true; // Show all arrows when no filter applied
+			} else {
+				// Only show arrow if both connected cards are visible
+				const fromCard = arrow.userData.fromCard;
+				const toCard = arrow.userData.toCard;
+				arrow.visible = fromCard && toCard && fromCard.visible && toCard.visible;
+			}
 		});
 	}
 	
@@ -1390,8 +1403,15 @@
 	<div class="person-detail-card">
 		<button class="close-person" on:click={() => hoveredPerson = null}>✕</button>
 		<div class="person-detail-content">
-			<!-- Always show initials for now until we have verified contributor images -->
-			<div class="placeholder-img">{hoveredPerson.name.split(' ').map(n => n[0]).join('')}</div>
+			{#if hoveredPerson.image}
+				<img src={hoveredPerson.image} alt={hoveredPerson.name} on:error={(e) => {
+					e.target.style.display = 'none';
+					e.target.nextElementSibling.style.display = 'flex';
+				}} />
+				<div class="placeholder-img" style="display: none;">{hoveredPerson.name.split(' ').map(n => n[0]).join('')}</div>
+			{:else}
+				<div class="placeholder-img">{hoveredPerson.name.split(' ').map(n => n[0]).join('')}</div>
+			{/if}
 			<h3>{hoveredPerson.name}</h3>
 			{#if hoveredPerson.born || hoveredPerson.died}
 				<p class="dates">
