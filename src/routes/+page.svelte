@@ -1404,7 +1404,7 @@
 		<button class="close-person" on:click={() => hoveredPerson = null}>✕</button>
 		<div class="person-detail-content">
 			{#if hoveredPerson.image}
-				<img src={hoveredPerson.image} alt={hoveredPerson.name} on:error={(e) => {
+				<img src=".{hoveredPerson.image}" alt={hoveredPerson.name} on:error={(e) => {
 					e.target.style.display = 'none';
 					e.target.nextElementSibling.style.display = 'flex';
 				}} />

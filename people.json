@@ -734,5 +734,37 @@
     "died": null,
     "image": "/images/people/madonna.jpg",
     "gender": 0
+  },
+  {
+    "id": "ramanujan",
+    "name": "Srinivasa Ramanujan",
+    "born": 1887,
+    "died": 1920,
+    "image": "/images/people/ramanujan.jpg",
+    "gender": 1
+  },
+  {
+    "id": "fermat",
+    "name": "Pierre de Fermat",
+    "born": 1607,
+    "died": 1665,
+    "image": "/images/people/fermat.jpg",
+    "gender": 1
+  },
+  {
+    "id": "knuth",
+    "name": "Donald Knuth",
+    "born": 1938,
+    "died": null,
+    "image": "/images/people/knuth.jpg",
+    "gender": 1
+  },
+  {
+    "id": "kolmogorov",
+    "name": "Andrey Kolmogorov",
+    "born": 1903,
+    "died": 1987,
+    "image": "/images/people/kolmogorov.jpg",
+    "gender": 1
   }
 ] 
