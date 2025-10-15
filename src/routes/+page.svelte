@@ -970,26 +970,50 @@
 		showDifficultyMenu = false;
 	}
 	
+	// Count topics by difficulty level
+	function getTopicCountByDifficulty() {
+		const counts = {
+			'High School': 0,
+			'UGrad': 0,
+			'PGrad': 0,
+			'Research': 0
+		};
+		topics.forEach(topic => {
+			if (topic.difficulty && counts.hasOwnProperty(topic.difficulty)) {
+				counts[topic.difficulty]++;
+			}
+		});
+		return counts;
+	}
+	
+	// Get reactive counts
+	$: difficultyCounts = getTopicCountByDifficulty();
+
 	function getSortedTopics() {
-		const sorted = [...topics];
+		// First filter by difficulty if needed
+		let filtered = [...topics];
+		if (difficultyFilter.size > 0) {
+			filtered = filtered.filter(topic => difficultyFilter.has(topic.difficulty));
+		}
+		
 		const difficultyOrder = { 'High School': 1, 'UGrad': 2, 'PGrad': 3, 'Research': 4 };
 		switch (sortBy) {
 			case 'year':
-				return sorted.sort((a, b) => a.year - b.year);
+				return filtered.sort((a, b) => a.year - b.year);
 			case 'name':
-				return sorted.sort((a, b) => a.name.localeCompare(b.name));
+				return filtered.sort((a, b) => a.name.localeCompare(b.name));
 			case 'category':
-				return sorted.sort((a, b) => a.category.localeCompare(b.category) || a.year - b.year);
+				return filtered.sort((a, b) => a.category.localeCompare(b.category) || a.year - b.year);
 			case 'type':
-				return sorted.sort((a, b) => a.type.localeCompare(b.type) || a.year - b.year);
+				return filtered.sort((a, b) => a.type.localeCompare(b.type) || a.year - b.year);
 			case 'difficulty':
-				return sorted.sort((a, b) => {
+				return filtered.sort((a, b) => {
 					const orderA = difficultyOrder[a.difficulty] || 999;
 					const orderB = difficultyOrder[b.difficulty] || 999;
 					return orderA - orderB || a.year - b.year;
 				});
 			default:
-				return sorted;
+				return filtered;
 		}
 	}
 	
@@ -1158,14 +1182,33 @@
 		<div class="list-header">
 			<h1>Mathematical Topics</h1>
 			<div class="sort-controls">
-				<label for="sort-select">Sort by:</label>
-				<select id="sort-select" bind:value={sortBy}>
-					<option value="year">Year (Chronological)</option>
-					<option value="name">Name (A-Z)</option>
-					<option value="category">Category</option>
-					<option value="type">Type (Pure/Applied)</option>
-					<option value="difficulty">Difficulty</option>
-				</select>
+				<div class="control-group">
+					<label for="sort-select">Sort by:</label>
+					<select id="sort-select" bind:value={sortBy}>
+						<option value="year">Year (Chronological)</option>
+						<option value="name">Name (A-Z)</option>
+						<option value="category">Category</option>
+						<option value="type">Type (Pure/Applied)</option>
+						<option value="difficulty">Difficulty</option>
+					</select>
+				</div>
+				<div class="control-group">
+					<label for="filter-select">Filter:</label>
+					<select id="filter-select" on:change={(e) => {
+						const value = e.target.value;
+						if (value === 'all') {
+							difficultyFilter = new Set();
+						} else {
+							difficultyFilter = new Set([value]);
+						}
+					}}>
+						<option value="all">All Levels ({topics.length})</option>
+						<option value="High School">High School ({difficultyCounts['High School']})</option>
+						<option value="UGrad">Undergraduate ({difficultyCounts['UGrad']})</option>
+						<option value="PGrad">Postgraduate ({difficultyCounts['PGrad']})</option>
+						<option value="Research">Research ({difficultyCounts['Research']})</option>
+					</select>
+				</div>
 			</div>
 		</div>
 		
@@ -1296,7 +1339,7 @@
 					class="difficulty-option clear-option"
 					on:click={clearDifficultyFilters}
 				>
-					✓ All Levels
+					✓ All Levels ({topics.length})
 				</button>
 				<div class="difficulty-separator"></div>
 				<label class="difficulty-option">
@@ -1305,7 +1348,7 @@
 						checked={difficultyFilter.has('High School')}
 						on:change={() => toggleDifficulty('High School')}
 					/>
-					<span class="difficulty-label" style="color: #22c55e">●</span> High School
+					<span class="difficulty-label" style="color: #22c55e">●</span> High School ({difficultyCounts['High School']})
 				</label>
 				<label class="difficulty-option">
 					<input 
@@ -1313,7 +1356,7 @@
 						checked={difficultyFilter.has('UGrad')}
 						on:change={() => toggleDifficulty('UGrad')}
 					/>
-					<span class="difficulty-label" style="color: #3b82f6">●</span> Undergraduate
+					<span class="difficulty-label" style="color: #3b82f6">●</span> Undergraduate ({difficultyCounts['UGrad']})
 				</label>
 				<label class="difficulty-option">
 					<input 
@@ -1321,7 +1364,7 @@
 						checked={difficultyFilter.has('PGrad')}
 						on:change={() => toggleDifficulty('PGrad')}
 					/>
-					<span class="difficulty-label" style="color: #f59e0b">●</span> Postgraduate
+					<span class="difficulty-label" style="color: #f59e0b">●</span> Postgraduate ({difficultyCounts['PGrad']})
 				</label>
 				<label class="difficulty-option">
 					<input 
@@ -1329,7 +1372,7 @@
 						checked={difficultyFilter.has('Research')}
 						on:change={() => toggleDifficulty('Research')}
 					/>
-					<span class="difficulty-label" style="color: #ef4444">●</span> Research
+					<span class="difficulty-label" style="color: #ef4444">●</span> Research ({difficultyCounts['Research']})
 				</label>
 			</div>
 		{/if}
@@ -1822,12 +1865,20 @@
 	.sort-controls {
 		display: flex;
 		align-items: center;
-		gap: 1rem;
+		gap: 2rem;
+		flex-wrap: wrap;
+	}
+	
+	.control-group {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
 	}
 	
 	.sort-controls label {
 		color: #aaa;
 		font-size: 0.9rem;
+		white-space: nowrap;
 	}
 	
 	.sort-controls select {
@@ -1838,6 +1889,7 @@
 		color: #eee;
 		font-size: 1rem;
 		cursor: pointer;
+		min-width: 180px;
 	}
 	
 	.list-cards {
@@ -2504,7 +2556,7 @@
 	}
 	
 	.tutorial-close-btn:hover {
-		background: #10A976
+		background: #10A976;
 		transform: translateY(-2px);
 		box-shadow: 0 4px 12px #10A976;
 	}
@@ -2660,10 +2712,16 @@
 		
 		.sort-controls {
 			width: 100%;
+			gap: 1rem;
+		}
+		
+		.control-group {
+			width: 100%;
 		}
 		
 		.sort-controls select {
 			flex: 1;
+			min-width: auto;
 		}
 		
 		.list-card-header {
