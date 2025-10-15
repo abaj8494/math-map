@@ -21,7 +21,10 @@
 	let viewMode = '3d'; // '3d' or 'list'
 	let sortBy = 'year'; // 'year', 'name', 'category', 'type', 'difficulty'
 	let difficultyFilter = new Set(); // Empty set means 'All', otherwise contains selected difficulties
-	let showDifficultyMenu = false; // Toggle for difficulty dropdown menu
+	let categoryFilter = new Set(); // Empty set means 'All', otherwise contains selected categories
+	let typeFilter = new Set(); // Empty set means 'All', otherwise contains selected types ('Pure Math', 'Applied Math')
+	let showDifficultyMenu = false; // Toggle for difficulty dropdown menu (3D view)
+	let showFiltersPanel = false; // Toggle for filters panel (list view)
 	let cardPosition = 'right'; // 'right' or 'left' for contributor card position
 	let showTutorial = false; // Tutorial popup visibility
 	let showResetConfirm = false; // Reset confirmation dialog visibility
@@ -929,39 +932,36 @@
 		}
 	}
 	
-	// Reactive statement to filter cards by difficulty
+	// Reactive statement to filter cards by all filters
 	$: if (cardMeshes.length > 0) {
 		cardMeshes.forEach(cardMesh => {
 			const topic = cardMesh.userData.topic;
-			// Show if no filters selected (all), or if topic's difficulty is in selected set
-			if (difficultyFilter.size === 0 || difficultyFilter.has(topic.difficulty)) {
-				cardMesh.visible = true;
-			} else {
-				cardMesh.visible = false;
+			let visible = true;
+			
+			// Check difficulty filter
+			if (difficultyFilter.size > 0 && !difficultyFilter.has(topic.difficulty)) {
+				visible = false;
 			}
+			
+			// Check category filter
+			if (categoryFilter.size > 0 && !categoryFilter.has(topic.category)) {
+				visible = false;
+			}
+			
+			// Check type filter
+			if (typeFilter.size > 0 && !typeFilter.has(topic.type)) {
+				visible = false;
+			}
+			
+			cardMesh.visible = visible;
 		});
 		
 		// Also hide/show corresponding arrows - show arrow if both source and destination cards are visible
 		arrowMeshes.forEach(arrow => {
-			if (difficultyFilter.size === 0) {
-				arrow.visible = true; // Show all arrows when no filter applied
-			} else {
-				// Only show arrow if both connected cards are visible
-				const fromCard = arrow.userData.fromCard;
-				const toCard = arrow.userData.toCard;
-				arrow.visible = fromCard && toCard && fromCard.visible && toCard.visible;
-			}
+			const fromCard = arrow.userData.fromCard;
+			const toCard = arrow.userData.toCard;
+			arrow.visible = fromCard && toCard && fromCard.visible && toCard.visible;
 		});
-	}
-	
-	// Helper to toggle difficulty filter
-	function toggleDifficulty(level) {
-		if (difficultyFilter.has(level)) {
-			difficultyFilter.delete(level);
-		} else {
-			difficultyFilter.add(level);
-		}
-		difficultyFilter = difficultyFilter; // Trigger reactivity
 	}
 	
 	// Clear all filters (show all)
@@ -986,14 +986,92 @@
 		return counts;
 	}
 	
+	// Count topics by category
+	function getTopicCountByCategory() {
+		const counts = {};
+		Object.keys(categoryColors).forEach(cat => {
+			counts[cat] = 0;
+		});
+		topics.forEach(topic => {
+			if (topic.category && counts.hasOwnProperty(topic.category)) {
+				counts[topic.category]++;
+			}
+		});
+		return counts;
+	}
+	
+	// Count topics by type
+	function getTopicCountByType() {
+		const counts = {
+			'Pure Math': 0,
+			'Applied Math': 0
+		};
+		topics.forEach(topic => {
+			if (topic.type && counts.hasOwnProperty(topic.type)) {
+				counts[topic.type]++;
+			}
+		});
+		return counts;
+	}
+	
 	// Get reactive counts
 	$: difficultyCounts = getTopicCountByDifficulty();
+	$: categoryCounts = getTopicCountByCategory();
+	$: typeCounts = getTopicCountByType();
+	
+	// Calculate total active filters
+	$: activeFilterCount = difficultyFilter.size + categoryFilter.size + typeFilter.size;
+	
+	// Helper functions for filter management
+	function toggleDifficultyFilter(level) {
+		if (difficultyFilter.has(level)) {
+			difficultyFilter.delete(level);
+		} else {
+			difficultyFilter.add(level);
+		}
+		difficultyFilter = difficultyFilter; // Trigger reactivity
+	}
+	
+	function toggleCategoryFilter(category) {
+		if (categoryFilter.has(category)) {
+			categoryFilter.delete(category);
+		} else {
+			categoryFilter.add(category);
+		}
+		categoryFilter = categoryFilter; // Trigger reactivity
+	}
+	
+	function toggleTypeFilter(type) {
+		if (typeFilter.has(type)) {
+			typeFilter.delete(type);
+		} else {
+			typeFilter.add(type);
+		}
+		typeFilter = typeFilter; // Trigger reactivity
+	}
+	
+	function clearAllFilters() {
+		difficultyFilter = new Set();
+		categoryFilter = new Set();
+		typeFilter = new Set();
+		showFiltersPanel = false;
+	}
 
-	function getSortedTopics() {
-		// First filter by difficulty if needed
+	// Reactive sorted and filtered topics list
+	$: sortedTopics = (() => {
+		// Apply all filters
 		let filtered = [...topics];
+		
 		if (difficultyFilter.size > 0) {
 			filtered = filtered.filter(topic => difficultyFilter.has(topic.difficulty));
+		}
+		
+		if (categoryFilter.size > 0) {
+			filtered = filtered.filter(topic => categoryFilter.has(topic.category));
+		}
+		
+		if (typeFilter.size > 0) {
+			filtered = filtered.filter(topic => typeFilter.has(topic.type));
 		}
 		
 		const difficultyOrder = { 'High School': 1, 'UGrad': 2, 'PGrad': 3, 'Research': 4 };
@@ -1015,7 +1093,7 @@
 			default:
 				return filtered;
 		}
-	}
+	})();
 	
 	function toggleSearch() {
 		searchVisible = !searchVisible;
@@ -1193,27 +1271,106 @@
 					</select>
 				</div>
 				<div class="control-group">
-					<label for="filter-select">Filter:</label>
-					<select id="filter-select" on:change={(e) => {
-						const value = e.target.value;
-						if (value === 'all') {
-							difficultyFilter = new Set();
-						} else {
-							difficultyFilter = new Set([value]);
-						}
-					}}>
-						<option value="all">All Levels ({topics.length})</option>
-						<option value="High School">High School ({difficultyCounts['High School']})</option>
-						<option value="UGrad">Undergraduate ({difficultyCounts['UGrad']})</option>
-						<option value="PGrad">Postgraduate ({difficultyCounts['PGrad']})</option>
-						<option value="Research">Research ({difficultyCounts['Research']})</option>
-					</select>
+					<button 
+						class="filters-button"
+						on:click={() => showFiltersPanel = !showFiltersPanel}
+					>
+						{activeFilterCount === 0 ? 'Filters' : `Filters (${activeFilterCount})`}
+						<span class="arrow">{showFiltersPanel ? '▲' : '▼'}</span>
+					</button>
+					
+					{#if showFiltersPanel}
+						<div class="filters-panel">
+							<div class="filters-panel-header">
+								<h4>Filters</h4>
+								<button class="clear-filters-btn" on:click={clearAllFilters}>Clear All</button>
+							</div>
+							
+							<!-- Difficulty Section -->
+							<div class="filter-section">
+								<div class="filter-section-title">Difficulty</div>
+								<label class="filter-option">
+									<input 
+										type="checkbox" 
+										checked={difficultyFilter.has('High School')}
+										on:change={() => toggleDifficultyFilter('High School')}
+									/>
+									<span class="filter-color-dot" style="background: #22c55e"></span>
+									High School ({difficultyCounts['High School']})
+								</label>
+								<label class="filter-option">
+									<input 
+										type="checkbox" 
+										checked={difficultyFilter.has('UGrad')}
+										on:change={() => toggleDifficultyFilter('UGrad')}
+									/>
+									<span class="filter-color-dot" style="background: #3b82f6"></span>
+									Undergraduate ({difficultyCounts['UGrad']})
+								</label>
+								<label class="filter-option">
+									<input 
+										type="checkbox" 
+										checked={difficultyFilter.has('PGrad')}
+										on:change={() => toggleDifficultyFilter('PGrad')}
+									/>
+									<span class="filter-color-dot" style="background: #f59e0b"></span>
+									Postgraduate ({difficultyCounts['PGrad']})
+								</label>
+								<label class="filter-option">
+									<input 
+										type="checkbox" 
+										checked={difficultyFilter.has('Research')}
+										on:change={() => toggleDifficultyFilter('Research')}
+									/>
+									<span class="filter-color-dot" style="background: #ef4444"></span>
+									Research ({difficultyCounts['Research']})
+								</label>
+							</div>
+							
+							<!-- Type Section -->
+							<div class="filter-section">
+								<div class="filter-section-title">Type</div>
+								<label class="filter-option">
+									<input 
+										type="checkbox" 
+										checked={typeFilter.has('Pure Math')}
+										on:change={() => toggleTypeFilter('Pure Math')}
+									/>
+									Pure Math ({typeCounts['Pure Math']})
+								</label>
+								<label class="filter-option">
+									<input 
+										type="checkbox" 
+										checked={typeFilter.has('Applied Math')}
+										on:change={() => toggleTypeFilter('Applied Math')}
+									/>
+									Applied Math ({typeCounts['Applied Math']})
+								</label>
+							</div>
+							
+							<!-- Category Section -->
+							<div class="filter-section">
+								<div class="filter-section-title">Category</div>
+								{#each Object.keys(categoryColors) as category}
+									<label class="filter-option">
+										<input 
+											type="checkbox" 
+											checked={categoryFilter.has(category)}
+											on:change={() => toggleCategoryFilter(category)}
+										/>
+										<span class="filter-color-dot" style="background: {categoryColors[category]}"></span>
+										{category} ({categoryCounts[category]})
+									</label>
+								{/each}
+							</div>
+						</div>
+					{/if}
 				</div>
 			</div>
 		</div>
 		
 		<div class="list-cards">
-			{#each getSortedTopics() as topic}
+			{#each sortedTopics as topic}
 				<button 
 					class="list-card"
 					style="border-left: 4px solid {categoryColors[topic.category] || '#fff'}"
@@ -1321,15 +1478,15 @@
 	{viewMode === '3d' ? '📋' : '🌌'}
 </button>
 
-<!-- Difficulty Filter Dropdown (only in 3D mode) -->
+<!-- Filters Dropdown (only in 3D mode) -->
 {#if viewMode === '3d'}
 	<div class="difficulty-filter">
 		<button 
 			class="difficulty-toggle"
 			on:click={() => showDifficultyMenu = !showDifficultyMenu}
-			aria-label="Filter by difficulty"
+			aria-label="Filters"
 		>
-			{difficultyFilter.size === 0 ? 'All Levels' : `${difficultyFilter.size} Level${difficultyFilter.size > 1 ? 's' : ''}`}
+			{activeFilterCount === 0 ? 'Filters' : `Filters (${activeFilterCount})`}
 			<span class="arrow">{showDifficultyMenu ? '▲' : '▼'}</span>
 		</button>
 		
@@ -1337,16 +1494,19 @@
 			<div class="difficulty-menu">
 				<button 
 					class="difficulty-option clear-option"
-					on:click={clearDifficultyFilters}
+					on:click={clearAllFilters}
 				>
-					✓ All Levels ({topics.length})
+					✓ Clear All Filters
 				</button>
 				<div class="difficulty-separator"></div>
+				
+				<!-- Difficulty Section -->
+				<div class="filter-section-title">Difficulty</div>
 				<label class="difficulty-option">
 					<input 
 						type="checkbox" 
 						checked={difficultyFilter.has('High School')}
-						on:change={() => toggleDifficulty('High School')}
+						on:change={() => toggleDifficultyFilter('High School')}
 					/>
 					<span class="difficulty-label" style="color: #22c55e">●</span> High School ({difficultyCounts['High School']})
 				</label>
@@ -1354,7 +1514,7 @@
 					<input 
 						type="checkbox" 
 						checked={difficultyFilter.has('UGrad')}
-						on:change={() => toggleDifficulty('UGrad')}
+						on:change={() => toggleDifficultyFilter('UGrad')}
 					/>
 					<span class="difficulty-label" style="color: #3b82f6">●</span> Undergraduate ({difficultyCounts['UGrad']})
 				</label>
@@ -1362,7 +1522,7 @@
 					<input 
 						type="checkbox" 
 						checked={difficultyFilter.has('PGrad')}
-						on:change={() => toggleDifficulty('PGrad')}
+						on:change={() => toggleDifficultyFilter('PGrad')}
 					/>
 					<span class="difficulty-label" style="color: #f59e0b">●</span> Postgraduate ({difficultyCounts['PGrad']})
 				</label>
@@ -1370,10 +1530,46 @@
 					<input 
 						type="checkbox" 
 						checked={difficultyFilter.has('Research')}
-						on:change={() => toggleDifficulty('Research')}
+						on:change={() => toggleDifficultyFilter('Research')}
 					/>
 					<span class="difficulty-label" style="color: #ef4444">●</span> Research ({difficultyCounts['Research']})
 				</label>
+				
+				<div class="difficulty-separator"></div>
+				
+				<!-- Type Section -->
+				<div class="filter-section-title">Type</div>
+				<label class="difficulty-option">
+					<input 
+						type="checkbox" 
+						checked={typeFilter.has('Pure Math')}
+						on:change={() => toggleTypeFilter('Pure Math')}
+					/>
+					Pure Math ({typeCounts['Pure Math']})
+				</label>
+				<label class="difficulty-option">
+					<input 
+						type="checkbox" 
+						checked={typeFilter.has('Applied Math')}
+						on:change={() => toggleTypeFilter('Applied Math')}
+					/>
+					Applied Math ({typeCounts['Applied Math']})
+				</label>
+				
+				<div class="difficulty-separator"></div>
+				
+				<!-- Category Section -->
+				<div class="filter-section-title">Category</div>
+				{#each Object.keys(categoryColors) as category}
+					<label class="difficulty-option">
+						<input 
+							type="checkbox" 
+							checked={categoryFilter.has(category)}
+							on:change={() => toggleCategoryFilter(category)}
+						/>
+						<span class="difficulty-label" style="color: {categoryColors[category]}">●</span> {category} ({categoryCounts[category]})
+					</label>
+				{/each}
 			</div>
 		{/if}
 	</div>
@@ -1793,7 +1989,9 @@
 		border: 1px solid rgba(99, 102, 241, 0.5);
 		border-radius: 0.5rem;
 		padding: 0.5rem;
-		min-width: 200px;
+		min-width: 250px;
+		max-height: 70vh;
+		overflow-y: auto;
 		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
 	}
 	
@@ -1838,6 +2036,15 @@
 		line-height: 1;
 	}
 	
+	.filter-section-title {
+		font-weight: bold;
+		color: rgba(99, 102, 241, 1);
+		padding: 0.5rem 0.75rem;
+		font-size: 0.85rem;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+	
 	.list-view {
 		width: 100vw;
 		height: 100vh;
@@ -1873,6 +2080,7 @@
 		display: flex;
 		align-items: center;
 		gap: 0.75rem;
+		position: relative;
 	}
 	
 	.sort-controls label {
@@ -1890,6 +2098,117 @@
 		font-size: 1rem;
 		cursor: pointer;
 		min-width: 180px;
+	}
+	
+	.filters-button {
+		padding: 0.5rem 1rem;
+		border-radius: 0.5rem;
+		border: 1px solid rgba(99, 102, 241, 0.5);
+		background: rgba(26, 26, 46, 0.8);
+		color: #eee;
+		font-size: 1rem;
+		cursor: pointer;
+		min-width: 180px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		transition: all 0.2s;
+	}
+	
+	.filters-button:hover {
+		border-color: rgba(99, 102, 241, 0.8);
+		background: rgba(99, 102, 241, 0.2);
+	}
+	
+	.filters-button .arrow {
+		font-size: 0.75rem;
+		opacity: 0.7;
+	}
+	
+	.filters-panel {
+		position: absolute;
+		top: calc(100% + 0.5rem);
+		right: 0;
+		background: rgba(26, 26, 46, 0.98);
+		border: 1px solid rgba(99, 102, 241, 0.5);
+		border-radius: 0.5rem;
+		padding: 1rem;
+		min-width: 300px;
+		max-height: 70vh;
+		overflow-y: auto;
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+		z-index: 100;
+	}
+	
+	.filters-panel-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 1rem;
+		padding-bottom: 0.75rem;
+		border-bottom: 1px solid rgba(99, 102, 241, 0.3);
+	}
+	
+	.filters-panel-header h4 {
+		margin: 0;
+		color: #fff;
+		font-size: 1.1rem;
+	}
+	
+	.clear-filters-btn {
+		background: rgba(239, 68, 68, 0.2);
+		color: #ef4444;
+		border: 1px solid rgba(239, 68, 68, 0.5);
+		border-radius: 0.25rem;
+		padding: 0.35rem 0.75rem;
+		font-size: 0.85rem;
+		cursor: pointer;
+		transition: all 0.2s;
+	}
+	
+	.clear-filters-btn:hover {
+		background: rgba(239, 68, 68, 0.4);
+	}
+	
+	.filter-section {
+		margin-bottom: 1.25rem;
+	}
+	
+	.filter-section:last-child {
+		margin-bottom: 0;
+	}
+	
+	.filter-option {
+		display: flex;
+		align-items: center;
+		padding: 0.5rem 0.5rem;
+		cursor: pointer;
+		border-radius: 0.25rem;
+		transition: background 0.2s;
+		font-size: 0.9rem;
+		gap: 0.5rem;
+		width: 100%;
+		text-align: left;
+		background: transparent;
+		border: none;
+		color: #ffffff;
+	}
+	
+	.filter-option:hover {
+		background: rgba(99, 102, 241, 0.15);
+	}
+	
+	.filter-option input[type="checkbox"] {
+		margin: 0;
+		cursor: pointer;
+	}
+	
+	.filter-color-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		display: inline-block;
 	}
 	
 	.list-cards {
@@ -2183,15 +2502,15 @@
 	
 	.overlay-close-button {
 		position: absolute;
-		top: 0.5rem;  /* Moved up from 1rem to 0.5rem */
-		right: 0.5rem;  /* Moved right from 1rem to 0.5rem */
-		width: 2rem;
-		height: 2rem;
+		top: 0.5rem;
+		right: 0.5rem;
+		width: 1.35rem;
+		height: 1.35rem;
 		border-radius: 50%;
 		background: rgba(239, 68, 68, 0.3);
 		color: white;
 		border: 1px solid rgba(239, 68, 68, 0.5);
-		font-size: 1.2rem;
+		font-size: 0.9rem;
 		font-weight: 700;
 		cursor: pointer;
 		transition: all 0.2s;
@@ -2210,14 +2529,14 @@
 	.overlay-switch-button {
 		position: absolute;
 		top: 0.5rem;
-		right: 3rem;
-		width: 2rem;
-		height: 2rem;
+		right: 2.2rem;
+		width: 1.35rem;
+		height: 1.35rem;
 		border-radius: 50%;
 		background: rgba(99, 102, 241, 0.3);
 		color: white;
 		border: 1px solid rgba(99, 102, 241, 0.5);
-		font-size: 1.2rem;
+		font-size: 0.9rem;
 		font-weight: 700;
 		cursor: pointer;
 		transition: all 0.2s;
@@ -2719,9 +3038,16 @@
 			width: 100%;
 		}
 		
-		.sort-controls select {
+		.sort-controls select,
+		.filters-button {
 			flex: 1;
 			min-width: auto;
+		}
+		
+		.filters-panel {
+			right: auto;
+			left: 0;
+			min-width: calc(100vw - 2rem);
 		}
 		
 		.list-card-header {
