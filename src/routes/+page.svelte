@@ -22,6 +22,9 @@
 	let sortBy = 'year'; // 'year', 'name', 'category', 'type', 'difficulty'
 	let difficultyFilter = new Set(); // Empty set means 'All', otherwise contains selected difficulties
 	let showDifficultyMenu = false; // Toggle for difficulty dropdown menu
+	let cardPosition = 'right'; // 'right' or 'left' for contributor card position
+	let showTutorial = false; // Tutorial popup visibility
+	let showResetConfirm = false; // Reset confirmation dialog visibility
 	
 	// ========== SPACING PARAMETERS (TWEAK THESE) ==========
 	const CARD_SPACING_X = 600;  // Timeline spread (tripled from 200)
@@ -51,6 +54,93 @@
 		'Research': '#ef4444'       // Red
 	};
 	
+	// ========== LOCALSTORAGE PERSISTENCE ==========
+	function saveArrowStates() {
+		const arrowStates = [];
+		selectedArrows.forEach((state, arrow) => {
+			const fromId = state.fromCard?.userData?.topic?.id;
+			const toId = state.toCard?.userData?.topic?.id;
+			if (fromId && toId) {
+				arrowStates.push({
+					fromId,
+					toId,
+					clickCount: state.clickCount
+				});
+			}
+		});
+		localStorage.setItem('mathMapArrowStates', JSON.stringify(arrowStates));
+	}
+
+	function loadArrowStates() {
+		try {
+			const saved = localStorage.getItem('mathMapArrowStates');
+			if (saved) {
+				const arrowStates = JSON.parse(saved);
+				// This will be applied after arrows are created in initScene
+				return arrowStates;
+			}
+		} catch (e) {
+			console.error('Failed to load arrow states:', e);
+		}
+		return [];
+	}
+
+	function applyArrowStates(savedStates) {
+		savedStates.forEach(savedState => {
+			// Find the arrow matching this from/to pair
+			const arrow = arrowMeshes.find(a => 
+				a.userData.fromCard?.userData?.topic?.id === savedState.fromId &&
+				a.userData.toCard?.userData?.topic?.id === savedState.toId
+			);
+			
+			if (arrow && savedState.clickCount >= 1) {
+				// Set the arrow state
+				selectedArrows.set(arrow, {
+					clickCount: savedState.clickCount,
+					fromCard: arrow.userData.fromCard,
+					toCard: arrow.userData.toCard
+				});
+				
+				// Apply white color to the arrow
+				arrow.children.forEach(child => {
+					if (child.material) {
+						child.material.color.set(0xffffff);
+						child.material.emissive.set(0xcccccc);
+						child.material.emissiveIntensity = 0.5;
+						child.material.opacity = 1.0;
+					}
+				});
+			}
+		});
+	}
+
+	function resetAllArrows() {
+		// Reset all arrows to default state
+		selectedArrows.forEach((state, arrow) => {
+			arrow.children.forEach(child => {
+				if (child.material) {
+					child.material.color.set(0x6366f1);
+					child.material.emissive.set(0x4f46e5);
+					child.material.emissiveIntensity = 0.2;
+					child.material.opacity = 0.6;
+				}
+			});
+		});
+		
+		// Clear the selectedArrows map
+		selectedArrows = new Map();
+		
+		// Save empty state to localStorage
+		localStorage.setItem('mathMapArrowStates', JSON.stringify([]));
+		
+		// Close confirmation dialog
+		showResetConfirm = false;
+	}
+
+	function toggleCardPosition() {
+		cardPosition = cardPosition === 'right' ? 'left' : 'right';
+	}
+
 	// Position cards in 3D space based on year and category
 	function calculateCardPosition(topic, index, topicsInCategory) {
 		const yearNormalized = (topic.year + 600) / 2700; // Normalize from -350 to 2025
@@ -661,6 +751,9 @@
 					selectedArrows.delete(clickedArrow);
 				}
 				
+				// Save arrow states to localStorage
+				saveArrowStates();
+				
 				return; // Don't check for card clicks
 			}
 			}
@@ -1029,7 +1122,24 @@
 	}
 	
 	onMount(() => {
+		// Load saved arrow states
+		const savedArrowStates = loadArrowStates();
+		
 		initScene();
+		
+		// Apply saved arrow states after a short delay to ensure arrows are created
+		if (savedArrowStates.length > 0) {
+			setTimeout(() => {
+				applyArrowStates(savedArrowStates);
+			}, 100);
+		}
+		
+		// Check if user has seen tutorial
+		const hasSeenTutorial = localStorage.getItem('mathMapHasSeenTutorial');
+		if (!hasSeenTutorial) {
+			showTutorial = true;
+			localStorage.setItem('mathMapHasSeenTutorial', 'true');
+		}
 		
 		return () => {
 			window.removeEventListener('resize', onWindowResize);
@@ -1132,6 +1242,30 @@
 		aria-label="Go to previous card"
 	>
 		← Back ({cardHistory.length})
+	</button>
+{/if}
+
+<!-- Tutorial Button (top right) -->
+{#if viewMode === '3d'}
+	<button
+		class="tutorial-button"
+		on:click={() => showTutorial = true}
+		aria-label="Show tutorial"
+		title="Show tutorial"
+	>
+		?
+	</button>
+{/if}
+
+<!-- Reset Button (top right, beside tutorial) -->
+{#if viewMode === '3d'}
+	<button
+		class="reset-button"
+		on:click={() => showResetConfirm = true}
+		aria-label="Reset all arrows"
+		title="Reset all arrows"
+	>
+		↺
 	</button>
 {/if}
 
@@ -1319,8 +1453,9 @@
 
 <!-- Card Interaction Overlay when viewing a card -->
 {#if selectedCard && viewMode === '3d'}
-	<div class="card-overlay-panel">
+	<div class="card-overlay-panel" class:card-left={cardPosition === 'left'}>
 		<button class="overlay-close-button" on:click={() => selectedCard = null}>✕</button>
+		<button class="overlay-switch-button" on:click={toggleCardPosition} title="Switch side">⇄</button>
 		<h2>{selectedCard.name}</h2>
 		
 		<!-- Contributors Section -->
@@ -1419,6 +1554,63 @@
 					{/if}
 				</p>
 			{/if}
+		</div>
+	</div>
+{/if}
+
+<!-- Tutorial Popup -->
+{#if showTutorial}
+	<div class="tutorial-overlay">
+		<div class="tutorial-popup">
+			<button class="close-tutorial" on:click={() => showTutorial = false}>✕</button>
+			<h2>Welcome to Math Map!</h2>
+			<div class="tutorial-content">
+				<div class="tutorial-section">
+					<h3>🎮 Navigation</h3>
+					<ul>
+						<li><strong>Zoom:</strong> Scroll wheel</li>
+						<li><strong>Rotate:</strong> Left-click + drag</li>
+						<li><strong>Pan:</strong> Shift + left-click + drag or right-click + drag</li>
+					</ul>
+				</div>
+				
+				<div class="tutorial-section">
+					<h3>➡️ Arrow Interactions</h3>
+					<p>Click arrows to cycle through 4 stages:</p>
+					<ol>
+						<li><strong>First click:</strong> Highlight arrow (white)</li>
+						<li><strong>Second click:</strong> Navigate to destination topic</li>
+						<li><strong>Third click:</strong> Navigate to source topic</li>
+						<li><strong>Fourth click:</strong> Reset arrow (back to default)</li>
+					</ol>
+					<p class="note">Your highlighted arrows are saved automatically!</p>
+				</div>
+				
+				<div class="tutorial-section">
+					<h3>🔍 Search & Features</h3>
+					<ul>
+						<li><strong>Quick Search (🔍):</strong> Find topics and contributors</li>
+						<li><strong>Pathfinding (🗺️):</strong> Find routes between topics</li>
+						<li><strong>List View (📋):</strong> Browse all topics</li>
+						<li><strong>Difficulty Filter:</strong> Filter by education level</li>
+					</ul>
+				</div>
+			</div>
+			<button class="tutorial-close-btn" on:click={() => showTutorial = false}>Got it!</button>
+		</div>
+	</div>
+{/if}
+
+<!-- Reset Confirmation Dialog -->
+{#if showResetConfirm}
+	<div class="tutorial-overlay">
+		<div class="confirm-popup">
+			<h3>Reset All Arrows?</h3>
+			<p>This will reset all highlighted arrows back to their default state. This action cannot be undone.</p>
+			<div class="confirm-buttons">
+				<button class="confirm-cancel" on:click={() => showResetConfirm = false}>Cancel</button>
+				<button class="confirm-reset" on:click={resetAllArrows}>Reset</button>
+			</div>
 		</div>
 	</div>
 {/if}
@@ -1929,6 +2121,12 @@
 		max-width: 350px;
 		max-height: 80vh;
 		overflow-y: auto;
+		transition: left 0.3s, right 0.3s;
+	}
+	
+	.card-overlay-panel.card-left {
+		right: auto;
+		left: 2rem;
 	}
 	
 	.overlay-close-button {
@@ -1954,6 +2152,32 @@
 	
 	.overlay-close-button:hover {
 		background: rgba(239, 68, 68, 0.6);
+		transform: scale(1.1);
+	}
+	
+	.overlay-switch-button {
+		position: absolute;
+		top: 0.5rem;
+		right: 3rem;
+		width: 2rem;
+		height: 2rem;
+		border-radius: 50%;
+		background: rgba(99, 102, 241, 0.3);
+		color: white;
+		border: 1px solid rgba(99, 102, 241, 0.5);
+		font-size: 1.2rem;
+		font-weight: 700;
+		cursor: pointer;
+		transition: all 0.2s;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 1;
+		z-index: 10;
+	}
+	
+	.overlay-switch-button:hover {
+		background: rgba(99, 102, 241, 0.6);
 		transform: scale(1.1);
 	}
 	
@@ -2119,6 +2343,231 @@
 		transform: scale(1.1);
 	}
 	
+	/* Tutorial and Reset buttons (top right) */
+	.tutorial-button {
+		position: fixed;
+		top: 2rem;
+		right: 2rem;
+		width: 3rem;
+		height: 3rem;
+		border-radius: 50%;
+		background: rgba(34, 197, 94, 0.9);
+		color: white;
+		border: 2px solid rgba(34, 197, 94, 1);
+		font-size: 1.8rem;
+		font-weight: bold;
+		cursor: pointer;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+		transition: all 0.2s;
+		z-index: 150;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	.tutorial-button:hover {
+		background: rgba(34, 197, 94, 1);
+		transform: scale(1.1);
+	}
+	
+	.reset-button {
+		position: fixed;
+		top: 2rem;
+		right: 6rem;
+		width: 3rem;
+		height: 3rem;
+		border-radius: 50%;
+		background: rgba(239, 68, 68, 0.9);
+		color: white;
+		border: 2px solid rgba(239, 68, 68, 1);
+		font-size: 1.8rem;
+		font-weight: bold;
+		cursor: pointer;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+		transition: all 0.2s;
+		z-index: 150;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	.reset-button:hover {
+		background: rgba(239, 68, 68, 1);
+		transform: scale(1.1);
+	}
+	
+	/* Tutorial Popup */
+	.tutorial-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background: rgba(0, 0, 0, 0.8);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 3000;
+	}
+	
+	.tutorial-popup {
+		background: rgba(26, 26, 46, 0.98);
+		border-radius: 1rem;
+		border: 2px solid rgba(34, 197, 94, 0.6);
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+		max-width: 600px;
+		max-height: 90vh;
+		overflow-y: auto;
+		padding: 2.5rem;
+		position: relative;
+	}
+	
+	.tutorial-popup h2 {
+		color: #22c55e;
+		margin: 0 0 1.5rem 0;
+		font-size: 2rem;
+		text-align: center;
+	}
+	
+	.close-tutorial {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		background: rgba(239, 68, 68, 0.3);
+		color: white;
+		border: 1px solid rgba(239, 68, 68, 0.5);
+		border-radius: 50%;
+		width: 2.5rem;
+		height: 2.5rem;
+		font-size: 1.5rem;
+		cursor: pointer;
+		transition: all 0.2s;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 1;
+	}
+	
+	.close-tutorial:hover {
+		background: rgba(239, 68, 68, 0.6);
+		transform: scale(1.1);
+	}
+	
+	.tutorial-content {
+		color: #eee;
+	}
+	
+	.tutorial-section {
+		margin-bottom: 2rem;
+	}
+	
+	.tutorial-section h3 {
+		color: #6366f1;
+		margin: 0 0 1rem 0;
+		font-size: 1.3rem;
+	}
+	
+	.tutorial-section ul, .tutorial-section ol {
+		margin: 0.5rem 0;
+		padding-left: 1.5rem;
+		line-height: 1.8;
+	}
+	
+	.tutorial-section li {
+		margin: 0.5rem 0;
+	}
+	
+	.tutorial-section p {
+		margin: 0.5rem 0;
+		line-height: 1.6;
+	}
+	
+	.tutorial-section .note {
+		color: #22c55e;
+		font-style: italic;
+		font-size: 0.9rem;
+		margin-top: 1rem;
+	}
+	
+	.tutorial-close-btn {
+		width: 100%;
+		padding: 1rem;
+		margin-top: 1.5rem;
+		border-radius: 0.5rem;
+		background: rgba(34, 197, 94, 0.8);
+		color: white;
+		border: 2px solid rgba(34, 197, 94, 1);
+		font-size: 1.1rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.2s;
+	}
+	
+	.tutorial-close-btn:hover {
+		background: rgba(34, 197, 94, 1);
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+	}
+	
+	/* Reset Confirmation Dialog */
+	.confirm-popup {
+		background: rgba(26, 26, 46, 0.98);
+		border-radius: 1rem;
+		border: 2px solid rgba(239, 68, 68, 0.6);
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+		max-width: 400px;
+		padding: 2rem;
+		text-align: center;
+	}
+	
+	.confirm-popup h3 {
+		color: #ef4444;
+		margin: 0 0 1rem 0;
+		font-size: 1.5rem;
+	}
+	
+	.confirm-popup p {
+		color: #ccc;
+		line-height: 1.6;
+		margin-bottom: 1.5rem;
+	}
+	
+	.confirm-buttons {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+	}
+	
+	.confirm-cancel, .confirm-reset {
+		padding: 0.75rem 1.5rem;
+		border-radius: 0.5rem;
+		font-size: 1rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.2s;
+		border: none;
+	}
+	
+	.confirm-cancel {
+		background: rgba(99, 102, 241, 0.8);
+		color: white;
+	}
+	
+	.confirm-cancel:hover {
+		background: rgba(99, 102, 241, 1);
+		transform: translateY(-2px);
+	}
+	
+	.confirm-reset {
+		background: rgba(239, 68, 68, 0.8);
+		color: white;
+	}
+	
+	.confirm-reset:hover {
+		background: rgba(239, 68, 68, 1);
+		transform: translateY(-2px);
+	}
+	
 	@media (max-width: 768px) {
 		.back-button {
 			top: 1rem;
@@ -2127,12 +2576,33 @@
 			font-size: 0.9rem;
 		}
 		
+		.tutorial-button {
+			top: 1rem;
+			right: 1rem;
+			width: 2.5rem;
+			height: 2.5rem;
+			font-size: 1.5rem;
+		}
+		
+		.reset-button {
+			top: 1rem;
+			right: 4.5rem;
+			width: 2.5rem;
+			height: 2.5rem;
+			font-size: 1.5rem;
+		}
+		
 		.card-overlay-panel {
 			right: 1rem;
 			left: 1rem;
 			max-width: calc(100% - 2rem);
 			max-height: 60vh;
 			padding: 1.5rem;
+		}
+		
+		.card-overlay-panel.card-left {
+			left: 1rem;
+			right: 1rem;
 		}
 		
 		.card-overlay-panel h2 {

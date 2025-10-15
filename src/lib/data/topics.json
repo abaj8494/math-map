@@ -179,7 +179,8 @@
     "notes": "Ancient Babylonian algebra (~1800 BCE), Al-Khwarizmi's 'Al-Jabr' (825 CE), Viète's symbolic notation (1591).",
     "leadsTo": [
       "trigonometry",
-      "linear-algebra"
+      "linear-algebra",
+      "calculus"
     ],
     "contributors": [
       "euclid",
@@ -533,7 +534,8 @@
       "vector-calculus",
       "real-analysis",
       "differential-equations",
-      "complex-analysis"
+      "complex-analysis",
+      "calculus-of-variations"
     ],
     "contributors": [
       "newton",
