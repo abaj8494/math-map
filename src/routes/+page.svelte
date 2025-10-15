@@ -2351,9 +2351,9 @@
 		width: 3rem;
 		height: 3rem;
 		border-radius: 50%;
-		background: rgba(34, 197, 94, 0.9);
+		background: #10A976;
 		color: white;
-		border: 2px solid rgba(34, 197, 94, 1);
+		border: 2px solid #10A976;
 		font-size: 1.8rem;
 		font-weight: bold;
 		cursor: pointer;
@@ -2377,9 +2377,9 @@
 		width: 3rem;
 		height: 3rem;
 		border-radius: 50%;
-		background: rgba(239, 68, 68, 0.9);
+		background: #7D2222;
 		color: white;
-		border: 2px solid rgba(239, 68, 68, 1);
+		border: 2px solid #7D2222;
 		font-size: 1.8rem;
 		font-weight: bold;
 		cursor: pointer;
@@ -2504,9 +2504,9 @@
 	}
 	
 	.tutorial-close-btn:hover {
-		background: rgba(34, 197, 94, 1);
+		background: #10A976
 		transform: translateY(-2px);
-		box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+		box-shadow: 0 4px 12px #10A976;
 	}
 	
 	/* Reset Confirmation Dialog */
@@ -2521,7 +2521,7 @@
 	}
 	
 	.confirm-popup h3 {
-		color: #ef4444;
+		color: #7D2222;
 		margin: 0 0 1rem 0;
 		font-size: 1.5rem;
 	}
@@ -2559,12 +2559,12 @@
 	}
 	
 	.confirm-reset {
-		background: rgba(239, 68, 68, 0.8);
+		background: #7D2222;
 		color: white;
 	}
 	
 	.confirm-reset:hover {
-		background: rgba(239, 68, 68, 1);
+		background: #7D2222;
 		transform: translateY(-2px);
 	}
 	
