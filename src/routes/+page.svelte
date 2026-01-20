@@ -1236,13 +1236,10 @@
 			}, 100);
 		}
 		
-		// Check if user has seen tutorial - show after a short delay
+		// Check if user has seen tutorial - mark as seen but don't show popup automatically
 		const hasSeenTutorial = localStorage.getItem('mathMapHasSeenTutorial');
 		if (!hasSeenTutorial) {
-			setTimeout(() => {
-				showTutorial = true;
-				localStorage.setItem('mathMapHasSeenTutorial', 'true');
-			}, 2000); // 2 second delay before showing tutorial
+			localStorage.setItem('mathMapHasSeenTutorial', 'true');
 		}
 		
 		return () => {

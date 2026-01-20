@@ -1,0 +1,6 @@
+# robots.txt for Math Map
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: http://mathmap.abaj.ai/sitemap.xml
